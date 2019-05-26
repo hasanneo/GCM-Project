@@ -5,23 +5,24 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.shape.SVGPath?>
 <AnchorPane maxHeight="-1.0" maxWidth="-1.0"
 	prefHeight="426.0" prefWidth="641.0"
 	xmlns="http://javafx.com/javafx/11.0.1"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="fxml.MainController">
+	fx:controller="controller.MainController">
 	<children>
 		<TextField id="search_txt" fx:id="search_text"
 			layoutX="160.0" layoutY="183.0" prefHeight="32.0" prefWidth="349.0"
 			promptText="search"
 			style="-fx-border-radius: 0; -fx-border-style: SOLID; -fx-border-width: 2; -fx-effect: BLOOM; -fx-border-color: #00FF7F;" />
-		<Button fx:id="login_btn" layoutX="575.0" layoutY="14.0"
+		<Button fx:id="login_btn" layoutX="587.0" layoutY="14.0"
 			mnemonicParsing="false" onAction="#LoginClick"
-			style="-fx-background-color: #00FF7F;" text="login" />
-		<Button fx:id="register_btn" layoutX="509.0" layoutY="14.0"
+			style="-fx-background-color: #00FF7F;" text="login" textFill="WHITE" />
+		<Button fx:id="register_btn" layoutX="518.0" layoutY="14.0"
 			mnemonicParsing="false" onAction="#RegisterClick"
-			style="-fx-background-color: #00FF7F;" text="register" />
+			style="-fx-background-color: #00FF7F;" text="register"
+			textFill="WHITE" />
 		<RadioButton layoutX="172.0" layoutY="215.0"
 			mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0"
 			text="name" textFill="#383938" />
@@ -32,10 +33,22 @@
 			mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0"
 			text="place" textFill="#383938" />
 		<AnchorPane layoutY="-1.0" prefHeight="433.0"
-			prefWidth="56.0" style="-fx-background-color: grey;">
+			prefWidth="70.0" style="-fx-background-color: grey;"
+			AnchorPane.bottomAnchor="0.0">
 			<effect>
 				<Bloom />
 			</effect>
+			<children>
+				<SVGPath fx:id="mapcatalog_icon"
+					content="M18.092,5.137l-3.977-1.466h-0.006c0.084,0.042-0.123-0.08-0.283,0H13.82L10,5.079L6.178,3.671H6.172c0.076,0.038-0.114-0.076-0.285,0H5.884L1.908,5.137c-0.151,0.062-0.25,0.207-0.25,0.369v10.451c0,0.691,0.879,0.244,0.545,0.369l3.829-1.406l3.821,1.406c0.186,0.062,0.385-0.029,0.294,0l3.822-1.406l3.83,1.406c0.26,0.1,0.543-0.08,0.543-0.369V5.506C18.342,5.344,18.242,5.199,18.092,5.137 M5.633,14.221l-3.181,1.15V5.776l3.181-1.15V14.221z M9.602,15.371l-3.173-1.15V4.626l3.173,1.15V15.371z M13.57,14.221l-3.173,1.15V5.776l3.173-1.15V14.221z M17.547,15.371l-3.182-1.15V4.626l3.182,1.15V15.371z"
+					layoutX="24.0" layoutY="192.0" onMouseClicked="#CatalogClick" />
+				<SVGPath fx:id="downloads_icon"
+					content="M17.896,12.706v-0.005v-0.003L15.855,2.507c-0.046-0.24-0.255-0.413-0.5-0.413H4.899c-0.24,0-0.447,0.166-0.498,0.4L2.106,12.696c-0.008,0.035-0.013,0.071-0.013,0.107v4.593c0,0.28,0.229,0.51,0.51,0.51h14.792c0.28,0,0.51-0.229,0.51-0.51v-4.593C17.906,12.77,17.904,12.737,17.896,12.706 M5.31,3.114h9.625l1.842,9.179h-4.481c-0.28,0-0.51,0.229-0.51,0.511c0,0.703-1.081,1.546-1.785,1.546c-0.704,0-1.785-0.843-1.785-1.546c0-0.281-0.229-0.511-0.51-0.511H3.239L5.31,3.114zM16.886,16.886H3.114v-3.572H7.25c0.235,1.021,1.658,2.032,2.75,2.032c1.092,0,2.515-1.012,2.749-2.032h4.137V16.886z"
+					layoutX="23.0" layoutY="307.0" onMouseClicked="#DownloadsClick" />
+				<SVGPath fx:id="account_icon"
+					content="M12.075,10.812c1.358-0.853,2.242-2.507,2.242-4.037c0-2.181-1.795-4.618-4.198-4.618S5.921,4.594,5.921,6.775c0,1.53,0.884,3.185,2.242,4.037c-3.222,0.865-5.6,3.807-5.6,7.298c0,0.23,0.189,0.42,0.42,0.42h14.273c0.23,0,0.42-0.189,0.42-0.42C17.676,14.619,15.297,11.677,12.075,10.812 M6.761,6.775c0-2.162,1.773-3.778,3.358-3.778s3.359,1.616,3.359,3.778c0,2.162-1.774,3.778-3.359,3.778S6.761,8.937,6.761,6.775 M3.415,17.69c0.218-3.51,3.142-6.297,6.704-6.297c3.562,0,6.486,2.787,6.705,6.297H3.415z"
+					layoutX="23.0" layoutY="78.0" onMouseClicked="#AccountClick" />
+			</children>
 		</AnchorPane>
 	</children>
 </AnchorPane>
