@@ -9,7 +9,7 @@ public class SqlConnection {
 	private Connection conn;
 	private String schema;
 	/**
-	 * Establish SQL connection
+	 * SqlConnection to establish SQL connection.
 	 * 
 	 * @param data base schema name
 	 * @param data base user name

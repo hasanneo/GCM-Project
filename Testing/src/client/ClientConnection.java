@@ -21,6 +21,10 @@ public class ClientConnection implements GCMIF{
 			System.exit(1);
 		}
 	}
+	/**
+	 * execute user queries
+	 * @param the sql query
+	 */
 	public void ExecuteQuery(Object message) {
 		client.handleMessageFromClientUI(message);
 	}
