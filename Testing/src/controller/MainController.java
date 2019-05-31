@@ -1,13 +1,21 @@
 package controller;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import main.MainProgram;
 
 public class MainController {
 	@FXML // fx:id="search_text"
@@ -30,13 +38,22 @@ public class MainController {
     }
 
     @FXML
-    void DownloadsClick(MouseEvent event) {
+    void MenuClick(MouseEvent event) {
 
     }
     @FXML
     void LoginClick(ActionEvent event) {
-    	Alert alert = new Alert(AlertType.CONFIRMATION, "Login", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-    	alert.showAndWait();
+    //opening the login window
+    	 try {
+    	        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/LogInScreen.fxml"));
+    	        Parent root1 = (Parent) fxmlLoader.load();
+    	        Stage stage = new Stage();
+    	        stage.setScene(new Scene(root1));  
+    	        stage.show();
+    	    } catch(Exception e) {
+    	        e.printStackTrace();
+    	    }
+
     }
 
     @FXML

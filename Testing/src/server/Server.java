@@ -10,9 +10,16 @@ import ocsf.server.ConnectionToClient;
 public class Server extends AbstractServer{
 	private Object clientMessageResult;
 	private SqlConnection sqlConnection;
-	public Server(int port,SqlConnection con) {
+	public SqlConnection getSqlConnection() {
+		return sqlConnection;
+	}
+
+	public void setSqlConnection(SqlConnection sqlConnection) {
+		this.sqlConnection = sqlConnection;
+	}
+
+	public Server(int port) {
 		super(port);
-		this.sqlConnection=con;
 	}
 
 	@Override
@@ -25,6 +32,7 @@ public class Server extends AbstractServer{
 			e.printStackTrace();
 		}
 		
+		  
 	}
 	public static void main(String[] args) {
 		int DEFAULT_PORT = 5555; // Port to listen on
@@ -42,9 +50,12 @@ public class Server extends AbstractServer{
 			String schema = props.getProperty("jdbc.schema");
 			String username = props.getProperty("jdbc.username");
 			String password = props.getProperty("jdbc.password");
+			String hostname =props.getProperty("jdbc.host");
 			port = Integer.parseInt(props.getProperty("server.port"));//get port from the properties
-			server = new Server(port,new SqlConnection(schema, username, password));
+			server = new Server(port);
+			server.setSqlConnection(new SqlConnection(schema, username, password,hostname,props.getProperty("server.port")));
 			server.listen(); // Start listening for connections
+			server.serverStarted();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
