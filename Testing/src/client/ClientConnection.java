@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import common.GCMIF;
 
@@ -16,6 +17,7 @@ public class ClientConnection implements GCMIF{
 	public ClientConnection(String host, int port) {
 		try {
 			client = new GcmClient(host, port, this);
+			System.out.println("Client connection established ["+host+","+port+"]");
 		} catch (IOException exception) {
 			System.out.println("Error: Can't setup connection!" + " Terminating client.");
 			System.exit(1);
@@ -46,11 +48,19 @@ public class ClientConnection implements GCMIF{
 	public void SetServerObject(Object obj) {
 		if(obj==null)
 			return;
-		System.out.println("Server object has been set");
-		this.serverObject = serverObject;	
+		this.serverObject = obj;	
+		System.out.println("ClientConnection >> Object received from server::"+serverObject.toString());
 	}
 	@Override
 	public Object GetServerObject() {
 		return serverObject;
+	}
+	/**
+	 * parse the object received from server to ArrayList and return it
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getList() {
+		return (ArrayList<String>) this.serverObject;
 	}
 }

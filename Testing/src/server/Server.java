@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import controller.DataBaseController;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -26,7 +27,9 @@ public class Server extends AbstractServer{
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		try {
 			System.out.println("handleMessageFromClient :[Client " + client.getId() + "] Message received: " + msg.toString());
-			client.sendToClient(clientMessageResult);
+			Object obj;
+			obj=sqlConnection.ExecuteQuery(msg);
+			client.sendToClient(obj);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +55,7 @@ public class Server extends AbstractServer{
 			String password = props.getProperty("jdbc.password");
 			String hostname =props.getProperty("jdbc.host");
 			port = Integer.parseInt(props.getProperty("server.port"));//get port from the properties
-			server = new Server(port);
+			server = new Server(DEFAULT_PORT);
 			server.setSqlConnection(new SqlConnection(schema, username, password,hostname,props.getProperty("server.port")));
 			server.listen(); // Start listening for connections
 			server.serverStarted();

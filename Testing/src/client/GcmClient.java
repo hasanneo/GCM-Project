@@ -21,6 +21,7 @@ public class GcmClient extends AbstractClient {
 		/*
 		 * Get message from server code goes here
 		 */
+		System.out.println("RECIEVED A MESSAGE FROM SERVER");
 		clientUI.SetServerObject(msg);
 		sem.release();
 	}

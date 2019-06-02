@@ -34,7 +34,7 @@ public class MainProgram extends Application {
 			in.close();
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
-			//DataBaseController.InitiateClient(new ClientConnection(host, port));/*commented out till the server works
+			DataBaseController.InitiateClient(new ClientConnection(host, port));//commented out till the server works
 			// creating the main window
 			AnchorPane root = (AnchorPane) FXMLLoader.load(MainProgram.class.getResource("/fxml/MainScreen.fxml"));
 			Scene scene = new Scene(root);
