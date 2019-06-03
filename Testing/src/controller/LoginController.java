@@ -60,8 +60,8 @@ public class LoginController {
 		} else {
 			DataBaseController.SelectFromTable("accounts", "username", accountNameTxt.getText());
 			//saves the returned object in DataBaseController.clientCon.obj
+			//MAJD COMMENT
 		}
-
 	}
 
 }
