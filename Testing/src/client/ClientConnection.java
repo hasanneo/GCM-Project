@@ -9,6 +9,8 @@ public class ClientConnection implements GCMIF{
 	final public static int DEFAULT_PORT = 5555;// The default port to connect on.
 	private Object serverObject;// Object that gets recieved from the server
 	private GcmClient client;//Client object 
+	
+	//test
 	/**
 	 * Ctor that sets up a new client connection
 	 * @param host for connection
