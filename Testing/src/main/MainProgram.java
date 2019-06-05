@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class MainProgram extends Application {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub a
 		launch(args);
 	}
 

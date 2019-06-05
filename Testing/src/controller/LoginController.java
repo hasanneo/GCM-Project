@@ -62,14 +62,18 @@ public class LoginController {
 		} else {
 			//get username and pass from the DB
 			DataBaseController.SelectFromTable("accounts", "username", accountNameTxt.getText());
+<<<<<<< HEAD
 			serverObjects=DataBaseController.clientCon.getList();
 			if(ValidateLogin(serverObjects.get(0).toString(),serverObjects.get(1).toString())) {
 
 			}else {
 
 			}
+=======
+			//saves the returned object in DataBaseController.clientCon.obj
+			//MAJD COMMENT
+>>>>>>> branch 'master' of https://github.com/hasanneo/GCM-Project.git
 		}
-
 	}
 	boolean ValidateLogin(String username,String pass) {
 		if(username.equals(accountNameTxt.getText())&&pass.equals(passwordTxt.getText())) {

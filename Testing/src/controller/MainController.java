@@ -25,6 +25,7 @@ public class MainController {
 	@FXML // fx:id="login_btn"
 	private Button login_btn; // Value injected by FXMLLoader
 
+<<<<<<< HEAD
 	@FXML // fx:id="register_btn"
 	private Button register_btn; // Value injected by FXMLLoader
 	@FXML
@@ -34,6 +35,23 @@ public class MainController {
 
 	@FXML
 	void LogOutCLick(MouseEvent event) {
+=======
+    @FXML // fx:id="register_btn"
+    private Button register_btn; // Value injected by FXMLLoader
+    
+    @FXML
+    void AccountClick(MouseEvent event) {
+    	 try {
+ 	        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/UserCard.fxml"));
+ 	        Parent root1 = (Parent) fxmlLoader.load();
+ 	        Stage stage = new Stage();
+ 	        stage.setScene(new Scene(root1));  
+ 	        stage.show();
+ 	    } catch(Exception e) {
+ 	        e.printStackTrace();
+ 	    }
+    }
+>>>>>>> branch 'master' of https://github.com/hasanneo/GCM-Project.git
 
 	}
 
