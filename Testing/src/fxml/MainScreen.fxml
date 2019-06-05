@@ -2,11 +2,13 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-1.0" maxWidth="-1.0"
 	prefHeight="426.0" prefWidth="641.0"
@@ -60,5 +62,14 @@
 				</SVGPath>
 			</children>
 		</AnchorPane>
+		<Label fx:id="username" layoutX="573.0" layoutY="18.0" text="Label"
+			visible="false">
+			<font>
+				<Font size="10.0" />
+			</font>
+		</Label>
+		<Button fx:id="logOutBtn" layoutX="561.0" layoutY="39.0"
+			mnemonicParsing="false" onMouseClicked="#LogOutCLick" text="LOGOUT"
+			visible="false" />
 	</children>
 </AnchorPane>

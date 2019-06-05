@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.Frame;
+import java.awt.Label;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
@@ -15,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class LoginController {
+	ArrayList<String> serverObjects;
 	@FXML
 	private Button logInBtn;
 
@@ -29,7 +31,6 @@ public class LoginController {
 
 	@FXML
 	private PasswordField passwordTxt;
-
 	@FXML
 	void CancelClick(MouseEvent event) {
 		// get a handle to the stage
@@ -51,17 +52,31 @@ public class LoginController {
 	@FXML
 	void LogInClick(MouseEvent event) {
 		// should check more cases
-		if (passwordTxt.getText().isEmpty()) {
-			Alert alert = new Alert(AlertType.ERROR, "Incorrect Password", ButtonType.OK);
-			alert.setContentText("Incorrect Password");
+		if (passwordTxt.getText().isEmpty()||accountNameTxt.getText().isEmpty()) {
+			Alert alert = new Alert(AlertType.ERROR, "", ButtonType.OK);
+			alert.setContentText("Fill username and password.");
 			alert.showAndWait();
+			accountNameTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
 			passwordTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
 			passwordTxt.clear();
 		} else {
+			//get username and pass from the DB
 			DataBaseController.SelectFromTable("accounts", "username", accountNameTxt.getText());
-			//saves the returned object in DataBaseController.clientCon.obj
+			serverObjects=DataBaseController.clientCon.getList();
+			if(ValidateLogin(serverObjects.get(0).toString(),serverObjects.get(1).toString())) {
+
+			}else {
+
+			}
 		}
 
+	}
+	boolean ValidateLogin(String username,String pass) {
+		if(username.equals(accountNameTxt.getText())&&pass.equals(passwordTxt.getText())) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 }

@@ -9,6 +9,13 @@ public class Account {
 	private String lastName;
 	private String mail;
 	private String phoneNumber;
+	private String userType;
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 	/**
 	 * set username and password from the values
 	 * @param values is an array list that will have username and password
