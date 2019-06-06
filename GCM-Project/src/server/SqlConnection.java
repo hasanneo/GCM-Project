@@ -33,7 +33,7 @@ public class SqlConnection {
 					arr.add(rs.getString(i++));
 				}
 			}
-		} catch (SQLException Exception) {
+		} catch (SQLException Exception) { //catch any possible error
 			System.out.println("ERROR while parsing array!");
 		}
 		return arr;
