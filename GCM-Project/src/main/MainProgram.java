@@ -4,6 +4,8 @@ import java.util.*;
 
 import client.ClientConnection;
 import controller.DataBaseController;
+import controller.MainController;
+
 import java.io.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -36,11 +38,13 @@ public class MainProgram extends Application {
 			int port = Integer.parseInt(props.getProperty("server.port"));
 			DataBaseController.InitiateClient(new ClientConnection(host, port));//commented out till the server works
 			// creating the main window
-			AnchorPane root = (AnchorPane) FXMLLoader.load(MainProgram.class.getResource("/fxml/MainScreen.fxml"));
+			/*AnchorPane root = (AnchorPane) FXMLLoader.load(MainProgram.class.getResource("/fxml/MainScreen.fxml"));
 			Scene scene = new Scene(root);
 			arg0.setScene(scene);
 			arg0.setTitle("GCM");
-			arg0.show();
+			arg0.show();*/
+			MainController main=new MainController();
+			main.start(arg0);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
