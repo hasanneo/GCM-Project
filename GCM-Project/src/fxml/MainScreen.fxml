@@ -2,63 +2,38 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.SVGPath?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0"
-	prefHeight="426.0" prefWidth="641.0"
-	xmlns="http://javafx.com/javafx/11.0.1"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="controller.MainController">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="426.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 	<children>
-		<TextField id="search_txt" fx:id="search_text"
-			layoutX="160.0" layoutY="183.0" prefHeight="32.0" prefWidth="349.0"
-			promptText="search"
-			style="-fx-border-radius: 0; -fx-border-style: SOLID; -fx-border-width: 2; -fx-effect: BLOOM; -fx-border-color: #00FF7F;" />
-		<Button fx:id="login_btn" layoutX="587.0" layoutY="14.0"
-			mnemonicParsing="false" onAction="#LoginClick"
-			style="-fx-background-color: #00FF7F;" text="login" textFill="WHITE" />
-		<Button fx:id="register_btn" layoutX="518.0" layoutY="14.0"
-			mnemonicParsing="false" onAction="#RegisterClick"
-			style="-fx-background-color: #00FF7F;" text="register"
-			textFill="WHITE" />
-		<RadioButton layoutX="172.0" layoutY="215.0"
-			mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0"
-			text="name" textFill="#383938" />
-		<RadioButton layoutX="279.0" layoutY="215.0"
-			mnemonicParsing="false" prefHeight="30.0" prefWidth="112.0"
-			text="description" textFill="#383938" />
-		<RadioButton layoutX="404.0" layoutY="215.0"
-			mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0"
-			text="place" textFill="#383938" />
-		<AnchorPane layoutY="-1.0" prefHeight="433.0"
-			prefWidth="70.0" style="-fx-background-color: grey;"
-			AnchorPane.bottomAnchor="0.0">
+		<TextField id="search_txt" fx:id="search_text" layoutX="160.0" layoutY="183.0" prefHeight="32.0" prefWidth="349.0" promptText="search" style="-fx-border-radius: 0; -fx-border-style: SOLID; -fx-border-width: 2; -fx-effect: BLOOM; -fx-border-color: #00FF7F;" />
+		<Button fx:id="login_btn" layoutX="587.0" layoutY="14.0" mnemonicParsing="false" onAction="#LoginClick" style="-fx-background-color: #00FF7F;" text="login" textFill="WHITE" />
+		<Button fx:id="register_btn" layoutX="518.0" layoutY="14.0" mnemonicParsing="false" onAction="#RegisterClick" style="-fx-background-color: #00FF7F;" text="register" textFill="WHITE" />
+		<RadioButton layoutX="172.0" layoutY="215.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="name" textFill="#383938" />
+		<RadioButton layoutX="279.0" layoutY="215.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="112.0" text="description" textFill="#383938" />
+		<RadioButton layoutX="404.0" layoutY="215.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="place" textFill="#383938" />
+		<AnchorPane layoutY="-1.0" prefHeight="433.0" prefWidth="70.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0">
 			<effect>
 				<Bloom />
 			</effect>
 			<children>
-				<SVGPath fx:id="user_card_icon"
-					content="M14.781,14.347h1.738c0.24,0,0.436-0.194,0.436-0.435v-1.739c0-0.239-0.195-0.435-0.436-0.435h-1.738c-0.239,0-0.435,0.195-0.435,0.435v1.739C14.347,14.152,14.542,14.347,14.781,14.347 M18.693,3.045H1.307c-0.48,0-0.869,0.39-0.869,0.869v12.17c0,0.479,0.389,0.869,0.869,0.869h17.387c0.479,0,0.869-0.39,0.869-0.869V3.915C19.562,3.435,19.173,3.045,18.693,3.045 M18.693,16.085H1.307V9.13h17.387V16.085z M18.693,5.653H1.307V3.915h17.387V5.653zM3.48,12.608h7.824c0.24,0,0.435-0.195,0.435-0.436c0-0.239-0.194-0.435-0.435-0.435H3.48c-0.24,0-0.435,0.195-0.435,0.435C3.045,12.413,3.24,12.608,3.48,12.608 M3.48,14.347h6.085c0.24,0,0.435-0.194,0.435-0.435s-0.195-0.435-0.435-0.435H3.48c-0.24,0-0.435,0.194-0.435,0.435S3.24,14.347,3.48,14.347"
-					layoutX="23.0" layoutY="78.0" onMouseClicked="#AccountClick" />
-				<SVGPath fx:id="mapcatalog_icon"
-					content="M18.092,5.137l-3.977-1.466h-0.006c0.084,0.042-0.123-0.08-0.283,0H13.82L10,5.079L6.178,3.671H6.172c0.076,0.038-0.114-0.076-0.285,0H5.884L1.908,5.137c-0.151,0.062-0.25,0.207-0.25,0.369v10.451c0,0.691,0.879,0.244,0.545,0.369l3.829-1.406l3.821,1.406c0.186,0.062,0.385-0.029,0.294,0l3.822-1.406l3.83,1.406c0.26,0.1,0.543-0.08,0.543-0.369V5.506C18.342,5.344,18.242,5.199,18.092,5.137 M5.633,14.221l-3.181,1.15V5.776l3.181-1.15V14.221z M9.602,15.371l-3.173-1.15V4.626l3.173,1.15V15.371z M13.57,14.221l-3.173,1.15V5.776l3.173-1.15V14.221z M17.547,15.371l-3.182-1.15V4.626l3.182,1.15V15.371z"
-					layoutX="22.0" layoutY="180.0" onMouseClicked="#CatalogClick" />
-				<SVGPath fx:id="menu_icon"
-					content="M7.228,11.464H1.996c-0.723,0-1.308,0.587-1.308,1.309v5.232c0,0.722,0.585,1.308,1.308,1.308h5.232c0.723,0,1.308-0.586,1.308-1.308v-5.232C8.536,12.051,7.95,11.464,7.228,11.464z M7.228,17.351c0,0.361-0.293,0.654-0.654,0.654H2.649c-0.361,0-0.654-0.293-0.654-0.654v-3.924c0-0.361,0.292-0.654,0.654-0.654h3.924c0.361,0,0.654,0.293,0.654,0.654V17.351z M17.692,11.464H12.46c-0.723,0-1.308,0.587-1.308,1.309v5.232c0,0.722,0.585,1.308,1.308,1.308h5.232c0.722,0,1.308-0.586,1.308-1.308v-5.232C19,12.051,18.414,11.464,17.692,11.464z M17.692,17.351c0,0.361-0.293,0.654-0.654,0.654h-3.924c-0.361,0-0.654-0.293-0.654-0.654v-3.924c0-0.361,0.293-0.654,0.654-0.654h3.924c0.361,0,0.654,0.293,0.654,0.654V17.351z M7.228,1H1.996C1.273,1,0.688,1.585,0.688,2.308V7.54c0,0.723,0.585,1.308,1.308,1.308h5.232c0.723,0,1.308-0.585,1.308-1.308V2.308C8.536,1.585,7.95,1,7.228,1z M7.228,6.886c0,0.361-0.293,0.654-0.654,0.654H2.649c-0.361,0-0.654-0.292-0.654-0.654V2.962c0-0.361,0.292-0.654,0.654-0.654h3.924c0.361,0,0.654,0.292,0.654,0.654V6.886z M17.692,1H12.46c-0.723,0-1.308,0.585-1.308,1.308V7.54c0,0.723,0.585,1.308,1.308,1.308h5.232C18.414,8.848,19,8.263,19,7.54V2.308C19,1.585,18.414,1,17.692,1z M17.692,6.886c0,0.361-0.293,0.654-0.654,0.654h-3.924c-0.361,0-0.654-0.292-0.654-0.654V2.962c0-0.361,0.293-0.654,0.654-0.654h3.924c0.361,0,0.654,0.292,0.654,0.654V6.886z"
-					layoutX="23.0" layoutY="275.0" onMouseClicked="#MenuClick">
+				<SVGPath fx:id="user_card_icon" content="M14.781,14.347h1.738c0.24,0,0.436-0.194,0.436-0.435v-1.739c0-0.239-0.195-0.435-0.436-0.435h-1.738c-0.239,0-0.435,0.195-0.435,0.435v1.739C14.347,14.152,14.542,14.347,14.781,14.347 M18.693,3.045H1.307c-0.48,0-0.869,0.39-0.869,0.869v12.17c0,0.479,0.389,0.869,0.869,0.869h17.387c0.479,0,0.869-0.39,0.869-0.869V3.915C19.562,3.435,19.173,3.045,18.693,3.045 M18.693,16.085H1.307V9.13h17.387V16.085z M18.693,5.653H1.307V3.915h17.387V5.653zM3.48,12.608h7.824c0.24,0,0.435-0.195,0.435-0.436c0-0.239-0.194-0.435-0.435-0.435H3.48c-0.24,0-0.435,0.195-0.435,0.435C3.045,12.413,3.24,12.608,3.48,12.608 M3.48,14.347h6.085c0.24,0,0.435-0.194,0.435-0.435s-0.195-0.435-0.435-0.435H3.48c-0.24,0-0.435,0.194-0.435,0.435S3.24,14.347,3.48,14.347" layoutX="23.0" layoutY="78.0" onMouseClicked="#AccountClick" />
+				<SVGPath fx:id="mapcatalog_icon" content="M18.092,5.137l-3.977-1.466h-0.006c0.084,0.042-0.123-0.08-0.283,0H13.82L10,5.079L6.178,3.671H6.172c0.076,0.038-0.114-0.076-0.285,0H5.884L1.908,5.137c-0.151,0.062-0.25,0.207-0.25,0.369v10.451c0,0.691,0.879,0.244,0.545,0.369l3.829-1.406l3.821,1.406c0.186,0.062,0.385-0.029,0.294,0l3.822-1.406l3.83,1.406c0.26,0.1,0.543-0.08,0.543-0.369V5.506C18.342,5.344,18.242,5.199,18.092,5.137 M5.633,14.221l-3.181,1.15V5.776l3.181-1.15V14.221z M9.602,15.371l-3.173-1.15V4.626l3.173,1.15V15.371z M13.57,14.221l-3.173,1.15V5.776l3.173-1.15V14.221z M17.547,15.371l-3.182-1.15V4.626l3.182,1.15V15.371z" layoutX="22.0" layoutY="180.0" onMouseClicked="#CatalogClick" />
+				<SVGPath fx:id="menu_icon" content="M7.228,11.464H1.996c-0.723,0-1.308,0.587-1.308,1.309v5.232c0,0.722,0.585,1.308,1.308,1.308h5.232c0.723,0,1.308-0.586,1.308-1.308v-5.232C8.536,12.051,7.95,11.464,7.228,11.464z M7.228,17.351c0,0.361-0.293,0.654-0.654,0.654H2.649c-0.361,0-0.654-0.293-0.654-0.654v-3.924c0-0.361,0.292-0.654,0.654-0.654h3.924c0.361,0,0.654,0.293,0.654,0.654V17.351z M17.692,11.464H12.46c-0.723,0-1.308,0.587-1.308,1.309v5.232c0,0.722,0.585,1.308,1.308,1.308h5.232c0.722,0,1.308-0.586,1.308-1.308v-5.232C19,12.051,18.414,11.464,17.692,11.464z M17.692,17.351c0,0.361-0.293,0.654-0.654,0.654h-3.924c-0.361,0-0.654-0.293-0.654-0.654v-3.924c0-0.361,0.293-0.654,0.654-0.654h3.924c0.361,0,0.654,0.293,0.654,0.654V17.351z M7.228,1H1.996C1.273,1,0.688,1.585,0.688,2.308V7.54c0,0.723,0.585,1.308,1.308,1.308h5.232c0.723,0,1.308-0.585,1.308-1.308V2.308C8.536,1.585,7.95,1,7.228,1z M7.228,6.886c0,0.361-0.293,0.654-0.654,0.654H2.649c-0.361,0-0.654-0.292-0.654-0.654V2.962c0-0.361,0.292-0.654,0.654-0.654h3.924c0.361,0,0.654,0.292,0.654,0.654V6.886z M17.692,1H12.46c-0.723,0-1.308,0.585-1.308,1.308V7.54c0,0.723,0.585,1.308,1.308,1.308h5.232C18.414,8.848,19,8.263,19,7.54V2.308C19,1.585,18.414,1,17.692,1z M17.692,6.886c0,0.361-0.293,0.654-0.654,0.654h-3.924c-0.361,0-0.654-0.292-0.654-0.654V2.962c0-0.361,0.293-0.654,0.654-0.654h3.924c0.361,0,0.654,0.292,0.654,0.654V6.886z" layoutX="23.0" layoutY="275.0" onMouseClicked="#MenuClick">
 					<styleClass>
-						<String
-							fx:value=".svg-icon {  width: 1em;  height: 1em;}.svg-icon path" />
+						<String fx:value=".svg-icon {  width: 1em;  height: 1em;}.svg-icon path" />
 						<String fx:value=".svg-icon polygon" />
-						<String
-							fx:value=".svg-icon rect {  fill: #4691f6;}.svg-icon circle {  stroke: #4691f6;  stroke-width: 1;}" />
+						<String fx:value=".svg-icon rect {  fill: #4691f6;}.svg-icon circle {  stroke: #4691f6;  stroke-width: 1;}" />
 					</styleClass>
 				</SVGPath>
 			</children>
 		</AnchorPane>
+		<Button fx:id="log_out_btn" layoutX="70.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#LogOutClick" text="logout" visible="false" />
+		<Label fx:id="usernamelbl" layoutX="70.0" layoutY="14.0" text="Label" visible="false" />
 	</children>
 </AnchorPane>

@@ -18,10 +18,7 @@ public class GcmClient extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		/*
-		 * Get message from server code goes here
-		 */
-		System.out.println("RECIEVED A MESSAGE FROM SERVER");
+		System.out.println("GcmClient :RECIEVED A MESSAGE FROM SERVER :"+msg.toString());
 		clientUI.SetServerObject(msg);
 		sem.release();
 	}

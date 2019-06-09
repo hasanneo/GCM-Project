@@ -1,20 +1,40 @@
 package controller;
 
 import java.awt.Frame;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import controller.SceneController;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-public class LoginController {
+/**
+ * 
+ * @author Hasan
+ *
+ *
+ * Controller class for the login screen
+ */
+public class LoginController extends Application {
+
+	Stage loginStage;
+
+	FXMLLoader fxmlLoader;
 	@FXML
 	private Button logInBtn;
 
@@ -31,13 +51,15 @@ public class LoginController {
 	private PasswordField passwordTxt;
 
 	@FXML
-	void CancelClick(MouseEvent event) {
-		// get a handle to the stage
-		Stage stage = (Stage) cancelBtn.getScene().getWindow();
-		// do what you have to do
-		stage.close();
+	void CancelClick(MouseEvent event) throws IOException {
+		loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		loginStage.setScene(SceneController.pop());// replace the scene
 	}
-
+	
+	/**
+	 * Opens the register form
+	 * @param registerBtn mouse click
+	 */
 	@FXML
 	void CreateAccountClick(MouseEvent event) {
 
@@ -46,22 +68,77 @@ public class LoginController {
 	/**
 	 * Login click that logs in the user into the app
 	 * 
-	 * @param event
+	 * @param mouse click on logInBtn
 	 */
 	@FXML
 	void LogInClick(MouseEvent event) {
-		// should check more cases
-		if (passwordTxt.getText().isEmpty()) {
-			Alert alert = new Alert(AlertType.ERROR, "Incorrect Password", ButtonType.OK);
-			alert.setContentText("Incorrect Password");
-			alert.showAndWait();
-			passwordTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			passwordTxt.clear();
-		} else {
-			DataBaseController.SelectFromTable("accounts", "username", accountNameTxt.getText());
-			//saves the returned object in DataBaseController.clientCon.obj
-			//MAJD COMMENT
+		String username;
+		String password;
+		ArrayList<String> tableRow;
+		DataBaseController.SelectLogInFromTable("TBL_USERS", accountNameTxt.getText(), passwordTxt.getText());// execute query
+		tableRow=DataBaseController.clientCon.getList();//get row result
+		if (tableRow.size() == 0) {// check if result is false
+			LoginDialog("fail");
+		} else {// when result is true
+			username = tableRow.get(3).toString();
+			password =tableRow.get(4).toString();
+			if (accountNameTxt.getText().equalsIgnoreCase(username)&& passwordTxt.getText().equals(password)) {
+				System.out.println("IN THE TRUE IF STATEMENT");
+				DataBaseController.clientCon.setLoggedIn(true);// SET LOGGED IN AS TRUE
+				DataBaseController.clientCon.SetUserAccount(tableRow);//set the account in the logged in client
+				LoginDialog("success");
+				try {
+					LogIntoMain(username);
+				} catch (IOException e) {
+					System.out.println("LOGIN CONTROLLER >> failed at LoginClick");
+					e.printStackTrace();
+				}
+			}else {
+				LoginDialog("fail");
+			}
 		}
 	}
 
+	public void LogIntoMain(String username) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainScreen.fxml"));
+		Parent root = (Parent) loader.load();
+		MainController secController = loader.getController();
+		secController.SetUserIsLoggedIn("Welcome," + username);
+		Stage stage = new Stage();
+		stage.setScene(new Scene(root));
+		stage.show();
+		loginStage = (Stage) ((Node) cancelBtn).getScene().getWindow();// get stage
+		loginStage.close();// close login stage
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		// TODO Auto-generated method stub
+		fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(getClass().getResource("/fxml/LogInScreen.fxml"));
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root);
+		stage.setTitle("LogIn");
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
+
+	}
+	public void LoginDialog(String str) {
+		if(str.equals("fail")) {
+		Alert alert = new Alert(AlertType.ERROR, "Incorrect Password or username", ButtonType.OK);
+		alert.setContentText("Incorrect password or username");
+		alert.showAndWait();
+		passwordTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+		accountNameTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+		accountNameTxt.clear();
+		passwordTxt.clear();
+		}
+		else if(str.equals("success")) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setContentText("Logged in");
+			alert.showAndWait();
+		}
+	}
 }
