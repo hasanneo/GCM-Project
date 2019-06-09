@@ -27,10 +27,9 @@ public class DataBaseController {
  * @param value to compare with
  * @return
  */
-	public static void SelectFromTable(String tableName,String user,String pass) {
+	public static void SelectLogInFromTable(String tableName,String user,String pass) {
 		try {
-		//String query = "SELECT * FROM accounts where username='john';";
-		String query = "SELECT * FROM "+tableName+" where username='"+user+"' and password='"+pass+"';";
+		String query = "SELECT * FROM "+tableName+" where USERNAME='"+user+"' and PASS_WORD='"+pass+"';";
 		clientCon.ExecuteQuery(query);
 		}catch(Exception e) {			
 			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
