@@ -8,7 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mysql.cj.xdevapi.Statement;
-
+/**
+ * 
+ * @author Hasan
+ *A class that connects to the mysql database
+ *
+ */
 public class SqlConnection {
 	final String DATABASE_URL = "jdbc:mysql://";
 	final String timeZone="?useTimezone=true&serverTimezone=UTC";

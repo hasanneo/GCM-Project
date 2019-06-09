@@ -14,10 +14,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * The program will launch from here
  * 
  * @author Hasan
  *
+ *The program will launch from here
  */
 public class MainProgram extends Application {
 
@@ -30,6 +30,7 @@ public class MainProgram extends Application {
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
 		try {
+			//init the client properties from the file
 			Properties props = new Properties();
 			FileInputStream in = new FileInputStream("@/../Client.properties");
 			props.load(in);
@@ -37,16 +38,11 @@ public class MainProgram extends Application {
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
 			DataBaseController.InitiateClient(new ClientConnection(host, port));//commented out till the server works
-			// creating the main window
-			/*AnchorPane root = (AnchorPane) FXMLLoader.load(MainProgram.class.getResource("/fxml/MainScreen.fxml"));
-			Scene scene = new Scene(root);
-			arg0.setScene(scene);
-			arg0.setTitle("GCM");
-			arg0.show();*/
 			MainController main=new MainController();
-			main.start(arg0);
+			arg0=new Stage();
+			main.start(arg0);//start main menu
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("MainProgram :"+e.getMessage());
 		}
 	}
 
