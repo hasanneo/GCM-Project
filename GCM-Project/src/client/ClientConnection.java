@@ -86,4 +86,10 @@ public class ClientConnection implements GCMIF {
 	public void SetUserAccount(ArrayList<String> values) {
 		 this.userAccount=new Account(values);
 	}
+	public String GetUserType() {
+		if(this.userAccount==null)
+			return null;
+		else
+			return this.userAccount.getUserType();
+	}
 }

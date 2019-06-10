@@ -72,10 +72,12 @@ public class MainController extends Application {
 	}
 
 	@FXML
-	void RegisterClick(ActionEvent event) {
-		register_btn.setVisible(false);
-		Alert alert = new Alert(AlertType.CONFIRMATION, "Register", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-		alert.showAndWait();
+	void RegisterClick(ActionEvent event) throws Exception {
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		RegisterController register = new RegisterController();
+		register.start(new Stage());// create the register stage
 	}
 
 	public void SetUserIsLoggedIn(String username) {
