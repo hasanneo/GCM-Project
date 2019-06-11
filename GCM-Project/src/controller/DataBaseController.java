@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import client.ClientConnection;
+import entity.City;
 
 /**
  * 
@@ -30,6 +31,20 @@ public class DataBaseController {
 	public static void SelectLogInFromTable(String tableName,String user,String pass) {
 		try {
 		String query = "SELECT * FROM "+tableName+" where USERNAME='"+user+"' and PASS_WORD='"+pass+"';";
+		clientCon.ExecuteQuery(query);
+		}catch(Exception e) {			
+			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
+		}
+	}
+	
+	/**
+	 * A method that will return true if the data was successfully inserted.
+	 * @param newCity
+	 * @return
+	 */
+	public static void AddCityToDb(City newCity) {
+		try {
+		String query = "INSERT INTO city"+"VALUES ("+newCity.getCityName()+","+newCity.getNumberOfMaps()+","+newCity.getNumberOfPOI()+","+newCity.getNumberOfTours()+","+newCity.getNumberOfVersions()+")"+"';";
 		clientCon.ExecuteQuery(query);
 		}catch(Exception e) {			
 			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
