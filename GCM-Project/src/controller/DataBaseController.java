@@ -3,7 +3,11 @@ package controller;
 import java.util.ArrayList;
 
 import client.ClientConnection;
+
 import entity.Account;
+
+import entity.City;
+
 
 /**
  * 
@@ -39,6 +43,7 @@ public class DataBaseController {
 			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
 		}
 	}
+
 	public static void InsertNewUser(Account account) {
 		ArrayList<String> queryArr =new ArrayList<String>();
 		String query = "INSERT INTO accounts(FIRST_NAME, LAST_NAME, USERNAME, PASS_WORD, PHONE_NUMBER, EMAIL, USER_TYPE)VALUES (?,?,?,?,?,?,?)";
@@ -46,5 +51,20 @@ public class DataBaseController {
 		queryArr.add(query);
 		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	/**
+	 * A method that will return true if the data was successfully inserted.
+	 * @param newCity
+	 * @return
+	 */
+	public static void AddCityToDb(City newCity) {
+		try {
+		String query = "INSERT INTO city"+"VALUES ("+newCity.getCityName()+","+newCity.getNumberOfMaps()+","+newCity.getNumberOfPOI()+","+newCity.getNumberOfTours()+","+newCity.getNumberOfVersions()+")"+"';";
+		clientCon.ExecuteQuery(query);
+		}catch(Exception e) {			
+			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
+		}
+
 	}
 }

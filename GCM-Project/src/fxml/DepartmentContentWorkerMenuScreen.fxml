@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="596.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <children>
+      <SplitPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fitHeight="693.0" fitWidth="1219.0" layoutX="-368.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/Background.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="40.0" layoutY="14.0" prefHeight="44.0" prefWidth="440.0" text="Department Content Worker" textFill="#e00b0b">
+         <font>
+            <Font name="Comic Sans MS Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="142.0" layoutY="120.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/catalogue.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="View maps catalog" />
+         </tooltip>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="351.0" layoutY="120.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <tooltip>
+            <Tooltip text="Buy maps " />
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/map.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="558.0" layoutY="120.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <tooltip>
+            <Tooltip text="View maps" />
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/view%20maps.png" />
+               </image></ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="31.0" layoutY="548.0" mnemonicParsing="false" onAction="#LogOutClick" prefHeight="90.0" prefWidth="90.0">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <tooltip>
+            <Tooltip text="Log out" />
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/Log%20out.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="142.0" layoutY="320.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <tooltip>
+            <Tooltip text="View user card" />
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/User%20card.png" />
+               </image></ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="351.0" layoutY="320.0" mnemonicParsing="false" onAction="#LogOutClick" prefHeight="90.0" prefWidth="90.0">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <tooltip>
+            <Tooltip text="Edit exiting map" />
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/Edit%20exiting%20map.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="558.0" layoutY="320.0" mnemonicParsing="false" onAction="#LogOutClick" prefHeight="90.0" prefWidth="90.0">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <tooltip>
+            <Tooltip text="add city to map" />
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/add%20city%20to%20map.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

@@ -58,9 +58,9 @@ public class SqlConnection {
 	 */
 	public ArrayList<String> ParseResultToArrayList(ResultSet rs) {
 		ArrayList<String> arr = new ArrayList<>();
-		int i;
-			
-		try {//convert the the rs to ArrayList 
+		int i;		
+		//convert the the rs to ArrayList
+		try { 
 			ResultSetMetaData rsmd = rs.getMetaData();
 			while (rs.next()) {
 				i = 1;
@@ -68,7 +68,8 @@ public class SqlConnection {
 					arr.add(rs.getString(i++));
 				}
 			}
-		} catch (SQLException Exception) {
+			//catch any possible error	
+		} catch (SQLException Exception) { 
 			System.out.println("ERROR while parsing array!");
 		}
 		return arr;

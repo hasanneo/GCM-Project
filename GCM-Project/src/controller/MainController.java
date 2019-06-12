@@ -43,8 +43,8 @@ public class MainController extends Application {
 	private Button log_out_btn;
 
 	@FXML
-	void LogOutClick(MouseEvent event) {
-
+	void LogOutClick() {
+		System.out.println("out");
 	}
 
 	@FXML
@@ -57,9 +57,14 @@ public class MainController extends Application {
 
 	}
 
-	@FXML
-	void MenuClick(MouseEvent event) {
+	@FXML//
+	void OptionsOnActionBtn(ActionEvent event) throws Exception {
 
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		OptionsController option = new OptionsController();
+		option.start(new Stage());// create the option stage
 	}
 
 	@FXML
