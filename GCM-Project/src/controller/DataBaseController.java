@@ -3,7 +3,11 @@ package controller;
 import java.util.ArrayList;
 
 import client.ClientConnection;
+
+import entity.Account;
+
 import entity.City;
+
 
 /**
  * 
@@ -28,13 +32,25 @@ public class DataBaseController {
  * @param value to compare with
  * @return
  */
-	public static void SelectLogInFromTable(String tableName,String user,String pass) {
+	public static void SelectAccountFromTable(String tableName,String user,String pass) {
+		ArrayList<String> queryArr =new ArrayList<String>();
 		try {
 		String query = "SELECT * FROM "+tableName+" where USERNAME='"+user+"' and PASS_WORD='"+pass+"';";
-		clientCon.ExecuteQuery(query);
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
 		}catch(Exception e) {			
 			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
 		}
+	}
+
+	public static void InsertNewUser(Account account) {
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "INSERT INTO accounts(FIRST_NAME, LAST_NAME, USERNAME, PASS_WORD, PHONE_NUMBER, EMAIL, USER_TYPE)VALUES (?,?,?,?,?,?,?)";
+		queryArr.addAll(account.GetFieldsAsList());
+		queryArr.add(query);
+		queryArr.add("insert");
+		clientCon.ExecuteQuery(queryArr);
 	}
 	
 	/**
@@ -49,5 +65,6 @@ public class DataBaseController {
 		}catch(Exception e) {			
 			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
 		}
+
 	}
 }
