@@ -44,7 +44,7 @@ public class ClientConnection implements GCMIF {
 	 * @param the sql query
 	 */
 	public void ExecuteQuery(Object message) {
-		System.out.println("ClientConnection : ExecuteQuery "+message.toString());
+		System.out.println("ClientConnection >> ExecuteQuery "+message.toString());
 		client.handleMessageFromClientUI(message);
 	}
 
@@ -63,10 +63,14 @@ public class ClientConnection implements GCMIF {
 
 	@Override
 	public void SetServerObject(Object obj) {
-		if (obj == null)
-			return;
+		if(obj==null||obj.toString().equals("[]")) {
+			
+			this.serverObject = null;
+		}else {
 		this.serverObject = obj;
-		System.out.println("ClientConnection >> Object received from server::" + serverObject.toString());
+		System.out.println("ClientConnection >> Object received from server:" + serverObject.toString());
+		}
+		
 	}
 
 	@Override
@@ -84,7 +88,7 @@ public class ClientConnection implements GCMIF {
 		return (ArrayList<String>) this.serverObject;
 	}
 	public void SetUserAccount(ArrayList<String> values) {
-		 this.userAccount=new Account(values);
+		 this.userAccount=new Account(values,values.get(0));
 	}
 	public String GetUserType() {
 		if(this.userAccount==null)

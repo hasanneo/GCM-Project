@@ -2,6 +2,7 @@ package server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -20,16 +21,45 @@ public class SqlConnection {
 	private Connection conn;
 	private String schema;
 	private Object queryResult;
+	
+	public Object ExecuteQuery(Object query) {
+		ArrayList<String> queryArr = (ArrayList<String>) query;
+		String queryType = String.valueOf(queryArr.get(queryArr.size() - 1));
+		System.out.println("SQL CONNECTION >> "+queryArr.toString());
+		try {
+		if(queryType.equals("select")) {
+			System.out.println("SQL CONNECTION >> in the select with "+queryArr.get(0));
+			return ExecuteSelectQuery(queryArr.get(0));
+		}
+		else if(queryType.equals("insert")) {
+			int i;
+			PreparedStatement ps = conn.prepareStatement(queryArr.get(queryArr.size() - 2));
+			for (i = 0; i < queryArr.size() - 2; i++) {
+				ps.setString(i + 1, queryArr.get(i));
+			}
+			ps.executeUpdate();
+			ps.close();
+			System.out.println("DB: InsertQuery => Executed Successfully");
+			return null;
+		}
+		}catch(Exception e) {
+			System.out.println("SqlConnection query exception >> "+e.getMessage());
+		}
+		
+		return null;
+	
+	}
+	
 	/**
 	 * Parse database result set into an ArrayList with rows separated by commas
 	 * 
 	 * @param rs
 	 * @return ArrayList<String>
 	 */
-	public ArrayList<String> parseResultSet(ResultSet rs) {
+	public ArrayList<String> ParseResultToArrayList(ResultSet rs) {
 		ArrayList<String> arr = new ArrayList<>();
 		int i;
-	
+			
 		try {//convert the the rs to ArrayList 
 			ResultSetMetaData rsmd = rs.getMetaData();
 			while (rs.next()) {
@@ -49,20 +79,21 @@ public class SqlConnection {
 	 * @return object
 	 */
 	
-	public Object ExecuteQuery(Object query) {
-		String msg = query.toString();
+	public Object ExecuteSelectQuery(Object query) {
+		String msg = query.toString(); 
+		int size;
 		try {
 			java.sql.Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(msg);
 			System.out.println("DB: " + msg + " => Executed Successfully");
-			return parseResultSet(rs);
-
+			return ParseResultToArrayList(rs);
 		} catch (SQLException sqlException) {
 			System.out.println("Couldn't execute query");
 			sqlException.printStackTrace();
 			return null;
 		}
 	}
+	
 	/**
 	 * SqlConnection to establish SQL connection.
 	 * 

@@ -11,24 +11,33 @@ public class Account {
 	private String mail;
 	private String phoneNumber;
 	private String userType;
-
+	private ArrayList<String> fieldsArr;
 	/**
 	 * set username and password from the values
 	 * 
 	 * @param values is an array list that will have username and password
 	 */
-	public Account(ArrayList<String> values) {
-
-		setId(Integer.parseInt(values.get(0).toString()));
-		setFirstName(values.get(1).toString());
-		setLastName(values.get(2).toString());
-		setUsername(values.get(3).toString());
-		setPassword(values.get(4).toString());
-		setPhoneNumber(values.get(5).toString());
-		setMail(values.get(6).toString());
-		setUserType(values.get(7).toString());
+	public Account(ArrayList<String> values,String id) {
+		this.fieldsArr=new ArrayList<String>(values);
+		setId(Integer.parseInt(id));
+		setFirstName(values.get(1));
+		setLastName(values.get(2));
+		setUsername(values.get(3));
+		setPassword(values.get(4));
+		setPhoneNumber(values.get(5));
+		setMail(values.get(6));
+		setUserType(values.get(7));
 	}
-
+	public Account(ArrayList<String> values) {
+		this.fieldsArr=new ArrayList<String>(values);
+		setFirstName(values.get(0));
+		setLastName(values.get(1));
+		setUsername(values.get(2));
+		setPassword(values.get(3));
+		setPhoneNumber(values.get(4));
+		setMail(values.get(5));
+		setUserType(values.get(6));
+	}
 	public Account(String username, String password) {
 		setUsername(username);
 		setPassword(password);
@@ -46,7 +55,7 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Account [username=" + username + ", password=" + password + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", mail=" + mail + ", phoneNumber=" + phoneNumber + "]";
+				+ lastName + ", mail=" + mail +", userType=" + userType + ", phoneNumber=" + phoneNumber + "]";
 	}
 
 	public int getId() {
@@ -111,5 +120,11 @@ public class Account {
 
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+	public ArrayList<String> GetFieldsAsList() {
+		return  this.fieldsArr;
+	} 
+	public void AddfieldToList(String field) {
+		this.fieldsArr.add(field);
 	}
 }

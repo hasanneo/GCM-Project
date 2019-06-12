@@ -62,7 +62,15 @@ public class LoginController extends Application {
 	 */
 	@FXML
 	void CreateAccountClick(MouseEvent event) {
-
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		RegisterController register = new RegisterController();
+		try {
+			register.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}// create the register stage
 	}
 
 	/**
@@ -75,7 +83,7 @@ public class LoginController extends Application {
 		String username;
 		String password;
 		ArrayList<String> tableRow;
-		DataBaseController.SelectLogInFromTable("TBL_USERS", accountNameTxt.getText(), passwordTxt.getText());// execute query
+		DataBaseController.SelectAccountFromTable("accounts", accountNameTxt.getText(), passwordTxt.getText());// execute query
 		tableRow=DataBaseController.clientCon.getList();//get row result
 		if (tableRow.size() == 0) {// check if result is false
 			LoginDialog("fail");
