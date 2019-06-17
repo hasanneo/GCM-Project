@@ -44,7 +44,7 @@ public class ClientConnection implements GCMIF {
 	 * @param the sql query
 	 */
 	public void ExecuteQuery(Object message) {
-		System.out.println("ClientConnection >> ExecuteQuery "+message.toString());
+		System.out.println("ClientConnection >> ExecuteQuery " + message.toString());
 		client.handleMessageFromClientUI(message);
 	}
 
@@ -63,14 +63,15 @@ public class ClientConnection implements GCMIF {
 
 	@Override
 	public void SetServerObject(Object obj) {
-		if(obj==null||obj.toString().equals("[]")) {
-			
+		System.out.println("IN SET SERVER OBJECT");
+		if (obj == null || obj.toString().equals("[]")) {
+			System.out.println("ClientConnection >> received null object from server");
 			this.serverObject = null;
-		}else {
-		this.serverObject = obj;
-		System.out.println("ClientConnection >> Object received from server:" + serverObject.toString());
+		} else {
+			System.out.println("ClientConnection >> Object received from server");
+			this.serverObject = obj;
+			System.out.println("ClientConnection >> Object string:" + serverObject.toString());
 		}
-		
 	}
 
 	@Override
@@ -87,13 +88,23 @@ public class ClientConnection implements GCMIF {
 	public ArrayList<String> getList() {
 		return (ArrayList<String>) this.serverObject;
 	}
+
 	public void SetUserAccount(ArrayList<String> values) {
-		 this.userAccount=new Account(values,values.get(0));
+		this.userAccount = new Account(values, values.get(0));
 	}
+
 	public String GetUserType() {
-		if(this.userAccount==null)
+		if (this.userAccount == null)
 			return null;
 		else
 			return this.userAccount.getUserType();
+	}
+
+	public String[] GetObjectAsStringArray() {
+		String str = serverObject.toString();
+		str = str.replace("[", "");
+		str = str.replace("]", "");
+		String[] array = str.split(",");
+		return array;
 	}
 }
