@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -69,7 +70,6 @@ public class OptionsController extends Application  {
 				
 				
 				
-		
 				// TODO Auto-generated method stub
 				fxmlLoader = new FXMLLoader();
 				fxmlLoader.setLocation(getClass().getResource("/fxml/DepartmentContentManagerMenuScreen.fxml"));
@@ -78,7 +78,10 @@ public class OptionsController extends Application  {
 				stage.setTitle("Department Content Manager");
 				stage.setScene(scene);
 				stage.setResizable(false);
-				stage.show();	
+				stage.show();
+				
+				
 	}
+	
 
 }
