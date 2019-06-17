@@ -19,7 +19,9 @@ public class GcmClient extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		clientUI.SetServerObject(msg);
+		System.out.println("About to release lock");
 		sem.release();
+		System.out.println("Lock Released");
 	}
 
 	public void handleMessageFromClientUI(Object message) {

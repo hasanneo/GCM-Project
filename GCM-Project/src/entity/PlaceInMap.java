@@ -3,7 +3,13 @@ package entity;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-
+/**
+ * 
+ * 
+ *
+ * @author Jawad
+ *
+ */
 public class PlaceInMap {
 	String name;
 	double x,y;
