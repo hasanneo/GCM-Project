@@ -67,4 +67,17 @@ public class DataBaseController {
 		}
 
 	}
+	/*majd
+	public static void SelectUserTypeFromTable(String tableName) {
+		ArrayList<String> queryArr =new ArrayList<String>();
+		try {
+		String query = "SELECT * FROM "+tableName+"";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+		}catch(Exception e) {			
+			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
+		}
+	}*/
+
 }
