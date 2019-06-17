@@ -52,7 +52,7 @@ public class OptionsController extends Application  {
 			stage.setResizable(false);
 			stage.show();
 				}
-				else if(UserType=="worker") {
+				else if(UserType.equals("worker")) {
 					// TODO Auto-generated method stub
 					fxmlLoader = new FXMLLoader();
 					fxmlLoader.setLocation(getClass().getResource("/fxml/DepartmentContentWorkerMenuScreen.fxml"));
