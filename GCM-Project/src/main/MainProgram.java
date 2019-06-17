@@ -5,6 +5,7 @@ import java.util.*;
 import client.ClientConnection;
 import controller.DataBaseController;
 import controller.MainController;
+import controller.MapViewController;
 
 import java.io.*;
 import javafx.application.Application;
@@ -38,9 +39,10 @@ public class MainProgram extends Application {
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
 			DataBaseController.InitiateClient(new ClientConnection(host, port));//commented out till the server works
-			MainController main=new MainController();
+			new MapViewController().start(new Stage());
+			/*MainController main=new MainController();
 			arg0=new Stage();
-			main.start(arg0);//start main menu
+			main.start(arg0);//start main menu*/
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
 		}

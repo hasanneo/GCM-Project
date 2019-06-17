@@ -63,6 +63,7 @@ public class LoginController extends Application {
 	@FXML
 	void CreateAccountClick(MouseEvent event) {
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
 		mystage.close();
 		RegisterController register = new RegisterController();
 		try {
@@ -82,10 +83,10 @@ public class LoginController extends Application {
 	void LogInClick(MouseEvent event) {
 		String username;
 		String password;
-		ArrayList<String> tableRow;
+		ArrayList<String> tableRow=null;
 		DataBaseController.SelectAccountFromTable("accounts", accountNameTxt.getText(), passwordTxt.getText());// execute query
 		tableRow=DataBaseController.clientCon.getList();//get row result
-		if (tableRow.size() == 0) {// check if result is false
+		if (tableRow==null ||tableRow.size() == 0) {// check if result is false
 			LoginDialog("fail");
 		} else {// when result is true
 			username = tableRow.get(3).toString();
