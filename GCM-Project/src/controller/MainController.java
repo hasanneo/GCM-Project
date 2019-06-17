@@ -45,8 +45,7 @@ public class MainController extends Application {
 
 	@FXML
 	void LogOutClick() {
-		
-		
+
 	}
 
 	@FXML
