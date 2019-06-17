@@ -39,7 +39,7 @@ public class MainProgram extends Application {
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
 			DataBaseController.InitiateClient(new ClientConnection(host, port));//commented out till the server works
-			
+			//new MapViewController().start(new Stage());
 			MainController main=new MainController();
 			arg0=new Stage();
 			main.start(arg0);//start main menu
