@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller=".MapController">
+   <children>
+      <VBox prefHeight="507.0" prefWidth="600.0">
+         <children>
+            <HBox prefHeight="156.0" prefWidth="600.0">
+               <children>
+                  <Label text="Edit map">
+                     <font>
+                        <Font size="47.0" />
+                     </font></Label>
+                  <Pane prefHeight="77.0" prefWidth="294.0">
+                     <children>
+                        <Button id="addSiteBtn" fx:id="addSiteBtn" layoutX="218.0" layoutY="27.0" mnemonicParsing="false" onAction="#addPlace" text="Add" />
+                        <ComboBox id="combo" fx:id="combo" layoutX="40.0" layoutY="27.0" prefWidth="150.0" promptText="Choose Place " />
+                        <Button id="removeBtn" fx:id="removeBtn" layoutX="40.0" layoutY="72.0" mnemonicParsing="false" onAction="#removeSite" text="Remove site" visible="false" />
+                        <Button id="changeBtn" fx:id="changeBtn" layoutX="180.0" layoutY="72.0" mnemonicParsing="false" onAction="#changeCordinates" text="change cordinates" visible="false" />
+                        <Button id="saveCordBtn" fx:id="saveCordBtn" layoutX="280.0" layoutY="72.0" mnemonicParsing="false" onAction="#saveNewCordinates" text="Save change" visible="false" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <SplitPane dividerPositions="0.31605351170568563" prefHeight="406.0" prefWidth="600.0">
+               <items>
+                  <ListView id="placesList" fx:id="placesList" onMouseClicked="#veiwbuttons" prefHeight="400.0" prefWidth="200.0" />
+                  <ScrollPane id="scrollPane" fx:id="scrollPane" onScroll="#zoom" prefHeight="406.0" prefWidth="406.0">
+                     <content>
+                        <Pane id="p1" fx:id="p1">
+                           <children>
+                              <ImageView id="mapView" fx:id="mapView" layoutX="1.0" onMouseClicked="#saveCordinates">
+                                 <image>
+                                    <Image url="@../../../../../Desktop/GoogleMapTA.jpg" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="CROSSHAIR" />
+                                 </cursor>
+                              </ImageView>
+                              <Pane id="PlacePane" fx:id="PlacePane" layoutX="109.0" layoutY="97.0" prefHeight="50.0" prefWidth="30.0">
+                                 <children>
+                                    <Label id="SiteNameLbl" fx:id="SiteNameLbl" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="1.0" layoutY="28.0" prefHeight="17.0" prefWidth="30.0" text="test" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView id="button1" fx:id="button1" accessibleRole="BUTTON" fitHeight="47.0" fitWidth="30.0" focusTraversable="true" nodeOrientation="INHERIT" onMousePressed="#moveSite" onMouseReleased="#stopHandler" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../Desktop/b969b0a89c.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="OPEN_HAND" />
+                                       </cursor>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                     </content>
+                  </ScrollPane>
+               </items>
+            </SplitPane>
+            <Pane prefHeight="66.0" prefWidth="600.0">
+               <children>
+                  <Button id="cancelBtn" fx:id="cancelBtn" layoutX="419.0" layoutY="10.0" mnemonicParsing="false" onAction="#cancel" text="cancel" />
+                  <Button id="saveBtn" fx:id="saveBtn" layoutX="131.0" layoutY="10.0" mnemonicParsing="false" onAction="#save" text="save" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
