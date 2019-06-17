@@ -79,7 +79,7 @@ public class SqlConnection {
 			String filePath;
 			InputStream input = rs.getBinaryStream(blobColumn);// read blob
 			output = new FileOutputStream(blobFile);
-			byte[] buffer = new byte[1024];
+			byte[] buffer = new byte[16777215];//1024
 			// while(input.read(buffer)>0);
 			/*
 			 * warning it saves the file in the procject directory
@@ -94,6 +94,7 @@ public class SqlConnection {
 			result = filePath.replace("\\", "/");
 			filePath = "file:///";
 			result = filePath.concat(result);
+			rs.close();//added
 			return result;
 		}
 		System.out.println(" SqlConnection >> ExecuteGetFileQuery >> failure");

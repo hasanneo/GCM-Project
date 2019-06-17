@@ -329,23 +329,17 @@ public class MapEditController extends Application {
 	 * @return observable list of maps names
 	 */
 	private void InitComboBox() {
+		
 		DataBaseController.SelectAllRowsFromTable("places");// get the places from the db.
-		// get map list from db
-		int row = 0;
-		String[] mapsArray;
-		ArrayList<Map> maps;
-		ArrayList<String> mapNames;
-		maps = new ArrayList<Map>();
-		mapNames = new ArrayList<String>();
-		mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
+		// set up the combox
+		
+		String[] placeNames=DataBaseController.clientCon.GetObjectAsStringArray();
 		// populate the maps array list
-		for (int i = 0; row < mapsArray.length / 3; i += 3, row++) {
-			System.out.println(mapsArray[i] + " " + mapsArray[i + 1] + " " + mapsArray[i + 2]);
-			mapNames.add(mapsArray[i]);//add map names
-			maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2]));//add new maps object
-		}
-		ObservableList<String> comboOptions = FXCollections.observableArrayList(mapNames);
-		combo.setItems(comboOptions);
+				for (int i = 0,row=0; row < placeNames.length / 3; i += 3, row++) {
+					System.out.println(placeNames[i] + " " + placeNames[i + 1] + " " + placeNames[i + 2]);
+				}
+		//ObservableList<String> comboOptions = FXCollections.observableArrayList(mapNames);
+		//cmbo.setItems(comboOptions);
 	}
 
 	/*

@@ -5,7 +5,13 @@ import java.util.ArrayList;
 
 import common.GCMIF;
 import entity.Account;
-
+/**
+ * 
+ * 
+ *
+ * @author Hasan
+ *
+ */
 public class ClientConnection implements GCMIF {
 	final public static int DEFAULT_PORT = 5555;// The default port to connect on.
 	private Object serverObject;// Object that gets recieved from the server
@@ -105,6 +111,9 @@ public class ClientConnection implements GCMIF {
 		str = str.replace("[", "");
 		str = str.replace("]", "");
 		String[] array = str.split(",");
+		for(int i=0;i<array.length;i++) {
+			array[i]=array[i].trim();
+		}
 		return array;
 	}
 }

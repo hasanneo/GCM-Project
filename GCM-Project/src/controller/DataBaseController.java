@@ -114,7 +114,7 @@ public class DataBaseController {
 		String query="SELECT * FROM `"+tableName+"`;";
 		queryArr.add(query);
 		queryArr.add("select");
-		clientCon.ExecuteQuery(query);
+		clientCon.ExecuteQuery(queryArr);
 	}
 	/**
 	 * Select all rows from table in the data base based on search value given.
@@ -128,6 +128,6 @@ public class DataBaseController {
 		String query="SELECT * FROM `"+tableName+"` where "+tableField+"='"+searchValue+"';";
 		queryArr.add(query);
 		queryArr.add("select");
-		clientCon.ExecuteQuery(query);
+		clientCon.ExecuteQuery(queryArr);
 	}
 }
