@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import java.util.ResourceBundle;
 
 import entity.Map;
+import entity.Place;
 import entity.PlaceInMap;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
@@ -21,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -39,16 +41,16 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @author Jawad
+ * @author Jawad & Hasan
  *
  *
  */
-public class MapEditController extends Application {
+public class MapEditController implements Initializable {
 
 	final DoubleProperty zoomProperty = new SimpleDoubleProperty(200);
 	ArrayList<PlaceInMap> places = new ArrayList<>();
 	ArrayList<String> pla = new ArrayList<>();
-
+	Map chosenMap;
 	boolean chflag = false;
 	int cnt = 0;
 	double x;
@@ -106,6 +108,11 @@ public class MapEditController extends Application {
 
 	EventHandler<MouseEvent> h;
 
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void moveSite(MouseEvent event) {
 //		System.out.println("1");
@@ -138,6 +145,11 @@ public class MapEditController extends Application {
 //		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void changeCordinates(ActionEvent event) {
 		chflag = true;
@@ -150,6 +162,11 @@ public class MapEditController extends Application {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void removeSite(ActionEvent event) {
 		String pname;
@@ -177,7 +194,10 @@ public class MapEditController extends Application {
 
 	@FXML
 	void save(ActionEvent event) {
-
+		if (places != null && !places.isEmpty()) {
+			System.out.println("**********INSERTING********");
+			DataBaseController.InsertIntoPlacesInMaps(places.get(0));
+		}
 	}
 
 	@FXML
@@ -185,33 +205,47 @@ public class MapEditController extends Application {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void saveNewCordinates(ActionEvent event) {
-		chflag = false;
-		Label b;
-		// Pane np=new Pane();
-		p.setX(x);
-		p.setY(y);
-		p1.getChildren().remove(p.getPin());
-		p1.getChildren().remove(p.getPlacename());
-		b = new Label(p.getName());
-		b.setLayoutX(x);
-		b.setLayoutY(y + 25);
-		ImageView im = new ImageView("/GCM-Project/src/Images/pin.png");
-		im.setLayoutX(x);
-		im.setLayoutY(y);
-		im.setFitWidth(30);
-		im.setFitHeight(30);
-		p1.getChildren().add(im);
-		p1.getChildren().add(b);
-		im.setAccessibleText(p.getName());
-		p.setPin(im);
-		p.setPlacename(b);
-		// pla.add(p.name);
-		// placesList.getItems().add(p.name);//.add(p.name);
-		PlacePane.setVisible(false);
+		try {
+			chflag = false;
+			Label b;
+			// Pane np=new Pane();
+			p.setX(x);
+			p.setY(y);
+			p1.getChildren().remove(p.getPin());
+			p1.getChildren().remove(p.getPlacename());
+			b = new Label(p.getName());
+			b.setLayoutX(x);
+			b.setLayoutY(y + 25);
+			ImageView im = new ImageView("images/pin.png");
+			im.setLayoutX(x);
+			im.setLayoutY(y);
+			im.setFitWidth(30);
+			im.setFitHeight(30);
+			p1.getChildren().add(im);
+			p1.getChildren().add(b);
+			im.setAccessibleText(p.getName());
+			p.setPin(im);
+			p.setPlacename(b);
+			// pla.add(p.name);
+			// placesList.getItems().add(p.name);//.add(p.name);
+			PlacePane.setVisible(false);
+		} catch (Exception e) {
+			System.out.println("ERROR AT saveNewCordinates :" + e.getMessage());
+		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void addPlace(ActionEvent event) {
 		if (combo.getSelectionModel().getSelectedItem() != null) {
@@ -220,11 +254,13 @@ public class MapEditController extends Application {
 			// Pane np=new Pane();
 			PlaceInMap p = new PlaceInMap(combo.getSelectionModel().getSelectedItem(), x, y, null, null);
 			combo.getItems().remove(p.getName());
+			p.setMapName(ControllersSavedObjects.selectedMapFromCombo.getMapName());
+			p.setMapVersion(ControllersSavedObjects.selectedMapFromCombo.getMapVersion());
 			places.add(p);
 			b = new Label(p.getName());
 			b.setLayoutX(x);
 			b.setLayoutY(y + 25);
-			ImageView im = new ImageView("/GCM-Project/src/Images/pin.png");
+			ImageView im = new ImageView("images/pin.png");
 			im.setLayoutX(x);
 			im.setLayoutY(y);
 			im.setFitWidth(30);
@@ -238,10 +274,16 @@ public class MapEditController extends Application {
 			pla.add(p.getName());
 			placesList.getItems().add(p.getName());// .add(p.name);
 			PlacePane.setVisible(false);
-
+			System.out
+					.println("**********addPlace func******* X:" + places.get(0).getX() + "Y:" + places.get(0).getY());
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void zoom(ScrollEvent event) {
 		scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
@@ -266,30 +308,43 @@ public class MapEditController extends Application {
 	// }
 	// }
 	// });
-
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void saveCordinates(MouseEvent event) {
-		if (combo.getSelectionModel().getSelectedItem() != null || chflag == true) {
-			PlacePane.setVisible(true);
-			x = event.getX() - 15;
-			y = event.getY() - 25;
-			// button1.setTranslateX(x);
-			// button1.setTranslateY(y);
-			// button1.setLayoutX(x);
-			// button1.setLayoutY(y);
-			PlacePane.setLayoutX(x);
-			PlacePane.setLayoutY(y);
-			if (chflag == false) {
-				SiteNameLbl.setText(combo.getSelectionModel().getSelectedItem());
-				button1.setImage(new Image("/GCM-Project/src/Images/pin2.png"));
-			} else {
-				SiteNameLbl.setText(placesList.getSelectionModel().getSelectedItem());
-				button1.setImage(new Image("/GCM-Project/src/Images/pin3.png"));
-			}
+		try {
+			if (combo.getSelectionModel().getSelectedItem() != null || chflag == true) {
+				PlacePane.setVisible(true);
+				x = event.getX() - 15;
+				y = event.getY() - 25;
+				// button1.setTranslateX(x);
+				// button1.setTranslateY(y);
+				// button1.setLayoutX(x);
+				// button1.setLayoutY(y);
+				PlacePane.setLayoutX(x);
+				PlacePane.setLayoutY(y);
+				if (chflag == false) {
+					SiteNameLbl.setText(combo.getSelectionModel().getSelectedItem());
+					button1.setImage(new Image("images/pin2.png"));
+				} else {
+					SiteNameLbl.setText(placesList.getSelectionModel().getSelectedItem());
+					button1.setImage(new Image("images/pin3.png"));
+				}
 
+			}
+		} catch (Exception e) {
+			System.out.println("ERRROR AT saveCordinates :" + e.getMessage());
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void veiwbuttons(MouseEvent event) {
 		if (placesList.getSelectionModel().getSelectedItem() != null) {
@@ -299,6 +354,11 @@ public class MapEditController extends Application {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 * @author Jawad
+	 */
 	@FXML
 	void stopHandler(MouseEvent event) {
 		if (cnt == 1) {
@@ -308,56 +368,68 @@ public class MapEditController extends Application {
 		}
 	}
 
-	@FXML
-	void initialize() {
-		System.out.println("IN INIT OF MAP EDIT");
-		pla.add("braude");
-		pla.add("greg");
-		pla.add("mcdonalds");
-		pla.add("big");
-		combo.getItems().addAll(pla);
-		InitComboBox();
-		PlacePane.setVisible(false);
-
-		assert mapView != null : "fx:id=\"mapView\" was not injected: check your FXML file 'mapGui.fxml'.";
-
+	/**
+	 * @author Hasan
+	 * @Info Populate the combobox with names of places from the DB.
+	 * 
+	 */
+	private void InitComboBox() {
+		DataBaseController.SelectAllRowsFromTable("places");// get the places from the db.
+		String[] places = DataBaseController.clientCon.GetObjectAsStringArray();
+		ArrayList<Place> allPlaces = new ArrayList<Place>();
+		ArrayList<String> placesNames = new ArrayList<String>();
+		int colNum = 6;
+		// populate the maps array list
+		for (int i = 0, row = 0; row < places.length / colNum; i += colNum, row++) {
+			placesNames.add(places[i]);
+			allPlaces.add(new Place(places[i], places[i + 1], places[i + 2], places[i + 3], places[i + 4]));
+		}
+		ObservableList<String> comboOptions = FXCollections.observableArrayList(placesNames);
+		combo.setItems(comboOptions);
 	}
 
 	/**
+	 * Set the selected map from the combo box in the ViewMapController
+	 * 
+	 * @param chosenMap
+	 * @throws NullPointerException
 	 * @author Hasan
-	 * @Info the map values from the DB
-	 * @return observable list of maps names
 	 */
-	private void InitComboBox() {
-		
-		DataBaseController.SelectAllRowsFromTable("places");// get the places from the db.
-		// set up the combox
-		
-		String[] placeNames=DataBaseController.clientCon.GetObjectAsStringArray();
-		// populate the maps array list
-				for (int i = 0,row=0; row < placeNames.length / 3; i += 3, row++) {
-					System.out.println(placeNames[i] + " " + placeNames[i + 1] + " " + placeNames[i + 2]);
-				}
-		//ObservableList<String> comboOptions = FXCollections.observableArrayList(mapNames);
-		//cmbo.setItems(comboOptions);
+	public void SetMap(Map chosenMap) throws NullPointerException {
+		if (chosenMap != null) {
+			this.chosenMap = chosenMap;
+		} else
+			throw new NullPointerException("CHOSEN MAP IS NULL IN MapEditController");
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Sets the image view to the selected map from the previous window
 	 * 
-	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 * @author Hasan
 	 */
+	private void SetMapImage() {
+		String mapName = ControllersSavedObjects.selectedMapFromCombo.getMapName();
+		// get map file from the data base
+		DataBaseController.GetFileFromTable("MAP", "MAP_NAME", mapName, "MAPFILE");
+		String filePath = (String) (DataBaseController.clientCon.GetServerObject());
+		// set the imageview to the file path
+		if (filePath != null) {
+			try {
+				Image image = new Image(filePath);
+				mapView.setImage(image);
+			} catch (NullPointerException ex) {
+				System.out.println("MapEdit>>>EXCEPTION AT SetMapImage >>" + ex.getMessage());
+			}
+
+		}
+	}
+
 	@Override
-	public void start(Stage stage) throws Exception {
-		FXMLLoader fxmlLoader;
-		fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(getClass().getResource("/fxml/EditMapScreen.fxml"));
-		Parent root = fxmlLoader.load();
-		Scene scene = new Scene(root);
-		stage.setTitle("Edit map");
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.show();
-		System.out.println("IN THE START");
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		SetMapImage();
+		InitComboBox();
+		PlacePane.setVisible(false);
+		assert mapView != null : "fx:id=\"mapView\" was not injected: check your FXML file 'mapGui.fxml'.";
+
 	}
 }
