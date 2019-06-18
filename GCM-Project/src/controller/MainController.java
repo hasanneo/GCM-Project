@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
@@ -28,6 +30,12 @@ import javafx.stage.Stage;
  *Controller for the main menu
  */
 public class MainController extends Application {
+	@FXML
+	private ToggleGroup toggleGroup;
+
+	@FXML
+	private Button searchbtn;
+
 	@FXML // fx:id="search_text"
 	private TextField search_text; // Value injected by FXMLLoader
 
@@ -50,6 +58,32 @@ public class MainController extends Application {
 	@FXML
 	void AccountClick(MouseEvent event) {
 
+	}
+
+	@FXML
+	void searchMaps(ActionEvent event) {
+		String toogleGroupValue="";
+		RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+		toogleGroupValue = selectedRadioButton.getText();
+	
+		switch(toogleGroupValue)
+		{
+		case "name":
+			System.out.println("name");
+			break;
+
+		case "description":
+			System.out.println("description");
+			break;
+
+		case "place":
+			System.out.println("place");
+			break;
+
+		default: 
+			System.out.println("Choose search type");
+			break;
+		}
 	}
 
 	@FXML

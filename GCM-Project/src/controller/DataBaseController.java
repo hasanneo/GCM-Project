@@ -65,6 +65,20 @@ public class DataBaseController {
 		}catch(Exception e) {			
 			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
 		}
-
+		
+	}
+	
+	
+	public static void getMaps(String tableName,String type,String searchText)
+	{
+		ArrayList<String> queryArr =new ArrayList<String>();
+		try {
+		String query = "SELECT * FROM "+tableName+" where "+type+" LIKE "+"'%"+searchText+"%'"+";";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+		}catch(Exception e) {			
+			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
+		}
 	}
 }
