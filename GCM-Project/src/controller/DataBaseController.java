@@ -7,6 +7,8 @@ import client.ClientConnection;
 import entity.Account;
 
 import entity.City;
+import entity.Map;
+import entity.PlaceInMap;
 
 
 /**
@@ -69,7 +71,7 @@ public class DataBaseController {
 	 */
 	public static void GetMapsFromDB() {
 		ArrayList<String> queryArr =new ArrayList<String>();
-		String query="SELECT `MAP_NAME`,`MAP_DESC`,`CITY_NAME` FROM `MAP`";
+		String query="SELECT `MAP_NAME`,`MAP_DESC`,`CITY_NAME`,`MAP_VERSION` FROM `MAP`";
 		queryArr.add(query);
 		queryArr.add("select");
 		clientCon.ExecuteQuery(queryArr);
@@ -95,6 +97,7 @@ public class DataBaseController {
 	 * A method that will return true if the data was successfully inserted.
 	 * @param newCity
 	 * @return
+	 * @author Jawad
 	 */
 	public static void AddCityToDb(City newCity) {
 		try {
@@ -128,6 +131,14 @@ public class DataBaseController {
 		String query="SELECT * FROM `"+tableName+"` where "+tableField+"='"+searchValue+"';";
 		queryArr.add(query);
 		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	public static void InsertIntoPlacesInMaps(PlaceInMap place) {
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "INSERT INTO places_in_maps(MAP_VERSION, MAP_NAME, PLACE_NAME, X_LOCATION, Y_LOCATION)VALUES (?,?,?,?,?)";
+		queryArr.addAll(place.GetFieldsAsArrayList());
+		queryArr.add(query);
+		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
 	}
 	/*majd

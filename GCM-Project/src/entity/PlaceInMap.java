@@ -1,8 +1,11 @@
 package entity;
 
+import java.util.ArrayList;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+
 /**
  * 
  * 
@@ -12,17 +15,21 @@ import javafx.scene.image.ImageView;
  */
 public class PlaceInMap {
 	String name;
-	double x,y;
+	String mapName;
+	String mapVersion;
+	double x, y;
 	Button b;
 	ImageView pin;
 	Label placename;
-	public PlaceInMap(String name,double x, double y ,ImageView pin, Label placename)
-	{
-		this.name=name;
-		this.x=x;
-		this.y=y;
-		this.pin=pin;
-		this.placename=placename;
+	ArrayList<String> fields;
+
+	// public PlaceInMap(int mapVersion,String MapName,)
+	public PlaceInMap(String name, double x, double y, ImageView pin, Label placename) {
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.pin = pin;
+		this.placename = placename;
 	}
 
 	public Button getB() {
@@ -71,5 +78,31 @@ public class PlaceInMap {
 
 	public void setY(double y) {
 		this.y = y;
+	}
+
+	public String getMapVersion() {
+		return mapVersion;
+	}
+
+	public void setMapVersion(String mapVersion) {
+		this.mapVersion = mapVersion;
+	}
+
+	public String getMapName() {
+		return mapName;
+	}
+
+	public void setMapName(String mapName) {
+		this.mapName = mapName;
+	}
+
+	public ArrayList<String> GetFieldsAsArrayList() {
+		fields=new ArrayList<String>();
+		fields.add(mapVersion);
+		fields.add(mapName);
+		fields.add(name);
+		fields.add(Double.toString(x));
+		fields.add(Double.toString(y));
+		return fields;
 	}
 }
