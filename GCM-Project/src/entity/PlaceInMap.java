@@ -31,6 +31,21 @@ public class PlaceInMap {
 		this.pin = pin;
 		this.placename = placename;
 	}
+	/**
+	 * Addded for the map view
+	 * @param name
+	 * @param x
+	 * @param y
+	 * @param pin
+	 * @param placename
+	 */
+	public PlaceInMap(String name, String mapName, String mapVersion,double x, double y) {
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.mapName = mapName;
+		this.mapVersion = mapVersion;
+	}
 
 	public Button getB() {
 		return b;
