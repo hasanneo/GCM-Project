@@ -133,6 +133,11 @@ public class DataBaseController {
 		queryArr.add("select");
 		clientCon.ExecuteQuery(queryArr);
 	}
+	/**
+	 * Insert a place into the places_in_maps table.
+	 * @param place
+	 * @author Hasan
+	 */
 	public static void InsertIntoPlacesInMaps(PlaceInMap place) {
 		ArrayList<String> queryArr =new ArrayList<String>();
 		String query = "INSERT INTO places_in_maps(MAP_VERSION, MAP_NAME, PLACE_NAME, X_LOCATION, Y_LOCATION)VALUES (?,?,?,?,?)";
@@ -141,6 +146,7 @@ public class DataBaseController {
 		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
 	}
+	
 	/*majd
 	public static void SelectUserTypeFromTable(String tableName) {
 		ArrayList<String> queryArr =new ArrayList<String>();

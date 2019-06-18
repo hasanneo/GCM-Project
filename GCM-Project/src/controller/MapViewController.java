@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 
 import entity.Map;
+import entity.PlaceInMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,7 +46,6 @@ public class MapViewController implements Initializable {
 
 	@FXML
 	private Label mapCityLabel;
-
 	@FXML
 	private Label mapDescLabel;
 	@FXML
@@ -55,9 +55,11 @@ public class MapViewController implements Initializable {
 	@FXML
 	private Button edit_btn;
 	private Map chosenMap;
+	private ArrayList<PlaceInMap> placesArr;
 
 	/**
 	 * Init the combo box
+	 * 
 	 * @author Hasan
 	 */
 	@Override
@@ -67,16 +69,18 @@ public class MapViewController implements Initializable {
 		mapCombo.setItems(options);
 		mapCombo.getSelectionModel().selectedItemProperty()
 				.addListener((v, oldValue, newValue) -> FillMapTextValues(newValue));
+		GetMapsPlaces();//After this you will have all of the places from the places_in_maps table
 	}
 
 	/**
 	 * Going over the maps arraylist as a 2d array and creating new map objects
+	 * 
 	 * @author Hasan
 	 */
 	public void SetMapsArrayList() {
 		// get map list from db
 		int row = 0;
-		int tableColumns=4;
+		int tableColumns = 4;
 		String[] mapsArray;
 		maps = new ArrayList<Map>();
 		mapNames = new ArrayList<String>();
@@ -84,17 +88,20 @@ public class MapViewController implements Initializable {
 		mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
 		// populate the maps array list
 		for (int i = 0; row < mapsArray.length / tableColumns; i += tableColumns, row++) {
-			System.out.println(mapsArray[i] + " " + mapsArray[i + 1] + " " + mapsArray[i + 2]+ " ver:" + mapsArray[i + 3]);
+			System.out.println(
+					mapsArray[i] + " " + mapsArray[i + 1] + " " + mapsArray[i + 2] + " ver:" + mapsArray[i + 3]);
 			mapNames.add(mapsArray[i]);
-			maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2],mapsArray[i + 3]));
-			
+			maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2], mapsArray[i + 3]));
+
 		}
 	}
-/**
- * Fills the map fields on screen.
- * @param mapName
- * @author Hasan
- */
+
+	/**
+	 * Fills the map fields on screen.
+	 * 
+	 * @param mapName
+	 * @author Hasan
+	 */
 	public void FillMapTextValues(String mapName) {
 		String filePath = null;
 		for (Map m : maps) {
@@ -103,8 +110,9 @@ public class MapViewController implements Initializable {
 				mapNameLabel.setText(m.getMapName());
 				mapDescLabel.setText(m.getMapDescription());
 				mapVersion.setText(String.valueOf(m.getMapVersion()));
-				//save selected map object
-				ControllersSavedObjects.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),m.getMapVersion());
+				// save selected map object
+				ControllersSavedObjects.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),
+						m.getMapVersion());
 				System.out.println(m.toString());
 				break;
 			}
@@ -135,11 +143,13 @@ public class MapViewController implements Initializable {
 
 		}
 	}
-/**
- * Open the EditMap window
- * @param event
- * @author Hasan
- */
+
+	/**
+	 * Open the EditMap window
+	 * 
+	 * @param event
+	 * @author Hasan
+	 */
 	@FXML
 	void EditButtonClick(MouseEvent event) {
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
@@ -151,5 +161,21 @@ public class MapViewController implements Initializable {
 			System.out.println("EXCEPTION IN EDIT BUTTON CLICK >> " + e.getMessage());
 		}
 	}
-
+/**
+ * Populates the placesArr to rows of the places_in_maps tables
+ * @author Hasan
+ */
+	private void GetMapsPlaces() {
+		String[] placesArray;
+		double x, y;
+		int row = 0;
+		int tableColumns = 5;
+		DataBaseController.SelectAllRowsFromTable("places_in_maps");
+		placesArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
+		placesArr=new ArrayList<PlaceInMap>();
+		// populate the maps array list
+		for (int i = 0; row < placesArray.length / tableColumns; i += tableColumns, row++) {
+			placesArr.add(new PlaceInMap(placesArray[i + 2],placesArray[i + 1],placesArray[i],Double.parseDouble(placesArray[i + 3]),Double.parseDouble(placesArray[i + 4])));
+		}
+	}
 }

@@ -295,7 +295,6 @@ public class MapEditController implements Initializable {
 				}
 			}
 		});
-
 	}
 
 	// scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
