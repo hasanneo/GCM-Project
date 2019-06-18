@@ -5,7 +5,13 @@ import java.util.concurrent.Semaphore;
 
 import common.GCMIF;
 import ocsf.client.AbstractClient;
-
+/**
+ * 
+ * 
+ *
+ * @author Hasan
+ *
+ */
 public class GcmClient extends AbstractClient {
 	GCMIF clientUI;
 	Semaphore sem = new Semaphore(0);
@@ -19,7 +25,9 @@ public class GcmClient extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		clientUI.SetServerObject(msg);
+		System.out.println("About to release lock");
 		sem.release();
+		System.out.println("Lock Released");
 	}
 
 	public void handleMessageFromClientUI(Object message) {

@@ -52,7 +52,7 @@ public class MainController extends Application {
 
 	@FXML
 	void LogOutClick() {
-		System.out.println("out");
+		//System.out.println("out");
 	}
 
 	@FXML
