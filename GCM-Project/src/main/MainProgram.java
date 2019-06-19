@@ -5,7 +5,7 @@ import java.util.*;
 import client.ClientConnection;
 import controller.DataBaseController;
 import controller.MainController;
-import controller.MapViewController;
+import controller.ViewAllMapsLoader;
 
 import java.io.*;
 import javafx.application.Application;
@@ -38,8 +38,11 @@ public class MainProgram extends Application {
 			in.close();
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
-			DataBaseController.InitiateClient(new ClientConnection(host, port));//commented out till the server works
-			//new MapViewController().start(new Stage());
+			DataBaseController.InitiateClient(new ClientConnection(host, port));
+			
+			//new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
+			
+			//Jawad comment this section
 			MainController main=new MainController();
 			arg0=new Stage();
 			main.start(arg0);//start main menu

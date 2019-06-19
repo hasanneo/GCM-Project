@@ -10,19 +10,18 @@ import java.util.Arrays;
  */
 public class Map {
 	private String mapName;
+	private String mapVersion;
 	private String mapDescription;
 	private String cityName;
 	private byte[] mapFile;
 
-	public Map(String mapName, String mapDescirption,String cityName) {
+	public Map(String mapName, String mapDescirption,String cityName,String mapVersion) {
 		setMapName(mapName);
 		setMapDescription(mapDescirption);
 		setCityName(cityName);
+		setMapVersion(mapVersion);
 	}
 
-	public Map(String mapName, String mapDescirption,String cityName, String file) {
-
-	}
 	public String getCityName() {
 		return cityName;
 	}
@@ -54,7 +53,13 @@ public class Map {
 	public void setMapFile(byte[] mapFile) {
 		this.mapFile = mapFile;
 	}
+	public String getMapVersion() {
+		return mapVersion;
+	}
 
+	public void setMapVersion(String mapVersion) {
+		this.mapVersion = mapVersion;
+	}
 	@Override
 	public String toString() {
 		return "Map [mapName=" + mapName + ", mapDescription=" + mapDescription + ", cityName=" + cityName
