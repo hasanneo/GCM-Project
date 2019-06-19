@@ -36,7 +36,6 @@
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></RadioButton>
-		<Button fx:id="log_out_btn" layoutX="70.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#LogOutClick" text="logout" visible="false" />
 		<Label fx:id="usernamelbl" layoutX="70.0" layoutY="14.0" text="Label" visible="false" />
       <TableView layoutX="387.0" layoutY="180.0" prefHeight="383.0" prefWidth="615.0" visible="false">
         <columns>
@@ -79,6 +78,13 @@
          <tooltip>
             <Tooltip text="Login" />
          </tooltip>
+         <graphic>
+            <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/login.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
       <Button fx:id="register_btn" contentDisplay="GRAPHIC_ONLY" layoutX="927.0" layoutY="12.0" mnemonicParsing="false" onAction="#RegisterClick" prefHeight="60.0" prefWidth="60.0" text="Button">
          <graphic>
@@ -93,10 +99,11 @@
          </tooltip>
       </Button>
       <Button layoutX="747.0" layoutY="97.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="Search" />
-      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="839.0" layoutY="12.0">
-         <image>
-            <Image url="@../Images/login.png" />
-         </image>
-      </ImageView>
+      <AnchorPane layoutX="149.0" layoutY="31.0" prefHeight="30.0" prefWidth="61.0">
+         <children>
+      		<Button fx:id="log_out_btn" mnemonicParsing="false" onAction="#LogOutClick" onMouseClicked="#LogOutClick" text="logout" visible="false" />
+         </children>
+      </AnchorPane>
+      <Button layoutX="787.0" layoutY="275.0" mnemonicParsing="false" onAction="#BuyMapClick" text="Buy" />
 	</children>
 </AnchorPane>

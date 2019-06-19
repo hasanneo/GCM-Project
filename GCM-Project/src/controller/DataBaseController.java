@@ -65,6 +65,18 @@ public class DataBaseController {
 		clientCon.ExecuteQuery(queryArr);
 	}
 	
+	
+	
+	public static void InsertToPurchaseCart(Account account) {
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "INSERT INTO purchase_cart(username)VALUES (?)";
+		queryArr.addAll(account.GetFieldsAsList());
+		queryArr.add(query);
+		queryArr.add("insert");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	
 	/**
 	 * Will get the all rows from the map table except for the blob column.
 	 * @author Hasan

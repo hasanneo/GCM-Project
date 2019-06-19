@@ -42,10 +42,18 @@ public class MainController extends Application {
 
 	@FXML
 	private Button log_out_btn;
+	
+	@FXML
+	private Button Buy_btn;
 
 	@FXML
-	void LogOutClick() {
-
+	void LogOutClick(ActionEvent event) throws Exception {
+		DataBaseController.clientCon.setLoggedIn(false);
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		MainController main = new MainController();
+		main.start(new Stage());// create the register stage
 	}
 
 	@FXML
@@ -83,6 +91,13 @@ System.out.println("out");
 		SceneController.push(((Node) event.getSource()).getScene());// push current scene
 		RegisterController register = new RegisterController();
 		register.start(new Stage());// create the register stage
+	}
+	
+	@FXML
+	void BuyMapClick(ActionEvent event) throws Exception {
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		PurchaseMapController purchase = new PurchaseMapController();
+		purchase.start(new Stage());// create the purchase stage
 	}
 
 	public void SetUserIsLoggedIn(String username) {

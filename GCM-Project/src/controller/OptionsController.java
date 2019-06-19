@@ -109,7 +109,7 @@ public class OptionsController extends Application  {
 		
 	}
 	@FXML
-	void MapPurchaseClick(ActionEvent event) throws Exception {
+	void MapPurchaseClick(ActionEvent event) throws Exception {//PurchaseMap
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		mystage.close();
 		SceneController.push(((Node) event.getSource()).getScene());// push current scene
@@ -118,7 +118,7 @@ public class OptionsController extends Application  {
 	}
 	
 	@FXML
-	void LogOutClick(ActionEvent event) throws Exception {
+	void LogOutClick(ActionEvent event) throws Exception {//LogOut
 		DataBaseController.clientCon.setLoggedIn(false);
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		mystage.close();
