@@ -35,7 +35,7 @@ import javafx.util.StringConverter;
  *
  * 
  */
-public class MapViewController implements Initializable {
+public class ViewAllMapsController implements Initializable {
 	ArrayList<Map> maps;
 	ArrayList<String> mapNames;
 	@FXML
@@ -111,7 +111,7 @@ public class MapViewController implements Initializable {
 				mapDescLabel.setText(m.getMapDescription());
 				mapVersion.setText(String.valueOf(m.getMapVersion()));
 				// save selected map object
-				ControllersSavedObjects.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),
+				ControllersAuxiliaryMethods.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),
 						m.getMapVersion());
 				System.out.println(m.toString());
 				break;

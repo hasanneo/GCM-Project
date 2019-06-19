@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  *
  * 
  */
-public class MapViewLoader extends Application{
+public class ViewAllMapsLoader extends Application{
 	
 		/* (non-Javadoc)
 		 * @see javafx.application.Application#start(javafx.stage.Stage)
@@ -28,10 +28,10 @@ public class MapViewLoader extends Application{
 		@Override
 		public void start(Stage stage) throws Exception {
 			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("/fxml/MapScreen.fxml"));
+			fxmlLoader.setLocation(getClass().getResource("/fxml/ViewAllMapScreen.fxml"));
 			Parent root = fxmlLoader.load();
 			Scene scene = new Scene(root);
-			stage.setTitle("Map");
+			stage.setTitle("Maps");
 			stage.setScene(scene);
 			stage.setResizable(false);
 			stage.show();
