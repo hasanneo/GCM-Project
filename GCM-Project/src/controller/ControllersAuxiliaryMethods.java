@@ -5,6 +5,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import entity.CityMap;
 import entity.Map;
 
 /**
@@ -15,8 +16,11 @@ import entity.Map;
  */
 public class ControllersAuxiliaryMethods {
 	public static Map selectedMapFromCombo = null;
+
 	/**
-	 * Auxiliary function to know which map was selected from the combo box from the previous screen.
+	 * Auxiliary function to know which map was selected from the combo box from the
+	 * previous screen.
+	 * 
 	 * @param mapName
 	 * @param mapDescirptionString
 	 * @param cityName
@@ -27,11 +31,13 @@ public class ControllersAuxiliaryMethods {
 			String mapVersion) {
 		selectedMapFromCombo = new Map(mapName, mapDescirptionString, cityName, mapVersion);
 	}
-/**
- * Auxiliary to get the rows from the map tablse as an arraylist.
- * @return ArrayList of all the maps (without files)
- * @author Hasan
- */
+
+	/**
+	 * Auxiliary to get the rows from the map tablse as an arraylist.
+	 * 
+	 * @return ArrayList of all the maps (without files)
+	 * @author Hasan
+	 */
 	public static ArrayList<Map> GetMapRowsAsList() {
 		// get map list from db
 		int row = 0;
@@ -46,4 +52,16 @@ public class ControllersAuxiliaryMethods {
 		}
 		return maps;
 	}
+
+	public static ArrayList<CityMap> GetCityMapsRowsAsList(String[] rowsArray,int tableColumnsNumber) {
+		int row = 0;
+		int tableColumns = tableColumnsNumber;
+		ArrayList<CityMap> rows = new ArrayList<CityMap>();
+		// populate the array list
+		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {
+			rows.add(new CityMap(rowsArray[i+1], rowsArray[i + 2], rowsArray[i + 3]));
+		}
+		return rows;
+	}
+	
 }

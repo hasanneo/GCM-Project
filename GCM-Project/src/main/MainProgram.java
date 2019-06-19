@@ -6,6 +6,8 @@ import client.ClientConnection;
 import controller.DataBaseController;
 import controller.MainController;
 import controller.ViewAllMapsLoader;
+import controller.ViewCityMapsCatalogController;
+import controller.ViewCityMapsCatalogLoader;
 
 import java.io.*;
 import javafx.application.Application;
@@ -41,6 +43,7 @@ public class MainProgram extends Application {
 			DataBaseController.InitiateClient(new ClientConnection(host, port));
 			
 			//new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
+			//new ViewCityMapsCatalogLoader().start(new Stage());
 			
 			//Jawad comment this section
 			MainController main=new MainController();
