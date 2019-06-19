@@ -102,7 +102,7 @@ public class MainController extends Application {
 		case "Name":
 			System.out.println("name");
 			
-		mapsList = ControllersSavedObjects.GetMapRowsAsList("map", "CITY_NAME",search_text.getText() );
+		mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "CITY_NAME",search_text.getText() );
 		mapsTableView.setItems(getMapObservableList(mapsList));
 
 			break;
@@ -110,7 +110,7 @@ public class MainController extends Application {
 		case "description":
 			System.out.println("description");
 			
-			mapsList = ControllersSavedObjects.GetMapRowsAsList("map", "DESC",search_text.getText() );
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "DESC",search_text.getText() );
 			
 			mapsTableView.setItems(getMapObservableList(mapsList));
 
@@ -119,7 +119,7 @@ public class MainController extends Application {
 		case "place":
 			System.out.println("place");
 			
-			mapsList = ControllersSavedObjects.GetMapRowsAsList("map","Place",search_text.getText());
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map","Place",search_text.getText());
 			mapsTableView.setItems(getMapObservableList(mapsList));
 
 			break;
