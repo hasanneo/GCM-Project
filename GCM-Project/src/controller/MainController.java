@@ -21,11 +21,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+
 /**
  * 
  * @author Hasan
+ * @author Ebrahem
+ * @author Majd
  *
- *Controller for the main menu
+ *         Controller for the main menu
  */
 public class MainController extends Application {
 	@FXML // fx:id="search_text"
@@ -43,8 +46,14 @@ public class MainController extends Application {
 	private Button log_out_btn;
 
 	@FXML
+	private TextField passTxt;
+	private String UserType;
+
+	FXMLLoader fxmlLoader;
+
+	@FXML
 	void LogOutClick() {
-		//System.out.println("out");
+		// System.out.println("out");
 	}
 
 	@FXML
@@ -57,14 +66,61 @@ public class MainController extends Application {
 
 	}
 
-	@FXML//
+	/**
+	 * @author Ebrahem
+	 * @author Majd
+	 * @param event
+	 * @throws Exception in case of failed stage opening
+	 * 
+	 * Controls to which options menu the user is redirected depending on user type:
+	 * * User
+	 * * Registered User
+	 * * Worker
+	 * * Manager
+	 */
+	@FXML 
 	void OptionsOnActionBtn(ActionEvent event) throws Exception {
 
-		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		mystage.close();
-		SceneController.push(((Node) event.getSource()).getScene());// push current scene
-		OptionsController option = new OptionsController();
-		option.start(new Stage());// create the option stage
+		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); //creating an instance of this stage
+		//checking user type to display the appropriate stage
+		if (DataBaseController.clientCon.isLoggedIn() == true) {
+			
+			UserType = DataBaseController.clientCon.GetUserType(); //get user type
+
+			System.out.println("USER YPE ::::" + UserType);
+			
+			//in case the user type was user -> display user options
+			if (UserType.equals("user")) {
+				thisStage.close(); //close current stage
+				RegisteredUserMenuScreen_Controller registeredUserScreen = new RegisteredUserMenuScreen_Controller(); //creating and instance of user menu screen
+				registeredUserScreen.start(new Stage()); //invoke the screen
+			}
+		//in case the user type was worker
+		 else if(UserType.equals("worker")) {
+			
+			 thisStage.close(); //close current stage
+			 DepartmentContentWorkerMenuScreen_Controller departmentWorker = new DepartmentContentWorkerMenuScreen_Controller(); //creating an instance of department worker controller 
+			 departmentWorker.start(new Stage()); //invoking department controller start method
+		 }
+		//Majd Shall Change
+		 /*} else if
+		 (UserType.equals("manager")) { 
+		 = new FXMLLoader(); 
+		 fxmlLoader.setLocation(getClass().getResource("/fxml/DepartmentContentManagerMenuScreen.fxml")); 
+		 Parent root = fxmlLoader.load(); 
+		 Scene scene = new Scene(root);
+		 stage.setTitle("Department Content Manager"); 
+		 stage.setScene(scene);
+		 stage.setResizable(false); 
+		 stage.show(); } }*/
+			
+		}
+		//if non of the above conditions were met then the user is an unregistered user, is redirected to the appropriate window
+		else {
+			thisStage.close(); //close current stage
+			UserMenuScreen_Controller userMenuControllerStage = new UserMenuScreen_Controller(); //create an instance of target class
+			userMenuControllerStage.start(new Stage()); //invoke start to get the appropriate UI
+		}
 	}
 
 	@FXML
