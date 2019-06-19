@@ -32,8 +32,8 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 		myStage.close();
 		
 		//try to open Main controller stage
+		MainController mainControllerStage = new MainController();
 		try {
-			MainController mainControllerStage = new MainController();
 			mainControllerStage.start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -93,33 +93,47 @@ public class MainController extends Application {
 			if (UserType.equals("user")) {
 				thisStage.close(); //close current stage
 				RegisteredUserMenuScreen_Controller registeredUserScreen = new RegisteredUserMenuScreen_Controller(); //creating and instance of user menu screen
-				registeredUserScreen.start(new Stage()); //invoke the screen
+				try {
+					registeredUserScreen.start(new Stage()); //invoke the screen
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		//in case the user type was worker
 		 else if(UserType.equals("worker")) {
 			
 			 thisStage.close(); //close current stage
 			 DepartmentContentWorkerMenuScreen_Controller departmentWorker = new DepartmentContentWorkerMenuScreen_Controller(); //creating an instance of department worker controller 
-			 departmentWorker.start(new Stage()); //invoking department controller start method
+			 try {
+				departmentWorker.start(new Stage()); //invoking department controller start method
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		 }
-		//Majd Shall Change
-		 /*} else if
-		 (UserType.equals("manager")) { 
-		 = new FXMLLoader(); 
-		 fxmlLoader.setLocation(getClass().getResource("/fxml/DepartmentContentManagerMenuScreen.fxml")); 
-		 Parent root = fxmlLoader.load(); 
-		 Scene scene = new Scene(root);
-		 stage.setTitle("Department Content Manager"); 
-		 stage.setScene(scene);
-		 stage.setResizable(false); 
-		 stage.show(); } }*/
-			
+			/*
+		 else if (UserType.equals("manager")) {
+			 thisStage.close(); //close current stage
+			 DepartmentContentManagerController departmentManager = new DepartmentContentManagerController(); //creating an instance of department worker controller 
+			 try {
+				departmentManager.start(new Stage()); //invoking department controller start method
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }*/
 		}
 		//if non of the above conditions were met then the user is an unregistered user, is redirected to the appropriate window
 		else {
 			thisStage.close(); //close current stage
 			UserMenuScreen_Controller userMenuControllerStage = new UserMenuScreen_Controller(); //create an instance of target class
-			userMenuControllerStage.start(new Stage()); //invoke start to get the appropriate UI
+			try {
+				userMenuControllerStage.start(new Stage()); //invoke start to get the appropriate UI
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
