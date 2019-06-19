@@ -21,27 +21,27 @@
          </image>
       </ImageView>
 		<TextField id="search_txt" fx:id="search_text" layoutX="206.0" layoutY="95.0" prefHeight="35.0" prefWidth="525.0" promptText="search" style="-fx-border-radius: 0; -fx-border-style: SOLID; -fx-border-width: 2; -fx-effect: BLOOM; -fx-border-color: #00FF7F;" />
-		<RadioButton layoutX="241.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="name" textFill="RED">
+		<RadioButton layoutX="241.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Name" textFill="RED">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>
          <toggleGroup>
-            <ToggleGroup fx:id="searchbtn" />
+            <ToggleGroup fx:id="toggleGroup" />
          </toggleGroup></RadioButton>
-		<RadioButton layoutX="419.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="112.0" text="description" textFill="#ff0038" toggleGroup="$searchbtn">
+		<RadioButton layoutX="419.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="112.0" text="description" textFill="#ff0038" toggleGroup="$toggleGroup">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></RadioButton>
-		<RadioButton layoutX="625.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="place" textFill="RED" toggleGroup="$searchbtn">
+		<RadioButton layoutX="625.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="place" textFill="RED" toggleGroup="$toggleGroup">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></RadioButton>
 		<Label fx:id="usernamelbl" layoutX="70.0" layoutY="14.0" text="Label" visible="false" />
-      <TableView layoutX="387.0" layoutY="180.0" prefHeight="383.0" prefWidth="615.0" visible="false">
+      <TableView id="mapsTableView" fx:id="mapsTableView" layoutX="387.0" layoutY="180.0" prefHeight="383.0" prefWidth="615.0" visible="false">
         <columns>
-          <TableColumn prefWidth="75.0" text="Map Name" />
-          <TableColumn prefWidth="75.0" text="City Name " />
-            <TableColumn prefWidth="75.0" text="Description" />
+          <TableColumn id="NameColumn" fx:id="NameColumn" prefWidth="75.0" text="Map Name" />
+          <TableColumn id="CityNameColumn" fx:id="CityNameColumn" prefWidth="75.0" text="City Name " />
+            <TableColumn id="DescriptionColumn" fx:id="DescriptionColumn" prefWidth="75.0" text="Description" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -98,6 +98,7 @@
             <Tooltip text="Regist" />
          </tooltip>
       </Button>
+
       <Button layoutX="747.0" layoutY="97.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="Search" />
       <AnchorPane layoutX="149.0" layoutY="31.0" prefHeight="30.0" prefWidth="61.0">
          <children>
@@ -105,5 +106,8 @@
          </children>
       </AnchorPane>
       <Button layoutX="787.0" layoutY="275.0" mnemonicParsing="false" onAction="#BuyMapClick" text="Buy" />
+
+      <Button id="searchbtn" fx:id="searchbtn" layoutX="747.0" layoutY="97.0" mnemonicParsing="false" onAction="#searchMaps" prefHeight="31.0" prefWidth="80.0" text="Search" />
+
 	</children>
 </AnchorPane>

@@ -119,6 +119,52 @@ public class DataBaseController {
 			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
 		}
 	}
+	
+	
+	public static void getMaps(String tableName,String type,String searchText)
+	{
+		ArrayList<String> queryArr =new ArrayList<String>();
+		try {
+		String query = "SELECT * FROM "+tableName+" where "+type+" LIKE "+"'%"+searchText+"%'"+";";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+		}catch(Exception e) {			
+			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
+		}
+
+	}
+	
+	
+	public static void getMapsbyplace(String tableName,String type,String searchText)
+	{
+		ArrayList<String> queryArr =new ArrayList<String>();
+		try {
+		String query = "SELECT * FROM map where "+"MAP_NAME" +" IN (SELECT MAP_NAME FROM places_in_maps WHERE places_in_maps.PLACE_NAME like '%"+searchText+"%');";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+		}catch(Exception e) {			
+			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
+		}
+
+	}
+	
+	public static void getMapsbydesc(String tableName,String type,String searchText)
+	{
+		ArrayList<String> queryArr =new ArrayList<String>();
+		try {
+		String query = "SELECT * FROM "+tableName+" where CITY_NAME IN"+"(select CITY_NAME from city where cityDescription LIKE "+"'%"+searchText+"%')"+"UNION SELECT * FROM "+tableName+""
+		+ " where MAP_NAME IN (SELECT " + "places_in_maps.MAP_NAME " +"FROM " + " places_in_maps " + " INNER JOIN " + " places ON places.NAME = places_in_maps.PLACE_NAME where DESCRIPTION like '%"+searchText+"%');";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+		}catch(Exception e) {			
+			System.out.println("Exception thrown at Select from table:"+e.getMessage() +e.getClass().getName());
+		}
+
+	}
+	
 	/**
 	 * Select all rows from table in the data base.
 	 * @param tableName table name in the DB
