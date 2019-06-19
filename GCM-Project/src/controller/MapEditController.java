@@ -254,8 +254,8 @@ public class MapEditController implements Initializable {
 			// Pane np=new Pane();
 			PlaceInMap p = new PlaceInMap(combo.getSelectionModel().getSelectedItem(), x, y, null, null);
 			combo.getItems().remove(p.getName());
-			p.setMapName(ControllersSavedObjects.selectedMapFromCombo.getMapName());
-			p.setMapVersion(ControllersSavedObjects.selectedMapFromCombo.getMapVersion());
+			p.setMapName(ControllersAuxiliaryMethods.selectedMapFromCombo.getMapName());
+			p.setMapVersion(ControllersAuxiliaryMethods.selectedMapFromCombo.getMapVersion());
 			places.add(p);
 			b = new Label(p.getName());
 			b.setLayoutX(x);
@@ -407,7 +407,7 @@ public class MapEditController implements Initializable {
 	 * @author Hasan
 	 */
 	private void SetMapImage() {
-		String mapName = ControllersSavedObjects.selectedMapFromCombo.getMapName();
+		String mapName = ControllersAuxiliaryMethods.selectedMapFromCombo.getMapName();
 		// get map file from the data base
 		DataBaseController.GetFileFromTable("MAP", "MAP_NAME", mapName, "MAPFILE");
 		String filePath = (String) (DataBaseController.clientCon.GetServerObject());
@@ -419,7 +419,6 @@ public class MapEditController implements Initializable {
 			} catch (NullPointerException ex) {
 				System.out.println("MapEdit>>>EXCEPTION AT SetMapImage >>" + ex.getMessage());
 			}
-
 		}
 	}
 
