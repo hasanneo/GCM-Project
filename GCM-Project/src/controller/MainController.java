@@ -64,7 +64,7 @@ public class MainController extends Application {
 		mystage.close();
 		SceneController.push(((Node) event.getSource()).getScene());// push current scene
 		OptionsController option = new OptionsController();
-		option.start(new Stage());// create the option stage
+		option.start(new Stage());// create the option stagez
 	}
 
 	@FXML
@@ -105,5 +105,8 @@ public class MainController extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
+	}
+	
+	public void searchMaps(){
 	}
 }

@@ -105,6 +105,9 @@ public class ClientConnection implements GCMIF {
 		str = str.replace("[", "");
 		str = str.replace("]", "");
 		String[] array = str.split(",");
+		for(int i=0;i<array.length;i++) {
+			array[i]=array[i].trim();
+		}
 		return array;
 	}
 }

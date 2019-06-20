@@ -1,5 +1,9 @@
 package controller;
-
+//majd
+/*fix the DepartmentContentManagerMenuScreen-----user !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * line 72V
+ * line 75X
+ * */ 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -27,17 +31,6 @@ public class OptionsController extends Application  {
 	private String UserType;
 	@Override
 	public void start(Stage stage) throws Exception {
-		
-		
-		/*String UserType;
-		ArrayList<String> tableRow;
-		DataBaseController.SelectUserTypeFromTable("accounts");// execute query
-		tableRow=DataBaseController.clientCon.getList();//get row result
-		UserType = tableRow.get(8).toString();
-		*/
-		
-		
-		
 		if(DataBaseController.clientCon.isLoggedIn()==true) {
 			UserType=DataBaseController.clientCon.GetUserType();
 			System.out.println("USER YPE ::::"+UserType);
@@ -76,6 +69,7 @@ public class OptionsController extends Application  {
 				}				
 		}
 		else {
+			 //user
 			 // TODO Auto-generated method stub
 					fxmlLoader = new FXMLLoader();
 					fxmlLoader.setLocation(getClass().getResource("/fxml/UserMenuScreen.fxml"));
