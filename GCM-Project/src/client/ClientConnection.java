@@ -106,7 +106,15 @@ public class ClientConnection implements GCMIF {
 		else
 			return this.userAccount.getUserType();
 	}
-
+	
+	public Account GetUser() {
+		if (this.userAccount == null)
+			return null;
+		else 
+			return this.userAccount;
+	}
+	
+	
 	public String[] GetObjectAsStringArray() {
 		String str = serverObject.toString();
 		str = str.replace("[", "");

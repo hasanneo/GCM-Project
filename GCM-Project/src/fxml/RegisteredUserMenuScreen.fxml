@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="596.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefHeight="596.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisteredUserMenuScreen_Controller">
    <children>
       <SplitPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ImageView fitHeight="693.0" fitWidth="1219.0" layoutX="-368.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
@@ -53,6 +53,20 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button fx:id="btnLogOut" contentDisplay="GRAPHIC_ONLY" layoutX="40.0" layoutY="542.0" mnemonicParsing="false" onAction="#BackClick" prefHeight="90.0" prefWidth="90.0">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <tooltip>
+            <Tooltip text="Log out" />
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/Log%20out.png" />
+               </image></ImageView>
+         </graphic>
+      </Button>
       <Button contentDisplay="GRAPHIC_ONLY" layoutX="518.0" layoutY="132.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
@@ -67,21 +81,7 @@
                </image></ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="40.0" layoutY="542.0" mnemonicParsing="false" onAction="#LogOutClick" prefHeight="90.0" prefWidth="90.0">
-         <effect>
-            <SepiaTone />
-         </effect>
-         <tooltip>
-            <Tooltip text="Log out" />
-         </tooltip>
-         <graphic>
-            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/Log%20out.png" />
-               </image></ImageView>
-         </graphic>
-      </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="518.0" layoutY="376.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+      <Button fx:id="btnViewCard" contentDisplay="GRAPHIC_ONLY" layoutX="518.0" layoutY="376.0" mnemonicParsing="false" onAction="#ViewCardClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>

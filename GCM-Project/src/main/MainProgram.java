@@ -47,7 +47,7 @@ public class MainProgram extends Application {
 			//new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
 			//new ViewCityMapsCatalogLoader().start(new Stage());
 			
-		    //new AddMapToCityLoader("muqebla").start(new Stage());
+		    //new AddMapToCityLoader("citynametest").start(new Stage());
 			//new ChooseCityLoader().start(new Stage());
 			//Jawad comment this section
 
