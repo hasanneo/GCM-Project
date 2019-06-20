@@ -44,6 +44,9 @@ public class SqlConnection {
 				System.out.println("IN GET FILE CASE");
 				queryResult = ExecuteGetFileQuery(queryArr);
 				break;
+			case "update":
+				queryResult = ExecuteUpdateQuery(queryArr);
+				break;
 			default:
 				throw new Exception("SqConnection >> undefined query type");
 			}
@@ -56,12 +59,29 @@ public class SqlConnection {
 	}
 
 	/**
+	 * @param queryArr
+	 * @return
+	 * @author Hasan
+	 */
+	private Object ExecuteUpdateQuery(ArrayList<String> queryArr) {
+		try {
+			PreparedStatement updateQuery = conn.prepareStatement(queryArr.get(0));// pass the query string
+			return updateQuery.executeUpdate();// return affected rows
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
 	 * This method will search by the first coulmn of the table in the data base
 	 * 
-	 * @param queryArr the queryArr will have the query string at index 0,index 1
+	 * @param queryArr -the queryArr will have the query string at index 0,index 1
 	 *                 the name of the blob field, index 2 taget value to search by.
 	 * @return bytes of the selected file. Null when failed
 	 * @throws SQLException
+	 * @author Hasan
 	 */
 	private Object ExecuteGetFileQuery(ArrayList<String> queryArr) throws Exception {
 		ResultSet rs = null;
@@ -79,7 +99,7 @@ public class SqlConnection {
 			String filePath;
 			InputStream input = rs.getBinaryStream(blobColumn);// read blob
 			output = new FileOutputStream(blobFile);
-			byte[] buffer = new byte[1024];
+			byte[] buffer = new byte[16777215];// 1024
 			// while(input.read(buffer)>0);
 			/*
 			 * warning it saves the file in the procject directory
@@ -94,6 +114,7 @@ public class SqlConnection {
 			result = filePath.replace("\\", "/");
 			filePath = "file:///";
 			result = filePath.concat(result);
+			rs.close();// added
 			return result;
 		}
 		System.out.println(" SqlConnection >> ExecuteGetFileQuery >> failure");
@@ -103,8 +124,9 @@ public class SqlConnection {
 	/**
 	 * Parse database result set into an ArrayList with rows separated by commas
 	 * 
-	 * @param rs
+	 * @param rs - a result set
 	 * @return ArrayList<String>
+	 * @author Hasan
 	 */
 	public ArrayList<String> ParseResultToArrayList(ResultSet rs) {
 		ArrayList<String> arr = new ArrayList<>();
@@ -131,6 +153,7 @@ public class SqlConnection {
 	 * 
 	 * @param msg
 	 * @return object
+	 * @author Hasan
 	 */
 
 	public Object ExecuteSelectQuery(Object query) {
@@ -148,6 +171,13 @@ public class SqlConnection {
 		}
 	}
 
+	/**
+	 * 
+	 * @param queryArr
+	 * @return
+	 * @throws SQLException
+	 * @author Hasan
+	 */
 	public Object ExecuteInsertQuery(ArrayList<String> queryArr) throws SQLException {
 		int i;
 		PreparedStatement ps = conn.prepareStatement(queryArr.get(queryArr.size() - 2));

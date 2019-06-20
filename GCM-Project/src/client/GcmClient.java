@@ -5,7 +5,13 @@ import java.util.concurrent.Semaphore;
 
 import common.GCMIF;
 import ocsf.client.AbstractClient;
-
+/**
+ * 
+ * 
+ *
+ * @author Hasan
+ *
+ */
 public class GcmClient extends AbstractClient {
 	GCMIF clientUI;
 	Semaphore sem = new Semaphore(0);

@@ -16,10 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0"
-	prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MapEditController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MapEditController">
 	<children>
 		<VBox prefHeight="507.0" prefWidth="600.0">
 			<children>
@@ -32,62 +29,35 @@
 						</Label>
 						<Pane prefHeight="77.0" prefWidth="294.0">
 							<children>
-								<Button id="addSiteBtn" fx:id="addSiteBtn"
-									layoutX="218.0" layoutY="27.0" mnemonicParsing="false"
-									onAction="#addPlace" text="Add" />
-								<ComboBox id="combo" fx:id="combo" layoutX="40.0"
-									layoutY="27.0" prefWidth="150.0" promptText="Choose Place " />
-								<Button id="removeBtn" fx:id="removeBtn" layoutX="40.0"
-									layoutY="72.0" mnemonicParsing="false" onAction="#removeSite"
-									text="Remove site" visible="false" />
-								<Button id="changeBtn" fx:id="changeBtn" layoutX="180.0"
-									layoutY="72.0" mnemonicParsing="false"
-									onAction="#changeCordinates" text="change cordinates"
-									visible="false" />
-								<Button id="saveCordBtn" fx:id="saveCordBtn"
-									layoutX="280.0" layoutY="72.0" mnemonicParsing="false"
-									onAction="#saveNewCordinates" text="Save change"
-									visible="false" />
+								<Button id="addSiteBtn" fx:id="addSiteBtn" layoutX="218.0" layoutY="27.0" mnemonicParsing="false" onAction="#addPlace" text="Add" />
+								<ComboBox id="combo" fx:id="combo" layoutX="40.0" layoutY="27.0" prefWidth="150.0" promptText="Choose Place " />
+								<Button id="removeBtn" fx:id="removeBtn" layoutX="40.0" layoutY="72.0" mnemonicParsing="false" onAction="#removeSite" text="Remove site" visible="false" />
+								<Button id="changeBtn" fx:id="changeBtn" layoutX="180.0" layoutY="72.0" mnemonicParsing="false" onAction="#changeCordinates" text="change cordinates" visible="false" />
+								<Button id="saveCordBtn" fx:id="saveCordBtn" layoutX="280.0" layoutY="72.0" mnemonicParsing="false" onAction="#saveNewCordinates" text="Save change" visible="false" />
 							</children>
 						</Pane>
 					</children>
 				</HBox>
-				<SplitPane dividerPositions="0.31605351170568563"
-					prefHeight="406.0" prefWidth="600.0">
+				<SplitPane dividerPositions="0.31605351170568563" prefHeight="406.0" prefWidth="600.0">
 					<items>
-						<ListView id="placesList" fx:id="placesList"
-							onMouseClicked="#veiwbuttons" prefHeight="400.0"
-							prefWidth="200.0" />
-						<ScrollPane id="scrollPane" fx:id="scrollPane"
-							onScroll="#zoom" prefHeight="406.0" prefWidth="406.0">
+						<ListView id="placesList" fx:id="placesList" onMouseClicked="#veiwbuttons" prefHeight="400.0" prefWidth="200.0" />
+						<ScrollPane id="scrollPane" fx:id="scrollPane" onScroll="#zoom" prefHeight="406.0" prefWidth="406.0">
 							<content>
 								<Pane id="p1" fx:id="p1">
 									<children>
-										<ImageView id="mapView" fx:id="mapView"
-											layoutX="1.0" onMouseClicked="#saveCordinates">
-											<image>
-												<Image url="@../../../../../Desktop/GoogleMapTA.jpg" />
-											</image>
+										<ImageView id="mapView" fx:id="mapView" layoutX="1.0" onMouseClicked="#saveCordinates">
 											<cursor>
 												<Cursor fx:constant="CROSSHAIR" />
 											</cursor>
 										</ImageView>
-										<Pane id="PlacePane" fx:id="PlacePane" layoutX="109.0"
-											layoutY="97.0" prefHeight="50.0" prefWidth="30.0">
+										<Pane id="PlacePane" fx:id="PlacePane" layoutX="109.0" layoutY="97.0" prefHeight="50.0" prefWidth="30.0">
 											<children>
-												<Label id="SiteNameLbl" fx:id="SiteNameLbl"
-													alignment="TOP_CENTER" contentDisplay="TOP" layoutX="1.0"
-													layoutY="28.0" prefHeight="17.0" prefWidth="30.0"
-													text="test" textAlignment="CENTER">
+												<Label id="SiteNameLbl" fx:id="SiteNameLbl" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="1.0" layoutY="28.0" prefHeight="17.0" prefWidth="30.0" text="test" textAlignment="CENTER">
 													<font>
 														<Font name="System Bold" size="12.0" />
 													</font>
 												</Label>
-												<ImageView id="button1" fx:id="button1"
-													accessibleRole="BUTTON" fitHeight="47.0" fitWidth="30.0"
-													focusTraversable="true" nodeOrientation="INHERIT"
-													onMousePressed="#moveSite" onMouseReleased="#stopHandler"
-													preserveRatio="true">
+												<ImageView id="button1" fx:id="button1" accessibleRole="BUTTON" fitHeight="47.0" fitWidth="30.0" focusTraversable="true" nodeOrientation="INHERIT" onMousePressed="#moveSite" onMouseReleased="#stopHandler" preserveRatio="true">
 													<image>
 														<Image url="@../../../../../Desktop/b969b0a89c.png" />
 													</image>
@@ -108,12 +78,8 @@
 				</SplitPane>
 				<Pane prefHeight="66.0" prefWidth="600.0">
 					<children>
-						<Button id="cancelBtn" fx:id="cancelBtn" layoutX="419.0"
-							layoutY="10.0" mnemonicParsing="false" onAction="#cancel"
-							text="cancel" />
-						<Button id="saveBtn" fx:id="saveBtn" layoutX="131.0"
-							layoutY="10.0" mnemonicParsing="false" onAction="#save"
-							text="save" />
+						<Button id="cancelBtn" fx:id="cancelBtn" layoutX="419.0" layoutY="10.0" mnemonicParsing="false" onAction="#cancel" text="cancel" />
+						<Button id="saveBtn" fx:id="saveBtn" layoutX="131.0" layoutY="10.0" mnemonicParsing="false" onAction="#save" text="save" />
 					</children>
 				</Pane>
 			</children>

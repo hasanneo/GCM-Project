@@ -5,7 +5,13 @@ import java.util.ArrayList;
 
 import common.GCMIF;
 import entity.Account;
-
+/**
+ * 
+ * 
+ *
+ * @author Hasan
+ *
+ */
 public class ClientConnection implements GCMIF {
 	final public static int DEFAULT_PORT = 5555;// The default port to connect on.
 	private Object serverObject;// Object that gets recieved from the server
@@ -42,6 +48,7 @@ public class ClientConnection implements GCMIF {
 	 * execute user queries
 	 * 
 	 * @param the sql query
+	 * @author Hasan
 	 */
 	public void ExecuteQuery(Object message) {
 		System.out.println("ClientConnection >> ExecuteQuery " + message.toString());
@@ -99,7 +106,15 @@ public class ClientConnection implements GCMIF {
 		else
 			return this.userAccount.getUserType();
 	}
-
+	
+	public Account GetUser() {
+		if (this.userAccount == null)
+			return null;
+		else 
+			return this.userAccount;
+	}
+	
+	
 	public String[] GetObjectAsStringArray() {
 		String str = serverObject.toString();
 		str = str.replace("[", "");
