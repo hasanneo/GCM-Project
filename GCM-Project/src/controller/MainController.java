@@ -59,7 +59,6 @@ public class MainController extends Application {
 
 	@FXML//
 	void OptionsOnActionBtn(ActionEvent event) throws Exception {
-
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		mystage.close();
 		SceneController.push(((Node) event.getSource()).getScene());// push current scene
