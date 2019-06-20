@@ -44,6 +44,9 @@ public class SqlConnection {
 				System.out.println("IN GET FILE CASE");
 				queryResult = ExecuteGetFileQuery(queryArr);
 				break;
+			case "update":
+				queryResult = ExecuteUpdateQuery(queryArr);
+				break;
 			default:
 				throw new Exception("SqConnection >> undefined query type");
 			}
@@ -52,6 +55,22 @@ public class SqlConnection {
 			System.out.println("SqlConnection query exception >> " + e.getMessage());
 		}
 
+		return null;
+	}
+
+	/**
+	 * @param queryArr
+	 * @return
+	 * @author Hasan
+	 */
+	private Object ExecuteUpdateQuery(ArrayList<String> queryArr) {
+		try {
+			PreparedStatement updateQuery = conn.prepareStatement(queryArr.get(0));// pass the query string
+			return updateQuery.executeUpdate();// return affected rows
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -80,7 +99,7 @@ public class SqlConnection {
 			String filePath;
 			InputStream input = rs.getBinaryStream(blobColumn);// read blob
 			output = new FileOutputStream(blobFile);
-			byte[] buffer = new byte[16777215];//1024
+			byte[] buffer = new byte[16777215];// 1024
 			// while(input.read(buffer)>0);
 			/*
 			 * warning it saves the file in the procject directory
@@ -95,7 +114,7 @@ public class SqlConnection {
 			result = filePath.replace("\\", "/");
 			filePath = "file:///";
 			result = filePath.concat(result);
-			rs.close();//added
+			rs.close();// added
 			return result;
 		}
 		System.out.println(" SqlConnection >> ExecuteGetFileQuery >> failure");
@@ -151,13 +170,14 @@ public class SqlConnection {
 			return null;
 		}
 	}
-/**
- * 
- * @param queryArr
- * @return
- * @throws SQLException
- * @author Hasan
- */
+
+	/**
+	 * 
+	 * @param queryArr
+	 * @return
+	 * @throws SQLException
+	 * @author Hasan
+	 */
 	public Object ExecuteInsertQuery(ArrayList<String> queryArr) throws SQLException {
 		int i;
 		PreparedStatement ps = conn.prepareStatement(queryArr.get(queryArr.size() - 2));
