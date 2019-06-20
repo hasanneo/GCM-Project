@@ -5,9 +5,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 
 import entity.Map;
 import javafx.application.Application;
@@ -31,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+
 
 /**
  * 
@@ -81,68 +84,7 @@ public class MainController extends Application {
 	@FXML
 	private TableColumn<Map, String> DescriptionColumn;
 
-
-	@FXML
-	void LogOutClick() {
-
-
-
-
-
-		// System.out.println("out");
-
-		//System.out.println("out");
-	}
-
-	@FXML
-	void AccountClick(MouseEvent event) {
-
-	}
-
-	@FXML
-	void searchMaps(ActionEvent event) {
-		if (search_text.getText().equals(""))
-			return;
-		mapsTableView.setItems(null);
-		ArrayList<Map> mapsList;
-		String toogleGroupValue = "";
-		RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
-		toogleGroupValue = selectedRadioButton.getText();
-		mapsTableView.setVisible(true);
-		switch (toogleGroupValue) {
-		case "Name":
-			System.out.println("name");
-			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "CITY_NAME", search_text.getText());
-			if (mapsList != null) {
-				mapsTableView.setItems(getMapObservableList(mapsList));
-			}
-			break;
-		case "description":
-			System.out.println("description");
-			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "DESC", search_text.getText());//change by hasan. Was DESC INSTEAD OF MAP_DESK
-			if (mapsList != null) {
-				mapsTableView.setItems(getMapObservableList(mapsList));
-			}
-			break;
-		case "place":
-			System.out.println("place");
-			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "Place", search_text.getText());
-			if (mapsList != null) {
-				mapsTableView.setItems(getMapObservableList(mapsList));
-			}
-			break;
-
-		default:
-			System.out.println("Choose search type");
-			break;
-		}
-
-	}
-
-	@FXML
-	void CatalogClick(MouseEvent event) {
-
-	}
+	
 
 
 	/**
@@ -274,4 +216,74 @@ public class MainController extends Application {
 		// load dummy data
 		// mapsTableView.setItems(getPeople());
 	}
+
+
+	
+
+	@FXML
+	void LogOutClick() {
+
+		// System.out.println("out");
+
+		//System.out.println("out");
+
+
+
+	}
+
+	@FXML
+	void AccountClick(MouseEvent event) {
+
+	}
+
+	@FXML
+	void searchMaps(ActionEvent event) {
+		if (search_text.getText().equals(""))
+			return;
+		mapsTableView.setItems(null);
+		ArrayList<Map> mapsList;
+		String toogleGroupValue = "";
+		RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+		toogleGroupValue = selectedRadioButton.getText();
+		mapsTableView.setVisible(true);
+		switch (toogleGroupValue) {
+		case "Name":
+			System.out.println("name");
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "CITY_NAME", search_text.getText());
+			if (mapsList != null) {
+				mapsTableView.setItems(getMapObservableList(mapsList));
+			}
+			break;
+		case "description":
+			System.out.println("description");
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "DESC", search_text.getText());//change by hasan. Was DESC INSTEAD OF MAP_DESK
+			if (mapsList != null) {
+				mapsTableView.setItems(getMapObservableList(mapsList));
+			}
+			break;
+		case "place":
+			System.out.println("place");
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "Place", search_text.getText());
+			if (mapsList != null) {
+				mapsTableView.setItems(getMapObservableList(mapsList));
+			}
+			break;
+
+		default:
+			System.out.println("Choose search type");
+			break;
+		}
+
+	}
+
+	@FXML
+	void CatalogClick(MouseEvent event) {
+
+	}
+
+
+
+
+	
 }
+
