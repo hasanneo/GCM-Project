@@ -42,7 +42,6 @@ import javafx.stage.Stage;
  */
 public class MainController extends Application {
 
-
 	@FXML
 	private ToggleGroup toggleGroup;
 
@@ -62,8 +61,7 @@ public class MainController extends Application {
 
 	@FXML
 	private Button log_out_btn;
-	
-	
+
 	@FXML
 	private TableView<Map> mapsTableView;
 
@@ -83,6 +81,7 @@ public class MainController extends Application {
 	@FXML
 	private TableColumn<Map, String> DescriptionColumn;
 
+
 	
 
 	@FXML
@@ -91,6 +90,7 @@ public class MainController extends Application {
 		// System.out.println("out");
 
 		//System.out.println("out");
+
 
 
 	}
@@ -102,48 +102,41 @@ public class MainController extends Application {
 
 	@FXML
 	void searchMaps(ActionEvent event) {
-		
+		if (search_text.getText().equals(""))
+			return;
 		mapsTableView.setItems(null);
 		ArrayList<Map> mapsList;
-		String toogleGroupValue="";
+		String toogleGroupValue = "";
 		RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
 		toogleGroupValue = selectedRadioButton.getText();
-
 		mapsTableView.setVisible(true);
-		
-		switch(toogleGroupValue)
-		{
+		switch (toogleGroupValue) {
 		case "Name":
 			System.out.println("name");
-			
-		mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "CITY_NAME",search_text.getText() );
-		mapsTableView.setItems(getMapObservableList(mapsList));
-
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "CITY_NAME", search_text.getText());
+			if (mapsList != null) {
+				mapsTableView.setItems(getMapObservableList(mapsList));
+			}
 			break;
-
 		case "description":
 			System.out.println("description");
-			
-			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "DESC",search_text.getText() );
-			
-			mapsTableView.setItems(getMapObservableList(mapsList));
-
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "DESC", search_text.getText());//change by hasan. Was DESC INSTEAD OF MAP_DESK
+			if (mapsList != null) {
+				mapsTableView.setItems(getMapObservableList(mapsList));
+			}
 			break;
-
 		case "place":
 			System.out.println("place");
-			
-			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map","Place",search_text.getText());
-			mapsTableView.setItems(getMapObservableList(mapsList));
-
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "Place", search_text.getText());
+			if (mapsList != null) {
+				mapsTableView.setItems(getMapObservableList(mapsList));
+			}
 			break;
 
-		default: 
+		default:
 			System.out.println("Choose search type");
 			break;
 		}
-	
-		
 
 	}
 
@@ -151,6 +144,7 @@ public class MainController extends Application {
 	void CatalogClick(MouseEvent event) {
 
 	}
+
 
 	/**
 	 * @author Ebrahem
@@ -263,24 +257,22 @@ public class MainController extends Application {
 		primaryStage.show();
 	}
 
-
-	public ObservableList<Map>  getMapObservableList(ArrayList<Map> list)
-	{
+	public ObservableList<Map> getMapObservableList(ArrayList<Map> list) {
 		ObservableList<Map> mapsList = FXCollections.observableArrayList();
 		for (int i = 0; i < list.size(); i++) {
 			mapsList.add(list.get(i));
 		}
 		return mapsList;
 	}
+
 	@FXML
-	   public void initialize() {
-	        //set up the columns in the table
-	        NameColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("mapName"));
-	        
-	        CityNameColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("cityName"));
-	        DescriptionColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("mapDescription"));
-	        
-	        //load dummy data
-	        //mapsTableView.setItems(getPeople());
-	   }
+	public void initialize() {
+		// set up the columns in the table
+		NameColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("mapName"));
+		CityNameColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("cityName"));
+		DescriptionColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("mapDescription"));
+
+		// load dummy data
+		// mapsTableView.setItems(getPeople());
+	}
 }

@@ -48,6 +48,7 @@ public class ClientConnection implements GCMIF {
 	 * execute user queries
 	 * 
 	 * @param the sql query
+	 * @author Hasan
 	 */
 	public void ExecuteQuery(Object message) {
 		System.out.println("ClientConnection >> ExecuteQuery " + message.toString());

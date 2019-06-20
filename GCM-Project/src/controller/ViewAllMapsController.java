@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 
 import entity.Map;
 import entity.PlaceInMap;
+import fxmlLoaders.EditMapLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -54,7 +55,6 @@ public class ViewAllMapsController implements Initializable {
 	private ComboBox<String> mapCombo;
 	@FXML
 	private Button edit_btn;
-	private Map chosenMap;
 	private ArrayList<PlaceInMap> placesArr;
 
 	/**
@@ -103,7 +103,6 @@ public class ViewAllMapsController implements Initializable {
 	 * @author Hasan
 	 */
 	public void FillMapTextValues(String mapName) {
-		String filePath = null;
 		for (Map m : maps) {
 			if (m.getMapName().equals(mapName)) {
 				mapCityLabel.setText(m.getCityName());
@@ -167,7 +166,6 @@ public class ViewAllMapsController implements Initializable {
  */
 	private void GetMapsPlaces() {
 		String[] placesArray;
-		double x, y;
 		int row = 0;
 		int tableColumns = 5;
 		DataBaseController.SelectAllRowsFromTable("places_in_maps");
