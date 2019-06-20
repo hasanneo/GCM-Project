@@ -58,10 +58,11 @@ public class SqlConnection {
 	/**
 	 * This method will search by the first coulmn of the table in the data base
 	 * 
-	 * @param queryArr the queryArr will have the query string at index 0,index 1
+	 * @param queryArr -the queryArr will have the query string at index 0,index 1
 	 *                 the name of the blob field, index 2 taget value to search by.
 	 * @return bytes of the selected file. Null when failed
 	 * @throws SQLException
+	 * @author Hasan
 	 */
 	private Object ExecuteGetFileQuery(ArrayList<String> queryArr) throws Exception {
 		ResultSet rs = null;
@@ -104,8 +105,9 @@ public class SqlConnection {
 	/**
 	 * Parse database result set into an ArrayList with rows separated by commas
 	 * 
-	 * @param rs
+	 * @param rs - a result set
 	 * @return ArrayList<String>
+	 * @author Hasan
 	 */
 	public ArrayList<String> ParseResultToArrayList(ResultSet rs) {
 		ArrayList<String> arr = new ArrayList<>();
@@ -132,6 +134,7 @@ public class SqlConnection {
 	 * 
 	 * @param msg
 	 * @return object
+	 * @author Hasan
 	 */
 
 	public Object ExecuteSelectQuery(Object query) {
@@ -148,7 +151,13 @@ public class SqlConnection {
 			return null;
 		}
 	}
-
+/**
+ * 
+ * @param queryArr
+ * @return
+ * @throws SQLException
+ * @author Hasan
+ */
 	public Object ExecuteInsertQuery(ArrayList<String> queryArr) throws SQLException {
 		int i;
 		PreparedStatement ps = conn.prepareStatement(queryArr.get(queryArr.size() - 2));

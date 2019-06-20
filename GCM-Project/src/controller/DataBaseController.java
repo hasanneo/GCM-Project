@@ -192,7 +192,63 @@ public class DataBaseController {
 		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
 	}
-	
+	/**
+	 * A generic method for inserting a row to a table (convert all values to string before using this method)
+	 * @param tableName table name in the database
+	 * @param tableColums arraylist of table column names
+	 * @param values the arraylist of values required to insert
+	 * @author Hasan
+	 */
+	public static void InsertIntoTable(String tableName,ArrayList<String> tableColums,ArrayList<String> values) {
+		ArrayList<String> queryArr=new ArrayList<String>();
+		String query = "INSERT INTO "+tableName+"(";
+		for(int i=0;i<tableColums.size();i++) {
+			if(i==tableColums.size()-1)
+				query=query.concat(tableColums.get(i)+")");
+			else
+				query=query.concat(tableColums.get(i)+",");
+		}
+		query=query.concat("VALUES (");
+		for(int i=0;i<values.size();i++) {
+			if(i==values.size()-1)
+				query=query.concat("?);");
+			else 
+				query=query.concat("?,");
+		}
+		System.out.println(query);
+		queryArr.addAll(values);
+		queryArr.add(query);
+		queryArr.add("insert");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	/**
+	 * Generic select one column from table query by value.
+	 * @param tableName -name of the table in the DB
+	 * @param columnName -name of the column that you want to show
+	 * @param compareColumn -name of the column that you want to compare values with
+	 * @param value -the actual compare value.
+	 */
+	public static void GenericSelectFromTable(String tableName,String columnName,String compareColumn,String value) {
+		ArrayList<String> queryArr=new ArrayList<String>();
+		String query = "SELECT "+columnName+" FROM `"+tableName+"` WHERE "+compareColumn+"='"+value+"';";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	/**
+	 * Generic select one column from table query without compare
+	 * @param tableName -name of the table in the DB
+	 * @param columnName -name of the column that you want to show
+	 * @param compareColumn -name of the column that you want to compare values with
+	 *
+	 */
+	public static void GenericSelectFromTable(String tableName,String columnName) {
+		ArrayList<String> queryArr=new ArrayList<String>();
+		String query = "SELECT "+columnName+" FROM `"+tableName+"`;";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
 	/*majd
 	public static void SelectUserTypeFromTable(String tableName) {
 		ArrayList<String> queryArr =new ArrayList<String>();
