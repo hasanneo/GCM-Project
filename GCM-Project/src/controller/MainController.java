@@ -5,11 +5,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 
 import entity.Map;
 import javafx.application.Application;
@@ -33,17 +31,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-
-
 /**
  * 
  * @author Hasan
- * @author Ebrahem
- * @author Majd
  *
- *         Controller for the main menu
+ *Controller for the main menu
  */
 public class MainController extends Application {
+
 
 	@FXML
 	private ToggleGroup toggleGroup;
@@ -64,18 +59,12 @@ public class MainController extends Application {
 
 	@FXML
 	private Button log_out_btn;
-
+	
+	
 	@FXML
 	private TableView<Map> mapsTableView;
 
 	@FXML
-
-	private TextField passTxt;
-	private String UserType;
-
-	FXMLLoader fxmlLoader;
-
-
 	private TableColumn<Map, String> NameColumn;
 
 	@FXML
@@ -85,77 +74,78 @@ public class MainController extends Application {
 	private TableColumn<Map, String> DescriptionColumn;
 
 	
+	@FXML
+	void LogOutClick() {
+		//System.out.println("out");
 
 
-	/**
-	 * @author Ebrahem
-	 * @author Majd
-	 * @param event
-	 * @throws Exception in case of failed stage opening
-	 * 
-	 * Controls to which options menu the user is redirected depending on user type:
-	 * * User
-	 * * Registered User
-	 * * Worker
-	 * * Manager
-	 */
-	@FXML 
+	}
+
+	@FXML
+	void AccountClick(MouseEvent event) {
+
+	}
+
+	@FXML
+	void searchMaps(ActionEvent event) {
+		
+		mapsTableView.setItems(null);
+		ArrayList<Map> mapsList;
+		String toogleGroupValue="";
+		RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+		toogleGroupValue = selectedRadioButton.getText();
+
+		mapsTableView.setVisible(true);
+		
+		switch(toogleGroupValue)
+		{
+		case "Name":
+			System.out.println("name");
+			
+		mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "CITY_NAME",search_text.getText() );
+		mapsTableView.setItems(getMapObservableList(mapsList));
+
+			break;
+
+		case "description":
+			System.out.println("description");
+			
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "DESC",search_text.getText() );
+			
+			mapsTableView.setItems(getMapObservableList(mapsList));
+
+			break;
+
+		case "place":
+			System.out.println("place");
+			
+			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map","Place",search_text.getText());
+			mapsTableView.setItems(getMapObservableList(mapsList));
+
+			break;
+
+		default: 
+			System.out.println("Choose search type");
+			break;
+		}
+	
+		
+
+	}
+
+	@FXML
+	void CatalogClick(MouseEvent event) {
+
+	}
+
+	@FXML//
 	void OptionsOnActionBtn(ActionEvent event) throws Exception {
 
-		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); //creating an instance of this stage
-		//checking user type to display the appropriate stage
-		if (DataBaseController.clientCon.isLoggedIn() == true) {
-			
-			UserType = DataBaseController.clientCon.GetUserType(); //get user type
-
-			System.out.println("USER YPE ::::" + UserType);
-			
-			//in case the user type was user -> display user options
-			if (UserType.equals("user")) {
-				thisStage.close(); //close current stage
-				RegisteredUserMenuScreen_Controller registeredUserScreen = new RegisteredUserMenuScreen_Controller(); //creating and instance of user menu screen
-				try {
-					registeredUserScreen.start(new Stage()); //invoke the screen
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		//in case the user type was worker
-		 else if(UserType.equals("worker")) {
-			
-			 thisStage.close(); //close current stage
-			 DepartmentContentWorkerMenuScreen_Controller departmentWorker = new DepartmentContentWorkerMenuScreen_Controller(); //creating an instance of department worker controller 
-			 try {
-				departmentWorker.start(new Stage()); //invoking department controller start method
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		 }
-			/*
-		 else if (UserType.equals("manager")) {
-			 thisStage.close(); //close current stage
-			 DepartmentContentManagerController departmentManager = new DepartmentContentManagerController(); //creating an instance of department worker controller 
-			 try {
-				departmentManager.start(new Stage()); //invoking department controller start method
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		 }*/
-		}
-		//if non of the above conditions were met then the user is an unregistered user, is redirected to the appropriate window
-		else {
-			thisStage.close(); //close current stage
-			UserMenuScreen_Controller userMenuControllerStage = new UserMenuScreen_Controller(); //create an instance of target class
-			try {
-				userMenuControllerStage.start(new Stage()); //invoke start to get the appropriate UI
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		OptionsController option = new OptionsController();
+		option.start(new Stage());// create the option stage
 	}
 
 	@FXML
@@ -198,92 +188,24 @@ public class MainController extends Application {
 		primaryStage.show();
 	}
 
-	public ObservableList<Map> getMapObservableList(ArrayList<Map> list) {
+
+	public ObservableList<Map>  getMapObservableList(ArrayList<Map> list)
+	{
 		ObservableList<Map> mapsList = FXCollections.observableArrayList();
 		for (int i = 0; i < list.size(); i++) {
 			mapsList.add(list.get(i));
 		}
 		return mapsList;
 	}
-
 	@FXML
-	public void initialize() {
-		// set up the columns in the table
-		NameColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("mapName"));
-		CityNameColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("cityName"));
-		DescriptionColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("mapDescription"));
-
-		// load dummy data
-		// mapsTableView.setItems(getPeople());
-	}
-
-
-	
-
-	@FXML
-	void LogOutClick() {
-
-		// System.out.println("out");
-
-		//System.out.println("out");
-
-
-
-	}
-
-	@FXML
-	void AccountClick(MouseEvent event) {
-
-	}
-
-	@FXML
-	void searchMaps(ActionEvent event) {
-		if (search_text.getText().equals(""))
-			return;
-		mapsTableView.setItems(null);
-		ArrayList<Map> mapsList;
-		String toogleGroupValue = "";
-		RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
-		toogleGroupValue = selectedRadioButton.getText();
-		mapsTableView.setVisible(true);
-		switch (toogleGroupValue) {
-		case "Name":
-			System.out.println("name");
-			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "CITY_NAME", search_text.getText());
-			if (mapsList != null) {
-				mapsTableView.setItems(getMapObservableList(mapsList));
-			}
-			break;
-		case "description":
-			System.out.println("description");
-			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "DESC", search_text.getText());//change by hasan. Was DESC INSTEAD OF MAP_DESK
-			if (mapsList != null) {
-				mapsTableView.setItems(getMapObservableList(mapsList));
-			}
-			break;
-		case "place":
-			System.out.println("place");
-			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "Place", search_text.getText());
-			if (mapsList != null) {
-				mapsTableView.setItems(getMapObservableList(mapsList));
-			}
-			break;
-
-		default:
-			System.out.println("Choose search type");
-			break;
-		}
-
-	}
-
-	@FXML
-	void CatalogClick(MouseEvent event) {
-
-	}
-
-
-
-
-	
+	   public void initialize() {
+	        //set up the columns in the table
+	        NameColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("mapName"));
+	        
+	        CityNameColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("cityName"));
+	        DescriptionColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("mapDescription"));
+	        
+	        //load dummy data
+	        //mapsTableView.setItems(getPeople());
+	   }
 }
-

@@ -29,7 +29,6 @@ public class MainProgram extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 	@Override
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
@@ -50,12 +49,9 @@ public class MainProgram extends Application {
 		    //new AddMapToCityLoader("citynametest").start(new Stage());
 			//new ChooseCityLoader().start(new Stage());
 			//Jawad comment this section
-
 			MainController main=new MainController();
 			arg0=new Stage();
-			main.start(arg0);//start main menu
-			
-
+			main.start(arg0);//start main menu	
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
 		}
