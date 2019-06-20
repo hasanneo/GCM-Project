@@ -52,6 +52,8 @@ public class MainProgram extends Application {
 			MainController main=new MainController();
 			arg0=new Stage();
 			main.start(arg0);//start main menu	
+			
+
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
 		}
