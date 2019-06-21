@@ -1,3 +1,4 @@
+
 package controller;
 //majd
 /*fix the DepartmentContentManagerMenuScreen-----user !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -72,7 +73,7 @@ public class OptionsController extends Application  {
 			 //user
 			 // TODO Auto-generated method stub
 					fxmlLoader = new FXMLLoader();
-					fxmlLoader.setLocation(getClass().getResource("/fxml/DepartmentContentManagerMenuScreen.fxml"));
+					fxmlLoader.setLocation(getClass().getResource("/fxml/UserMenuScreen.fxml"));
 					Parent root = fxmlLoader.load();
 					Scene scene = new Scene(root);
 					stage.setTitle("User");
