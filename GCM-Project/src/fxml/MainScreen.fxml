@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="571.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="571.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 	<children>
       <ImageView fitHeight="616.0" fitWidth="1021.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -36,8 +36,8 @@
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></RadioButton>
-		<Button fx:id="log_out_btn" layoutX="70.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#LogOutClick" text="logout" visible="false" />
-		<Label fx:id="usernamelbl" layoutX="70.0" layoutY="14.0" text="Label" visible="false" />
+		<Button fx:id="log_out_btn" layoutX="111.0" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#LogOutClick" prefHeight="31.0" prefWidth="155.0" text="logout" />
+		<Label fx:id="usernamelbl" layoutX="281.0" layoutY="17.0" prefHeight="21.0" prefWidth="248.0" text="Label" />
       <TableView id="mapsTableView" fx:id="mapsTableView" layoutX="387.0" layoutY="180.0" prefHeight="383.0" prefWidth="615.0" visible="false">
         <columns>
           <TableColumn id="NameColumn" fx:id="NameColumn" prefWidth="75.0" text="Map Name" />
@@ -48,7 +48,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#OptionsOnActionBtn" prefHeight="60.0" prefWidth="60.0" text="Button">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#OptionsOnActionBtn" prefHeight="60.0" prefWidth="60.0" text="Button">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -100,5 +100,10 @@
          </tooltip>
       </Button>
       <Button id="searchbtn" fx:id="searchbtn" layoutX="747.0" layoutY="97.0" mnemonicParsing="false" onAction="#searchMaps" prefHeight="31.0" prefWidth="80.0" text="Search" />
+      <Label layoutX="109.0" layoutY="15.0" prefHeight="25.0" prefWidth="179.0" text="Label Notification " textFill="RED">
+         <font>
+            <Font name="Comic Sans MS Bold" size="18.0" />
+         </font>
+      </Label>
 	</children>
 </AnchorPane>

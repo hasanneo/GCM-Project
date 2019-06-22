@@ -44,16 +44,16 @@ public class MainProgram extends Application {
 			DataBaseController.InitiateClient(new ClientConnection(host, port));		
 
 			//new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
-			new ViewCityMapsCatalogLoader().start(new Stage());
+			//new ViewCityMapsCatalogLoader().start(new Stage());
 			
 		    //new AddMapToCityLoader("citynametest").start(new Stage());
 			//new ChooseCityLoader().start(new Stage());
 			//Jawad comment this section
-/*
+
 			MainController main=new MainController();
 			arg0=new Stage();
 			main.start(arg0);//start main menu	
-			*/
+			
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
 		}
