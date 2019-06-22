@@ -5,9 +5,12 @@ import java.util.*;
 import client.ClientConnection;
 import controller.DataBaseController;
 import controller.MainController;
-import controller.ViewAllMapsLoader;
 import controller.ViewCityMapsCatalogController;
-import controller.ViewCityMapsCatalogLoader;
+import fxmlLoaders.AddMapToCityLoader;
+import fxmlLoaders.ChooseCityLoader;
+import fxmlLoaders.ReleaseMapLoader;
+import fxmlLoaders.ViewAllMapsLoader;
+import fxmlLoaders.ViewCityMapsCatalogLoader;
 
 import java.io.*;
 import javafx.application.Application;
@@ -20,15 +23,13 @@ import javafx.stage.Stage;
  * 
  * @author Hasan
  *
- *The program will launch from here
+ *The program will launch from here.
  */
 public class MainProgram extends Application {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub a
 		launch(args);
 	}
-
 	@Override
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
@@ -41,9 +42,10 @@ public class MainProgram extends Application {
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
 			DataBaseController.InitiateClient(new ClientConnection(host, port));
-			
+		
 
 			//new MapViewLoader().start(new Stage());
+
 
 			new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
 			//new ViewCityMapsCatalogLoader().start(new Stage());

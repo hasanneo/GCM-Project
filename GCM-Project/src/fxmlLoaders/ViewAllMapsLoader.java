@@ -1,7 +1,7 @@
 /**
  * 
  */
-package controller;
+package fxmlLoaders;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;

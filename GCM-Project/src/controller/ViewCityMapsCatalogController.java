@@ -25,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+
 /**
  * 
  *
@@ -34,14 +35,19 @@ import javafx.scene.control.TableView;
 public class ViewCityMapsCatalogController implements Initializable {
 
 	@FXML
-    private TableView<CityMap> tableView;
+	private TableView<CityMap> tableView;
 	ArrayList<CityMap> list;
 	CityMap selectedMapRow;
+
+	/**
+	 * Initialize the table view.
+	 * @author Hasan
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		list = new ArrayList<CityMap>();
 		GetDataFromDB();
-		ObservableList<CityMap> details = FXCollections.observableArrayList(list);		
+		ObservableList<CityMap> details = FXCollections.observableArrayList(list);
 		TableColumn<CityMap, String> col1 = new TableColumn<>("CITY");
 		TableColumn<CityMap, String> col2 = new TableColumn<>("MAP");
 		TableColumn<CityMap, String> col3 = new TableColumn<>("INFO");
@@ -50,37 +56,44 @@ public class ViewCityMapsCatalogController implements Initializable {
 		col3.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getInfo()));
 		tableView.setOnMouseClicked((MouseEvent event) -> {
 			int index = tableView.getSelectionModel().getSelectedIndex();
-		    if (event.getClickCount()==2&&index!=-1) {
-		    	System.out.println("INDEX :"+index);
-		        selectedMapRow = tableView.getItems().get(index);
-		        tableView.getSelectionModel().clearSelection();
-		        tableView.getSelectionModel().clearSelection();
-		        Alert alert = new Alert(AlertType.INFORMATION, null, ButtonType.OK,ButtonType.CANCEL);
-		        alert.setTitle("PURCHASE MAP");
-		        alert.headerTextProperty().set("PURCHASE "+selectedMapRow.getMapName()+"?");
+			if (event.getClickCount() == 2 && index != -1) {
+				System.out.println("INDEX :" + index);
+				selectedMapRow = tableView.getItems().get(index);
+				tableView.getSelectionModel().clearSelection();
+				tableView.getSelectionModel().clearSelection();
+				Alert alert = new Alert(AlertType.INFORMATION, null, ButtonType.OK, ButtonType.CANCEL);
+				alert.setTitle("PURCHASE MAP");
+				alert.headerTextProperty().set("PURCHASE " + selectedMapRow.getMapName() + "?");
 				alert.setContentText(null);
 				Optional<ButtonType> result = alert.showAndWait();
 				ButtonType button = result.orElse(ButtonType.CANCEL);
 				if (button == ButtonType.OK) {
-					//OK BUTTON
-				    System.out.println("Ok pressed :"+selectedMapRow.toString());
-				    /*
-				     * MOHAMMED HERE!!!
-				     */
+					// OK BUTTON
+					System.out.println("Ok pressed :" + selectedMapRow.toString());
+					/*
+					 * MOHAMMED HERE!!!
+					 */
 				} else {
-				    //CANCEL BUTTON 
+					// CANCEL BUTTON
 				}
-		    }
+			}
 		});
 		tableView.getColumns().addAll(col1, col2, col3);
 		tableView.setItems(details);
 	}
+/**
+ * Fill in the list array with city maps
+ * @author Hasan
+ */
 	private void GetDataFromDB() {
-		ArrayList<CityMap> cityMaps;
 		DataBaseController.SelectAllRowsFromTable("city_maps");
-		String[] rowsArr = DataBaseController.clientCon.GetObjectAsStringArray();
-		cityMaps = ControllersAuxiliaryMethods.GetCityMapsRowsAsList(rowsArr, 4);
-		list.addAll(cityMaps);
+		if (DataBaseController.clientCon.GetServerObject() != null) {
+			ArrayList<CityMap> cityMaps;
+			String[] rowsArr = DataBaseController.clientCon.GetObjectAsStringArray();
+			cityMaps = ControllersAuxiliaryMethods.GetCityMapsRowsAsList(rowsArr, 6);//was 4
+			list.addAll(cityMaps);
+		}
+
 	}
 
 }

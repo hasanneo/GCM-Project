@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package controller;
 
 import java.awt.Button;
@@ -15,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import entity.Map;
 import entity.PlaceInMap;
+import fxmlLoaders.EditMapLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

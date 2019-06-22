@@ -127,4 +127,8 @@ public class Account {
 	public void AddfieldToList(String field) {
 		this.fieldsArr.add(field);
 	}
+	
+	public Account getUser() {
+		return this;
+	}
 }
