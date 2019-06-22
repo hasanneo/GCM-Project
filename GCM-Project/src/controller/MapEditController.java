@@ -214,7 +214,7 @@ public class MapEditController implements Initializable {
 				ButtonType button = result.orElse(ButtonType.CANCEL);
 				if (button == ButtonType.OK) {
 					Notification mgrNotification=new Notification("testing request","mgr");
-					mgrNotification.SendNotificationForManagerApproval(map.getCityName(), "SOME INFO TESTIGN", map.getMapName(), map.getMapVersion());
+					mgrNotification.SendNotificationForManagerApproval(map.getCityName(), "REQUESTING TO AUTHORIZE MAP:"+map.getMapName(), map.getMapName(), map.getMapVersion());
 					
 				} else {
 					// CANCEL BUTTON
