@@ -8,6 +8,7 @@ import controller.MainController;
 import controller.ViewCityMapsCatalogController;
 import fxmlLoaders.AddMapToCityLoader;
 import fxmlLoaders.ChooseCityLoader;
+import fxmlLoaders.ReleaseMapLoader;
 import fxmlLoaders.ViewAllMapsLoader;
 import fxmlLoaders.ViewCityMapsCatalogLoader;
 
@@ -41,18 +42,20 @@ public class MainProgram extends Application {
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
 
-			DataBaseController.InitiateClient(new ClientConnection(host, port));		
+			DataBaseController.InitiateClient(new ClientConnection(host, port));
+		
+
+			//new MapViewLoader().start(new Stage());
+
+
 
 			//new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
 			//new ViewCityMapsCatalogLoader().start(new Stage());
-			
-		    //new AddMapToCityLoader("citynametest").start(new Stage());
-			//new ChooseCityLoader().start(new Stage());
-			//Jawad comment this section
 
 			MainController main=new MainController();
 			arg0=new Stage();
-			main.start(arg0);//start main menu	
+			main.start(arg0);//start main menu*/
+
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
 		}

@@ -90,7 +90,7 @@ public class ViewCityMapsCatalogController implements Initializable {
 		if (DataBaseController.clientCon.GetServerObject() != null) {
 			ArrayList<CityMap> cityMaps;
 			String[] rowsArr = DataBaseController.clientCon.GetObjectAsStringArray();
-			cityMaps = ControllersAuxiliaryMethods.GetCityMapsRowsAsList(rowsArr, 4);
+			cityMaps = ControllersAuxiliaryMethods.GetCityMapsRowsAsList(rowsArr, 6);//was 4
 			list.addAll(cityMaps);
 		}
 

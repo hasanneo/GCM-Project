@@ -14,7 +14,9 @@ String Name;
 String xLocation;
 String yLocation;
 String classification;
+String description;
 String accessability;
+String cityName;
 
 
 /**

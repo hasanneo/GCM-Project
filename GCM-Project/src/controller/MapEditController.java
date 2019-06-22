@@ -6,9 +6,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import entity.Map;
+import entity.MapVersionNotification;
+import entity.Notification;
 import entity.Place;
 import entity.PlaceInMap;
 import javafx.application.Application;
@@ -25,12 +28,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -197,6 +203,24 @@ public class MapEditController implements Initializable {
 		if (places != null && !places.isEmpty()) {
 			System.out.println("**********INSERTING********");
 			DataBaseController.InsertIntoPlacesInMaps(places.get(0));
+			if(DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
+				Map map=ControllersAuxiliaryMethods.getSelectedMapFromCombo();
+				//insert successfully
+				Alert alert = new Alert(AlertType.INFORMATION, null, ButtonType.OK,ButtonType.CANCEL);
+				alert.setTitle("PURCHASE MAP");
+				alert.setContentText("Request release approval?"+Double.parseDouble(ControllersAuxiliaryMethods.selectedMapFromCombo.getMapVersion()));
+				alert.headerTextProperty().set("PLACES ADDED SUCCESSFULLY TO "+ControllersAuxiliaryMethods.selectedMapFromCombo.getMapName());
+				alert.setContentText(null);
+				Optional<ButtonType> result = alert.showAndWait();
+				ButtonType button = result.orElse(ButtonType.CANCEL);
+				if (button == ButtonType.OK) {
+					MapVersionNotification noti=new MapVersionNotification("Authorize version", DataBaseController.clientCon.GetUser().getUsername(), "Request info test", map.getCityName(), map.getMapName(), map.getMapVersion());
+					noti.SendNotificationForManagerApproval();
+					
+				} else {
+					// CANCEL BUTTON
+				}
+			}
 		}
 	}
 
@@ -377,11 +401,11 @@ public class MapEditController implements Initializable {
 		String[] places = DataBaseController.clientCon.GetObjectAsStringArray();
 		ArrayList<Place> allPlaces = new ArrayList<Place>();
 		ArrayList<String> placesNames = new ArrayList<String>();
-		int colNum = 6;
+		int colNum = 7;
 		// populate the maps array list
 		for (int i = 0, row = 0; row < places.length / colNum; i += colNum, row++) {
 			placesNames.add(places[i]);
-			allPlaces.add(new Place(places[i], places[i + 1], places[i + 2], places[i + 3], places[i + 4]));
+			//allPlaces.add(new Place(places[i], places[i + 1], places[i + 2], places[i + 3], places[i + 4]));
 		}
 		ObservableList<String> comboOptions = FXCollections.observableArrayList(placesNames);
 		combo.setItems(comboOptions);
@@ -426,6 +450,7 @@ public class MapEditController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SetMapImage();
 		InitComboBox();
+		
 		PlacePane.setVisible(false);
 		assert mapView != null : "fx:id=\"mapView\" was not injected: check your FXML file 'mapGui.fxml'.";
 

@@ -76,7 +76,7 @@ public class DataBaseController {
 	}
 
 	
-	//-----------majd-
+	//majd
 	public static void InsertReportsToDB(String cityName, int reportTableMapsNumber, 
 			            int reportTablSubscriptions,int reportTablSubscriptionRenew,
 			            int reportTablViews, int reportTablDownloads,int reportTablOneTimePurchase)
@@ -94,16 +94,26 @@ public class DataBaseController {
 		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
 	}
-	//----
+	
+	/**
+	 * 
+	 * @author majd
+	 * 
+	 * 
+	 * Increment with value 1 in "viewreportstable" table ,
+	 * this function that takes column and city names and 
+	 * updated the wanted cell on DB.
+	 * 
+	 * */
+	
 	public static void CityIncFieldsInDB(String fName,String CityName) {
-		/*ArrayList<String> queryArr =new ArrayList<String>();
-	            	//UPDATE viewreportstable SET ViewsNum = ViewsNum + 1 WHERE CITY_NAME='akko';
+		ArrayList<String> queryArr =new ArrayList<String>();
 		String query="UPDATE viewreportstable SET "+fName+"="+ fName +"+ 1 WHERE CITY_NAME='"+CityName+"';";
 		queryArr.add(query);
      	queryArr.add("update");
-		clientCon.ExecuteQuery(queryArr);*/
+		clientCon.ExecuteQuery(queryArr);
 	}
-	//--------------majd--
+	
 
 	/**
 	 * Will get the all rows from the map table except for the blob column.
@@ -241,7 +251,7 @@ public class DataBaseController {
 	 */
 	public static void InsertIntoPlacesInMaps(PlaceInMap place) {
 		ArrayList<String> queryArr = new ArrayList<String>();
-		String query = "INSERT INTO places_in_maps(MAP_VERSION, MAP_NAME, PLACE_NAME, X_LOCATION, Y_LOCATION)VALUES (?,?,?,?,?)";
+		String query = "INSERT INTO places_in_maps(MAP_NAME, PLACE_NAME, X_LOCATION, Y_LOCATION)VALUES (?,?,?,?)";
 		queryArr.addAll(place.GetFieldsAsArrayList());
 		queryArr.add(query);
 		queryArr.add("insert");
@@ -303,7 +313,6 @@ public class DataBaseController {
 	 * 
 	 * @param tableName     -name of the table in the DB
 	 * @param columnName    -name of the column that you want to show
-	 * @param compareColumn -name of the column that you want to compare values with
 	 * @author Hasan
 	 *
 	 */
@@ -342,8 +351,51 @@ public class DataBaseController {
 		clientCon.ExecuteQuery(queryArr);	
 	}
 
-	
-	
+	/**
+	 * This will select the columns that is provided with on compare value.
+	 * @param tableName
+	 * @param tableColumns
+	 * @param compareColumn
+	 * @param comapreValue
+	 * @author Hasan
+	 */
+	public static void GenericSelectColumnsFromTable(String tableName, ArrayList<String> tableColumns,String compareColumn,String comapreValue) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query="SELECT ";
+		//add columns to the query
+		for (int i = 0; i < tableColumns.size(); i++) {
+			if (i == tableColumns.size()-1) {
+				query = query.concat(tableColumns.get(i) + " FROM "+tableName+" WHERE "+compareColumn+"='"+comapreValue+"'");
+			} else {
+				query = query.concat(tableColumns.get(i) + ",");
+			}
+		}
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	/**
+	 * This will select the columns that is provided 
+	 * @param tableName -name of the table in the db
+	 * @param tableColumns -provided table columns
+	 * @author Hasan
+	 */
+	public static void GenericSelectColumnsFromTable(String tableName, ArrayList<String> tableColumns) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query="SELECT ";
+		//add columns to the query
+		for (int i = 0; i < tableColumns.size(); i++) {
+			if (i == tableColumns.size()-1) {
+				query = query.concat(tableColumns.get(i) + " FROM "+tableName);
+			} else {
+				query = query.concat(tableColumns.get(i) + ",");
+			}
+		}
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+
 
 
 }

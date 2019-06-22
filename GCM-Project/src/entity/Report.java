@@ -93,23 +93,24 @@ public class Report {
 		ReportTablOneTimePurchase =reportTablOneTimePurchase;
 	}
 
-    public void AddMapsNumber(String cityName) {
-		
-	}
-	public void AddSubscriptions(String cityName) {
-		
-	}
-	public void AddSubscriptionRenew(String cityName) {
 	
+    public static void AddReportTablMapsNumber(String cityName) {
+    	DataBaseController.CityIncFieldsInDB("MapsNum",cityName);
 	}
-	public void AddReportTablViews(String cityName) {
-		
+	public static void AddReportTablSubscriptions(String cityName) {
+    	DataBaseController.CityIncFieldsInDB("SubscriptionsNum",cityName);
 	}
-	public void AddTablDownloads(String cityName){
-	
+	public static void AddReportTablSubscriptionRenew(String cityName) {
+    	DataBaseController.CityIncFieldsInDB("SubscriptionRenewNum",cityName);
 	}
-	public void AddReportTablOneTimePurchase(String cityName){
-	
+	public static void AddReportTablViews(String cityName) {
+    	DataBaseController.CityIncFieldsInDB("ViewsNum",cityName);
+	}
+	public static void AddReportTablTablDownloads(String cityName){
+    	DataBaseController.CityIncFieldsInDB("DownloadsNum",cityName);
+	}
+	public static void AddReportTablOneTimePurchase(String cityName){
+    	DataBaseController.CityIncFieldsInDB("OneTimePurchase",cityName);
 	}
 	
 }
