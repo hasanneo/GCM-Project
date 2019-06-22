@@ -5,22 +5,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import client.ClientConnection;
 import entity.Account;
+import entity.PurchaseHistory;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import javafx.application.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * 
@@ -32,14 +30,8 @@ import javafx.application.*;
 public class ViewCard_Controller extends Application {
 
 	FXMLLoader fxmlLoader;
-	ClientConnection clientConn;
 	Account userInfo;
 
-	@FXML
-	private ResourceBundle resources;
-
-	@FXML
-	private URL location;
 
 	@FXML
 	private Label lblUserCard_DB; // label to hold first name of user to display as title
@@ -64,12 +56,20 @@ public class ViewCard_Controller extends Application {
 
 	@FXML
 	private Label lblPermissions_UI;
-
+	
 	@FXML
-	private TableView<?> tableView_PurchaseHistory;
+	private TableView<PurchaseHistory> tableView_PurchaseHistory;
+	
+	@FXML
+	private TableColumn<PurchaseHistory, String> cityColumn;
+	
+	@FXML
+	private TableColumn<PurchaseHistory, String> subscriptionColumn;
 
 	@FXML
 	private Button btnClose; // close button, gets back to options screen
+	
+	public ObservableList<PurchaseHistory> list = FXCollections.observableArrayList();
 
 	/**
 	 * @author Ebrahem
@@ -91,7 +91,28 @@ public class ViewCard_Controller extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	}
+	
+	
+	public ObservableList<PurchaseHistory> loadDataIntolist() {
+		ArrayList<PurchaseHistory> historyList = loadPurchaseHistory();
+		for (PurchaseHistory pH : historyList)
+			list.add(pH);
+		return list;
+	}
+	
+	
+	public ArrayList<PurchaseHistory> loadPurchaseHistory() {
+		ArrayList<PurchaseHistory> historyFromDB = new ArrayList<PurchaseHistory>();
+		PurchaseHistory userHistory;
+		DataBaseController.SelectAllRowsFromTable("purchase_history", "USERNAME", DataBaseController.clientCon.GetUser().getUsername());
+		String[] getAllhistory = DataBaseController.clientCon.GetObjectAsStringArray();
+		for (int i = 1; i < getAllhistory.length + 1; ) {
+			userHistory = new PurchaseHistory(getAllhistory[++i], getAllhistory[++i]);
+			historyFromDB.add(userHistory);
+			i+=2;
+		}
+		return historyFromDB;
 	}
 	
 	/**
@@ -121,11 +142,12 @@ public class ViewCard_Controller extends Application {
 				lblPermissions_DB.setVisible(true);
 				lblWorkerID_DB.setVisible(true);
 				lblPermissions_DB.setText(""+userInfo.getPermissions());
-				lblWorkerID_DB.setText(""+userInfo.getId());
+				lblWorkerID_DB.setText("#"+userInfo.getId());
 			}
 		}
-		
-		
+		cityColumn.setCellValueFactory(new PropertyValueFactory<PurchaseHistory, String>("City"));
+		subscriptionColumn.setCellValueFactory(new PropertyValueFactory<PurchaseHistory, String>("Subscription"));
+		tableView_PurchaseHistory.setItems(loadDataIntolist());
 	}
 
 	/**

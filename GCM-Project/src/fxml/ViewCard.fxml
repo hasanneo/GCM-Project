@@ -28,7 +28,7 @@
       <Button id="btnClose" fx:id="btnClose" layoutX="518.0" layoutY="458.0" mnemonicParsing="false" onAction="#btnClose_ClickEvent" text="Close" />
       <AnchorPane id="anchorpurchaseHistoryList" layoutX="181.0" layoutY="201.0" prefHeight="233.0" prefWidth="323.0">
          <children>
-            <TableView fx:id="tableView_PurchaseHistory1" layoutY="7.0" prefHeight="200.0" prefWidth="277.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="tableView_PurchaseHistory" layoutY="7.0" prefHeight="200.0" prefWidth="277.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columns>
                   <TableColumn fx:id="cityColumn" prefWidth="162.0" text="City" />
                   <TableColumn fx:id="subscriptionColumn" prefWidth="160.0" text="Subscription" />
