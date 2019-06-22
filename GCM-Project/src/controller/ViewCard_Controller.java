@@ -29,7 +29,7 @@ import javafx.application.*;
  *         Controller class for User View Card
  *
  */
-public class ViewCard_RegisteredUser_Controller extends Application {
+public class ViewCard_Controller extends Application {
 
 	FXMLLoader fxmlLoader;
 	ClientConnection clientConn;
@@ -52,6 +52,18 @@ public class ViewCard_RegisteredUser_Controller extends Application {
 
 	@FXML
 	private Label lblEmail_DB; // label to hold the user email
+	
+	@FXML
+	private Label lblWorkerID_DB;
+
+	@FXML
+	private Label lblPermissions_DB;
+	
+	@FXML
+	private Label lblWorker_UI;
+
+	@FXML
+	private Label lblPermissions_UI;
 
 	@FXML
 	private TableView<?> tableView_PurchaseHistory;
@@ -71,26 +83,49 @@ public class ViewCard_RegisteredUser_Controller extends Application {
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		thisStage.close();
 
-		if (DataBaseController.clientCon.GetUserType().equals("user")) {
-			// create an instance of target class and launch it's stage
-			RegisteredUserMenuScreen_Controller registeredUserStage = new RegisteredUserMenuScreen_Controller();
-			try {
-				registeredUserStage.start(new Stage());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else if (DataBaseController.clientCon.GetUserType().equals("manager")) {
-			// create an instance of target class and launch it's stage
-			DepartmentContentManagerController managerStage = new DepartmentContentManagerController();
-			try {
-				managerStage.start(new Stage());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
+		MainController mainController = new MainController();
+		try {
+			mainController.OptionsOnActionBtn(event);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * @author Ebrahem
+	 * 		Class to load the user data
+	 * 		if the user is a department worker, then we need to fetch permissions and worker ID
+	 * 		Manager and normal user don't require those fields
+	 */
+	public void loadUserData() {
+		Account userInfo;
+		if (DataBaseController.clientCon.isLoggedIn()) {
+			userInfo = DataBaseController.clientCon.GetUser();
+			userInfo.toString();
+			lblUserCard_DB.setText("" + userInfo.getFirstName() + " " + userInfo.getLastName() + " Card:");
+			lblUserName_DB.setText("" + userInfo.getUsername());
+			lblPhoneNumber_DB.setText("" + userInfo.getPhoneNumber());
+			lblEmail_DB.setText("" + userInfo.getMail());
+			lblPermissions_UI.setVisible(false);
+			lblWorker_UI.setVisible(false);
+			lblPermissions_DB.setVisible(false);
+			lblWorkerID_DB.setVisible(false);
+			
+			//in case the user is a content worker, then worker ID and permissions need to be added
+			if (DataBaseController.clientCon.GetUserType().equals("worker")) {
+				lblPermissions_UI.setVisible(true);
+				lblWorker_UI.setVisible(true);
+				lblPermissions_DB.setVisible(true);
+				lblWorkerID_DB.setVisible(true);
+				lblPermissions_DB.setText(""+userInfo.getPermissions());
+				lblWorkerID_DB.setText(""+userInfo.getId());
+			}
+		}
+		
+		
 	}
 
 	/**
@@ -101,7 +136,7 @@ public class ViewCard_RegisteredUser_Controller extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(getClass().getResource("/fxml/ViewCard_RegisteredUser.fxml"));
+		fxmlLoader.setLocation(getClass().getResource("/fxml/ViewCard.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
@@ -112,13 +147,7 @@ public class ViewCard_RegisteredUser_Controller extends Application {
 
 	@FXML
 	void initialize() {
-		Account userInfo;
-		userInfo = DataBaseController.clientCon.GetUser();
-		userInfo.toString();
-		lblUserCard_DB.setText("" + userInfo.getFirstName() + " " + userInfo.getLastName() + " Card:");
-		lblUserName_DB.setText("" + userInfo.getUsername());
-		lblPhoneNumber_DB.setText("" + userInfo.getPhoneNumber());
-		lblEmail_DB.setText("" + userInfo.getMail());
+		loadUserData();
 	}
 
 }
