@@ -41,23 +41,24 @@ public class MainProgram extends Application {
 			in.close();
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
+
 			DataBaseController.InitiateClient(new ClientConnection(host, port));
 		
 
 			//new MapViewLoader().start(new Stage());
 
 
+
 			//new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
 			//new ViewCityMapsCatalogLoader().start(new Stage());
-			
-			//Jawad comment this section
+
+
 
 			MainController main=new MainController();
+
 			arg0=new Stage();
 
 			main.start(arg0);//start main menu*/
-
-
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
 		}

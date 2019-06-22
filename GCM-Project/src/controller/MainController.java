@@ -1,3 +1,4 @@
+
 package controller;
 
 import javafx.scene.control.Label;
@@ -72,6 +73,9 @@ public class MainController extends Application {
 
 	@FXML
 	private TableColumn<Map, String> DescriptionColumn;
+	
+	private TextField passTxt;
+	private String UserType;
 
 	
 	@FXML
@@ -138,15 +142,75 @@ public class MainController extends Application {
 
 	}
 
-	@FXML//
+	/**
+	 * @author Ebrahem
+	 * @author Majd
+	 * @param event
+	 * @throws Exception in case of failed stage opening
+	 * 
+	 * Controls to which options menu the user is redirected depending on user type:
+	 * * User
+	 * * Registered User
+	 * * Worker
+	 * * Manager
+	 */
+	@FXML 
 	void OptionsOnActionBtn(ActionEvent event) throws Exception {
 
-		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		mystage.close();
-		SceneController.push(((Node) event.getSource()).getScene());// push current scene
-		OptionsController option = new OptionsController();
-		option.start(new Stage());// create the option stage
+		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); //creating an instance of this stage
+		//checking user type to display the appropriate stage
+		if (DataBaseController.clientCon.isLoggedIn() == true) {
+			
+			UserType = DataBaseController.clientCon.GetUserType(); //get user type
+
+			System.out.println("USER YPE ::::" + UserType);
+			
+			//in case the user type was user -> display user options
+			if (UserType.equals("user")) {
+				thisStage.close(); //close current stage
+				RegisteredUserMenuScreen_Controller registeredUserScreen = new RegisteredUserMenuScreen_Controller(); //creating and instance of user menu screen
+				try {
+					registeredUserScreen.start(new Stage()); //invoke the screen
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		//in case the user type was worker
+		 else if(UserType.equals("worker")) {
+			
+			 thisStage.close(); //close current stage
+			 DepartmentContentWorkerMenuScreen_Controller departmentWorker = new DepartmentContentWorkerMenuScreen_Controller(); //creating an instance of department worker controller 
+			 try {
+				departmentWorker.start(new Stage()); //invoking department controller start method
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }else if (UserType.equals("manager")) {
+			 thisStage.close(); //close current stage
+			 DepartmentContentManagerController departmentManager = new DepartmentContentManagerController(); //creating an instance of department worker controller 
+			 try {
+				departmentManager.start(new Stage()); //invoking department controller start method
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+		}
+		//if non of the above conditions were met then the user is an unregistered user, is redirected to the appropriate window
+		else {
+			thisStage.close(); //close current stage
+			UserMenuScreen_Controller userMenuControllerStage = new UserMenuScreen_Controller(); //create an instance of target class
+			try {
+				userMenuControllerStage.start(new Stage()); //invoke start to get the appropriate UI
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
+
 
 	@FXML
 	void LoginClick(ActionEvent event) throws Exception {
@@ -207,5 +271,10 @@ public class MainController extends Application {
 	        
 	        //load dummy data
 	        //mapsTableView.setItems(getPeople());
+	        
+	        //maintain the label at the top which shows the username 
+	        if (DataBaseController.clientCon.isLoggedIn() == true)
+				SetUserIsLoggedIn("Welcome, "+DataBaseController.clientCon.GetUser().getUsername());
 	   }
 }
+

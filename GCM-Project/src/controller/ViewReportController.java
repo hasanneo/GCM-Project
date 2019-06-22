@@ -1,37 +1,48 @@
 package controller;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import entity.Report;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-/* 
- * 
- * majd 
- * */
-
-public class ViewReportController {
-
-	Stage OptionsStage;
-	@FXML private TableView   ReportTable;
-	@FXML private TableColumn ReportTableCity;
-	@FXML private TableColumn ReportTableMapsNumber;
-	@FXML private TableColumn ReportTablSubscriptions  ;
-	@FXML private TableColumn ReportTablSubscriptionRenew   ;
-	@FXML private TableColumn ReportTablViews;
-	@FXML private TableColumn ReportTablDownloads  ;
-	@FXML private TableColumn ReportTablOneTimePurchase ;
+//majd
+public class ViewReportController{
+	@FXML private TableView<Report> ReportTable;	
+	@FXML private TableColumn<Report,String>  ReportTableCity;
+	@FXML private TableColumn<Report,Integer> ReportTableMapsNumber;
+	@FXML private TableColumn<Report,Integer> ReportTablSubscriptions  ;
+	@FXML private TableColumn<Report,Integer> ReportTablSubscriptionRenew   ;
+	@FXML private TableColumn<Report,Integer> ReportTablViews;
+	@FXML private TableColumn<Report,Integer> ReportTablDownloads  ;
+	@FXML private TableColumn<Report,Integer> ReportTablOneTimePurchase ;
 	@FXML private ComboBox combobox;
+	@FXML private Button cancelBtn;
 	
 	FXMLLoader fxmlLoader;
-	
+	ObservableList<Report> observableList;
+	Stage OptionsStage;
+	Report report;
+	int arrlength;
+	ArrayList<String> CitysArr = new ArrayList<String>();
+//--------------------------------------------------------------------------------------------------------------------	
 	public void start(Stage stage) throws Exception{
+		System.out.println("start");
 		fxmlLoader = new FXMLLoader();
 		fxmlLoader.setLocation(getClass().getResource("/fxml/ViewReportMainScreen.fxml"));
 		Parent root = fxmlLoader.load();
@@ -43,37 +54,63 @@ public class ViewReportController {
 	}
 	
 	@FXML
-	void CancelMouseClick(MouseEvent event){
-	//	OptionsStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		//OptionsStage.setScene(SceneController.pop());// replace the scene
-		((Stage) (combobox).getScene().getWindow()).setScene(SceneController.pop());// replace the scene
-		//((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(SceneController.pop());// replace the scene
-	}
-
-	@FXML
-	public void OnActionReportsOnAllTheCities() {
-		System.out.println("aaa");
+	void CancelMouseClick(MouseEvent event) {
+		((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(SceneController.pop());// replace the scene
 	}
 	
-	
-	@FXML
 	public void initialize() {
-	    
-	    combobox.getItems().addAll("Option A", "Option B", "Option C");//tfasel
-	    combobox.getSelectionModel().select("Option a");//3nwan 
-	    //combobox.getItems().removeAll(combobox.getItems());//delete
+		int i;
+		this.ReportTableCity.setCellValueFactory(new PropertyValueFactory<>("CityName"));
+		ReportTableMapsNumber.setCellValueFactory(new PropertyValueFactory<>("ReportTableMapsNumber"));
+		ReportTablSubscriptions.setCellValueFactory(new PropertyValueFactory<>("ReportTablSubscriptions"));
+		ReportTablSubscriptionRenew.setCellValueFactory(new PropertyValueFactory<>("ReportTablSubscriptionRenew"));
+		ReportTablViews.setCellValueFactory(new PropertyValueFactory<>("ReportTablViews"));
+		ReportTablDownloads.setCellValueFactory(new PropertyValueFactory<>("ReportTablDownloads"));
+		ReportTablOneTimePurchase.setCellValueFactory(new PropertyValueFactory<>("ReportTablOneTimePurchase"));
+		//Combo values : Citys name 
+		DataBaseController.SelectAllRowsFromTable("viewreportstable");           
+		String[] Arr=DataBaseController.clientCon.GetObjectAsStringArray();
+		combobox.getItems().removeAll(combobox.getItems());//delet
+		for(i=1;i<Arr.length+1;) {
+		    this.CitysArr.add(Arr[i]);
+			combobox.getItems().addAll(Arr[i]);
+			i=i+8;
+			combobox.getSelectionModel().select("Choose City name :");//3nwan
+        }
 	}
-	
-	
 	@FXML
 	public void OnActionComboox() {
-	
-		int x=combobox.getSelectionModel().getSelectedIndex();
-		if(x==0) 
-			System.out.println("A");
-		else if(x==1)
-			System.out.println("B");
-		else if(x==2)
-			System.out.println("C");
+		int i=1;
+		//initialize();
+		observableList = FXCollections.observableArrayList();
+		int index=combobox.getSelectionModel().getSelectedIndex();
+		String SelectedCity=this.CitysArr.get(index).toString();
+		//public static void SelectAllRowsFromTable(String tableName,String tableField,String searchValue)
+		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",SelectedCity);
+		String[] arr=DataBaseController.clientCon.GetObjectAsStringArray();
+		//--
+		Report rep;
+		rep=new Report(arr[i],Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),
+				Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]));
+		observableList.add(rep);
+		ReportTable.setItems(observableList);
+		//--
 	}
+	@FXML
+	public void OnActionReportsOnAllTheCities() {
+		int i;
+		DataBaseController.SelectAllRowsFromTable("viewreportstable");           
+		String[] arr=DataBaseController.clientCon.GetObjectAsStringArray();
+		observableList = FXCollections.observableArrayList();
+		for(i=1;i<arr.length+1;)
+		{
+			Report rep;
+			rep=new Report(arr[i],Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),
+					Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]));
+			i=i+2;
+			observableList.add(rep);
+			ReportTable.setItems(observableList);
+		}
+	}	
+	//-----------------------------
 }
