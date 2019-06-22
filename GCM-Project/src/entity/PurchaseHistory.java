@@ -1,6 +1,5 @@
 package entity;
 
-import javafx.beans.property.SimpleStringProperty;
 
 public class PurchaseHistory {
 	private String city;

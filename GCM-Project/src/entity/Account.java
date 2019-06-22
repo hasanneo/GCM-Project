@@ -46,6 +46,8 @@ public class Account {
 		return permissions;
 	}
 	public void setPermissions(String permissions) {
+		if (permissions == null)
+			this.permissions = "view";
 		this.permissions = permissions;	
 	}
 	public Account(String username, String password) {

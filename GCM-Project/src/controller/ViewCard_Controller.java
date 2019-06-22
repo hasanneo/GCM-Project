@@ -92,6 +92,11 @@ public class ViewCard_Controller extends Application {
 	}
 	
 	
+	/**
+	 * @author Ebrahem
+	 * 		Get user purchase history and adds it to the observable list
+	 * @return observable list that contains the purchase history of current user to be loaded into the table
+	 */
 	public ObservableList<PurchaseHistory> loadDataIntolist() {
 		ArrayList<PurchaseHistory> historyList = loadPurchaseHistory();
 		for (PurchaseHistory pH : historyList)
@@ -100,6 +105,12 @@ public class ViewCard_Controller extends Application {
 	}
 	
 	
+	/**
+	 * @author Ebrahem
+	 *	 	Function that runs a query to fetch purchase history for current user
+	 *		and adds each item to the array list
+	 * @return arraylist of purchase history
+	 */
 	public ArrayList<PurchaseHistory> loadPurchaseHistory() {
 		ArrayList<PurchaseHistory> historyFromDB = new ArrayList<PurchaseHistory>();
 		PurchaseHistory userHistory;
@@ -121,9 +132,10 @@ public class ViewCard_Controller extends Application {
 	 */
 	public void loadUserData() {
 		Account userInfo;
+		//load user details into the labels
 		if (DataBaseController.clientCon.isLoggedIn()) {
+			//fetch current user 
 			userInfo = DataBaseController.clientCon.GetUser();
-			userInfo.toString();
 			lblUserCard_DB.setText("" + userInfo.getFirstName() + " " + userInfo.getLastName() + " Card:");
 			lblUserName_DB.setText("" + userInfo.getUsername());
 			lblPhoneNumber_DB.setText("" + userInfo.getPhoneNumber());
@@ -143,9 +155,11 @@ public class ViewCard_Controller extends Application {
 				lblWorkerID_DB.setText("#"+userInfo.getId());
 			}
 		}
+		//set the table columns for purchase history
 		cityColumn.setCellValueFactory(new PropertyValueFactory<PurchaseHistory, String>("City"));
 		subscriptionColumn.setCellValueFactory(new PropertyValueFactory<PurchaseHistory, String>("Subscription"));
-		tableView_PurchaseHistory.setItems(loadDataIntolist());
+		//load purchase history into the table
+		tableView_PurchaseHistory.setItems(loadDataIntolist()); 
 	}
 
 	/**
@@ -165,6 +179,9 @@ public class ViewCard_Controller extends Application {
 		primaryStage.show();
 	}
 
+	/**
+	 * Initialize method, load all necessary data on load
+	 */
 	@FXML
 	void initialize() {
 		loadUserData();

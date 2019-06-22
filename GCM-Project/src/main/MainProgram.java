@@ -5,6 +5,7 @@ import java.util.*;
 import client.ClientConnection;
 import controller.DataBaseController;
 import controller.MainController;
+import controller.Purchase_Controller;
 import controller.ViewCityMapsCatalogController;
 import fxmlLoaders.AddMapToCityLoader;
 import fxmlLoaders.ChooseCityLoader;
@@ -45,6 +46,9 @@ public class MainProgram extends Application {
 			DataBaseController.InitiateClient(new ClientConnection(host, port));
 		
 
+			Purchase_Controller purchaseWindow = new Purchase_Controller();
+			purchaseWindow.start(arg0);
+			
 			//new MapViewLoader().start(new Stage());
 
 
@@ -52,9 +56,9 @@ public class MainProgram extends Application {
 			//new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
 			//new ViewCityMapsCatalogLoader().start(new Stage());
 
-			MainController main=new MainController();
-			arg0=new Stage();
-			main.start(arg0);//start main menu*/
+//			MainController main=new MainController();
+//			arg0=new Stage();
+//			main.start(arg0);//start main menu*/
 
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
