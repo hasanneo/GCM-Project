@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Account;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,6 +74,17 @@ public class ViewCard_DepartmentContentWorker_Controller extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
+	}
+	
+	@FXML
+	void initialize() {
+		Account userInfo;
+		userInfo = DataBaseController.clientCon.GetUser();
+		userInfo.toString();
+		lblUserCard_DB.setText(""+userInfo.getFirstName()+" "+userInfo.getLastName()+" Card:");
+		lblUserName_DB.setText(""+userInfo.getUsername());
+		lblPhoneNumber_DB.setText(""+userInfo.getPhoneNumber());
+		lblEmail_DB.setText(""+userInfo.getMail());
 	}
 
 }
