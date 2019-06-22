@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Payment_Controller">
+   <children>
+      <Pane prefHeight="489.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="157.0" layoutY="44.0" text="Thank you for shopping with us!!">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="107.0" layoutY="128.0" text="Product:">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="107.0" layoutY="161.0" text="Subscription Type:">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDesiredMap_DB" layoutX="299.0" layoutY="130.0" text="Map To Be Loaded">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblSubscriptionType_DB" layoutX="302.0" layoutY="163.0" text="Subscribtion Type">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="106.0" layoutY="249.0" text="First Name">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="106.0" layoutY="285.0" text="Last Name:">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="104.0" layoutY="318.0" text="ID Number:">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="106.0" layoutY="348.0" text="Credit Card Number:">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="481.0" layoutY="348.0" text="CW:" />
+            <Label layoutX="104.0" layoutY="381.0" text="Experation Day:">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="238.0" layoutY="245.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextField layoutX="238.0" layoutY="281.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextField layoutX="238.0" layoutY="314.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextField layoutX="238.0" layoutY="344.0" prefHeight="25.0" prefWidth="237.0" />
+            <SplitMenuButton layoutX="238.0" layoutY="377.0" mnemonicParsing="false" text="Month">
+              <items>
+                <MenuItem mnemonicParsing="false" text="01" />
+                <MenuItem mnemonicParsing="false" text="02" />
+                  <MenuItem mnemonicParsing="false" text="03" />
+                  <MenuItem mnemonicParsing="false" text="04" />
+                  <MenuItem mnemonicParsing="false" text="05" />
+                  <MenuItem mnemonicParsing="false" text="06" />
+                  <MenuItem mnemonicParsing="false" text="07" />
+                  <MenuItem mnemonicParsing="false" text="08" />
+                  <MenuItem mnemonicParsing="false" text="09" />
+                  <MenuItem mnemonicParsing="false" text="10" />
+                  <MenuItem mnemonicParsing="false" text="11" />
+                  <MenuItem mnemonicParsing="false" text="12" />
+              </items>
+            </SplitMenuButton>
+            <SplitMenuButton layoutX="325.0" layoutY="377.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Year">
+              <items>
+                <MenuItem mnemonicParsing="false" text="19" />
+                <MenuItem mnemonicParsing="false" text="20" />
+                  <MenuItem mnemonicParsing="false" text="21" />
+                  <MenuItem mnemonicParsing="false" text="22" />
+                  <MenuItem mnemonicParsing="false" text="23" />
+                  <MenuItem mnemonicParsing="false" text="24" />
+                  <MenuItem mnemonicParsing="false" text="25" />
+              </items>
+            </SplitMenuButton>
+            <Label layoutX="107.0" layoutY="198.0" text="Total Cost:">
+               <font>
+                  <Font name="System Italic" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblLoadPrice_DB" layoutX="306.0" layoutY="198.0" text="Load price" textFill="#38b200">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="511.0" layoutY="344.0" prefHeight="25.0" prefWidth="60.0" />
+            <Button layoutX="241.0" layoutY="436.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" text="Pay">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
