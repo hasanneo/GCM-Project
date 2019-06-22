@@ -352,7 +352,7 @@ public class DataBaseController {
 	}
 
 	/**
-	 * 
+	 * This will select the columns that is provided with on compare value.
 	 * @param tableName
 	 * @param tableColumns
 	 * @param compareColumn
@@ -366,6 +366,27 @@ public class DataBaseController {
 		for (int i = 0; i < tableColumns.size(); i++) {
 			if (i == tableColumns.size()-1) {
 				query = query.concat(tableColumns.get(i) + " FROM "+tableName+" WHERE "+compareColumn+"='"+comapreValue+"'");
+			} else {
+				query = query.concat(tableColumns.get(i) + ",");
+			}
+		}
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	/**
+	 * This will select the columns that is provided 
+	 * @param tableName -name of the table in the db
+	 * @param tableColumns -provided table columns
+	 * @author Hasan
+	 */
+	public static void GenericSelectColumnsFromTable(String tableName, ArrayList<String> tableColumns) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query="SELECT ";
+		//add columns to the query
+		for (int i = 0; i < tableColumns.size(); i++) {
+			if (i == tableColumns.size()-1) {
+				query = query.concat(tableColumns.get(i) + " FROM "+tableName);
 			} else {
 				query = query.concat(tableColumns.get(i) + ",");
 			}

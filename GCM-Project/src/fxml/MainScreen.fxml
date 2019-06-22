@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="571.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="571.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 	<children>
       <ImageView fitHeight="616.0" fitWidth="1021.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -36,8 +36,11 @@
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></RadioButton>
-		<Button fx:id="log_out_btn" layoutX="111.0" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#LogOutClick" prefHeight="31.0" prefWidth="155.0" text="logout" />
-		<Label fx:id="usernamelbl" layoutX="281.0" layoutY="17.0" prefHeight="21.0" prefWidth="248.0" text="Label" />
+		<Button fx:id="log_out_btn" layoutX="111.0" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#LogOutClick" prefHeight="31.0" prefWidth="155.0" text="logout" visible="false" />
+		<Label fx:id="usernamelbl" layoutX="111.0" prefHeight="47.0" prefWidth="211.0" text="Label" textFill="WHITE" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
       <TableView id="mapsTableView" fx:id="mapsTableView" layoutX="387.0" layoutY="180.0" prefHeight="383.0" prefWidth="615.0" visible="false">
         <columns>
           <TableColumn id="NameColumn" fx:id="NameColumn" prefWidth="75.0" text="Map Name" />
@@ -100,7 +103,7 @@
          </tooltip>
       </Button>
       <Button id="searchbtn" fx:id="searchbtn" layoutX="747.0" layoutY="97.0" mnemonicParsing="false" onAction="#searchMaps" prefHeight="31.0" prefWidth="80.0" text="Search" />
-      <Label layoutX="109.0" layoutY="15.0" prefHeight="25.0" prefWidth="179.0" text="Label Notification " textFill="RED">
+      <Label fx:id="notificationLable" layoutX="310.0" layoutY="16.0" prefHeight="25.0" prefWidth="28.0" text="(1)" textFill="#ffff00" visible="false">
          <font>
             <Font name="Comic Sans MS Bold" size="18.0" />
          </font>

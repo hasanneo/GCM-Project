@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import controller.SceneController;
+import entity.Account;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -109,10 +110,11 @@ public class LoginController extends Application {
 	}
 
 	public void LogIntoMain(String username) throws IOException {
+		Account loggedInAccount=DataBaseController.clientCon.GetUserAccount();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainScreen.fxml"));
 		Parent root = (Parent) loader.load();
 		MainController secController = loader.getController();
-		secController.SetUserIsLoggedIn("Welcome," + username);
+		secController.SetUserIsLoggedIn(loggedInAccount);
 		Stage stage = new Stage();
 		stage.setScene(new Scene(root));
 		stage.show();

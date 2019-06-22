@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import common.GCMIF;
 import entity.Account;
+
 /**
  * 
  * 
@@ -100,28 +101,31 @@ public class ClientConnection implements GCMIF {
 		this.userAccount = new Account(values, values.get(0));
 	}
 
+	public Account GetUserAccount() {
+		return this.userAccount;
+	}
+
 	public String GetUserType() {
 		if (this.userAccount == null)
 			return null;
 		else
 			return this.userAccount.getUserType();
 	}
-	
+
 	public Account GetUser() {
 		if (this.userAccount == null)
 			return null;
-		else 
+		else
 			return this.userAccount;
 	}
-	
-	
+
 	public String[] GetObjectAsStringArray() {
 		String str = serverObject.toString();
 		str = str.replace("[", "");
 		str = str.replace("]", "");
 		String[] array = str.split(",");
-		for(int i=0;i<array.length;i++) {
-			array[i]=array[i].trim();
+		for (int i = 0; i < array.length; i++) {
+			array[i] = array[i].trim();
 		}
 		return array;
 	}

@@ -4,9 +4,12 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import entity.CityMap;
 import entity.Map;
+import entity.MapVersionNotification;
+import entity.Notification;
 
 /**
  * This class will act as a communication between controllers
@@ -27,8 +30,9 @@ public class ControllersAuxiliaryMethods {
 	 * @param mapVersion
 	 * @author Hasan
 	 */
-	public static void SetSelectedMapFromCombo(String mapName, String mapDescirptionString, String cityName,String mapVersion) {
-		selectedMapFromCombo = new Map(mapName, mapDescirptionString, cityName,mapVersion);
+	public static void SetSelectedMapFromCombo(String mapName, String mapDescirptionString, String cityName,
+			String mapVersion) {
+		selectedMapFromCombo = new Map(mapName, mapDescirptionString, cityName, mapVersion);
 	}
 
 	/**
@@ -58,8 +62,8 @@ public class ControllersAuxiliaryMethods {
 		ArrayList<CityMap> rows = new ArrayList<CityMap>();
 		// populate the array list
 		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {
-			
-			System.out.println(rowsArray[i]+" |"+rowsArray[i + 1]+" |"+rowsArray[i + 2]);
+
+			System.out.println(rowsArray[i] + " |" + rowsArray[i + 1] + " |" + rowsArray[i + 2]);
 			rows.add(new CityMap(rowsArray[i + 1], rowsArray[i + 2], rowsArray[i + 3]));
 		}
 		return rows;
@@ -98,7 +102,7 @@ public class ControllersAuxiliaryMethods {
 		}
 		return maps;
 	}
-	
+
 	public static ArrayList<CityMap> GetCityMapsRowsAsListForRelease(String[] rowsArray, int tableColumnsNumber) {
 		int row = 0;
 		int tableColumns = tableColumnsNumber;
@@ -106,12 +110,12 @@ public class ControllersAuxiliaryMethods {
 		CityMap c;
 		// populate the array list
 		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {
-			c=new CityMap();
+			c = new CityMap();
 			c.setMapName(rowsArray[i]);
 			c.setInfo(rowsArray[i + 1]);
-			if(rowsArray[i + 2].equals("null"))
+			if (rowsArray[i + 2].equals("null"))
 				c.setMapVersion("0");
-			System.out.println(rowsArray[i]+" |"+rowsArray[i + 1]+" |"+rowsArray[i + 2]);
+			System.out.println(rowsArray[i] + " |" + rowsArray[i + 1] + " |" + rowsArray[i + 2]);
 			rows.add(c);
 		}
 		return rows;
@@ -124,5 +128,21 @@ public class ControllersAuxiliaryMethods {
 	public static void setSelectedMapFromCombo(Map selectedMapFromCombo) {
 		ControllersAuxiliaryMethods.selectedMapFromCombo = selectedMapFromCombo;
 	}
-	
+
+	/**
+	 * @param getObjectAsStringArray
+	 * @param i
+	 * @return
+	 */
+	public static Collection<? extends MapVersionNotification> GetTableNewVersionNotificationRowsAsList(String[] rowsArray,
+			int tableColumns) {
+		int row = 0;
+		ArrayList<MapVersionNotification> rows = new ArrayList<MapVersionNotification>();
+		// populate the array list
+		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {		
+			rows.add(new MapVersionNotification("AUTHORIZE MAP",rowsArray[i+4],rowsArray[i],rowsArray[i+3],rowsArray[i+1],rowsArray[i+2]));
+		}
+		return rows;
+	}
+
 }
