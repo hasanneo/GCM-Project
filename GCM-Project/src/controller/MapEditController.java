@@ -426,6 +426,7 @@ public class MapEditController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SetMapImage();
 		InitComboBox();
+		
 		PlacePane.setVisible(false);
 		assert mapView != null : "fx:id=\"mapView\" was not injected: check your FXML file 'mapGui.fxml'.";
 
