@@ -46,7 +46,17 @@ public class PlaceInMap {
 		this.mapName = mapName;
 		this.mapVersion = mapVersion;
 	}
+	public void setPinLabel() {
+		pin = new ImageView("images/pin.png");
+		placename= new Label(name);
 
+		placename.setLayoutX(x);
+		placename.setLayoutY(y + 25);
+		pin.setLayoutX(x);
+		pin.setLayoutY(y);
+		pin.setFitWidth(30);
+		pin.setFitHeight(30);
+	}
 	public Button getB() {
 		return b;
 	}
@@ -113,7 +123,7 @@ public class PlaceInMap {
 
 	public ArrayList<String> GetFieldsAsArrayList() {
 		fields=new ArrayList<String>();
-		fields.add(mapVersion);
+		//fields.add(mapVersion);
 		fields.add(mapName);
 		fields.add(name);
 		fields.add(Double.toString(x));

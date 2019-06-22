@@ -34,7 +34,7 @@ public class ViewCard_RegisteredUser_Controller extends Application {
 	FXMLLoader fxmlLoader;
 	ClientConnection clientConn;
 	Account userInfo;
-	
+
 	@FXML
 	private ResourceBundle resources;
 
@@ -59,7 +59,6 @@ public class ViewCard_RegisteredUser_Controller extends Application {
 	@FXML
 	private Button btnClose; // close button, gets back to options screen
 
-	
 	/**
 	 * @author Ebrahem
 	 * @param event: click event gets target class stage
@@ -68,23 +67,35 @@ public class ViewCard_RegisteredUser_Controller extends Application {
 	 */
 	@FXML
 	void btnClose_ClickEvent(ActionEvent event) throws Exception {
-		//close current stage
+		// close current stage
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		thisStage.close();
-		
-		//create an instance of target class and launch it's stage
-		RegisteredUserMenuScreen_Controller registeredUserStage = new RegisteredUserMenuScreen_Controller();
-		try {
-			registeredUserStage.start(new Stage());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		if (DataBaseController.clientCon.GetUserType().equals("user")) {
+			// create an instance of target class and launch it's stage
+			RegisteredUserMenuScreen_Controller registeredUserStage = new RegisteredUserMenuScreen_Controller();
+			try {
+				registeredUserStage.start(new Stage());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (DataBaseController.clientCon.GetUserType().equals("manager")) {
+			// create an instance of target class and launch it's stage
+			DepartmentContentManagerController managerStage = new DepartmentContentManagerController();
+			try {
+				managerStage.start(new Stage());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+
 	}
-	
+
 	/**
 	 * @param primaryStage: is a new stage instance to be redirected to this class
-	 * start method, launches this class stage
+	 *        start method, launches this class stage
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -101,12 +112,13 @@ public class ViewCard_RegisteredUser_Controller extends Application {
 
 	@FXML
 	void initialize() {
-		/*Account userInfo = null;
-		userInfo = userInfo.getUser();
-		lblUserCard_DB.setText(userInfo.getFirstName()+" "+userInfo.getLastName()+" Card:");
-		lblUserName_DB.setText(userInfo.getUsername());
-		lblPhoneNumber_DB.setText(userInfo.getPhoneNumber());
-		lblEmail_DB.setText(userInfo.getMail());*/
+		Account userInfo;
+		userInfo = DataBaseController.clientCon.GetUser();
+		userInfo.toString();
+		lblUserCard_DB.setText("" + userInfo.getFirstName() + " " + userInfo.getLastName() + " Card:");
+		lblUserName_DB.setText("" + userInfo.getUsername());
+		lblPhoneNumber_DB.setText("" + userInfo.getPhoneNumber());
+		lblEmail_DB.setText("" + userInfo.getMail());
 	}
 
 }

@@ -19,14 +19,14 @@
             <Image url="@../Images/Background.jpg" />
          </image>
       </ImageView>
-      <TableView fx:id="ReportTable" disable="true" layoutX="355.0" opacity="0.75" prefHeight="605.0" prefWidth="931.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="ReportTable" layoutX="355.0" opacity="0.75" prefHeight="605.0" prefWidth="931.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="ReportTableCity" prefWidth="104.0" text="City" />
           <TableColumn fx:id="ReportTableMapsNumber" minWidth="0.0" prefWidth="163.0" text="Maps number " />
             <TableColumn fx:id="ReportTablSubscriptions" prefWidth="75.0" text="Subscriptions " />
             <TableColumn fx:id="ReportTablSubscriptionRenew" minWidth="30.0" prefWidth="30.0" text="Subscription renew " />
             <TableColumn fx:id="ReportTablViews" minWidth="0.0" prefWidth="20.0" text="Views " />
-            <TableColumn fx:id="ReportTablDownloads" minWidth="0.0" prefWidth="95.0" text="downloads " />
+            <TableColumn fx:id="ReportTablDownloads" minWidth="0.0" prefWidth="95.0" text="Downloads " />
             <TableColumn fx:id="ReportTablOneTimePurchase" minWidth="60.0" prefWidth="177.0" text="One time purchase " />
         </columns>
          <opaqueInsets>

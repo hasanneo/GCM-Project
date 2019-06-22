@@ -4,9 +4,12 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import entity.CityMap;
 import entity.Map;
+import entity.MapVersionNotification;
+import entity.Notification;
 
 /**
  * This class will act as a communication between controllers
@@ -53,56 +56,93 @@ public class ControllersAuxiliaryMethods {
 		return maps;
 	}
 
-	public static ArrayList<CityMap> GetCityMapsRowsAsList(String[] rowsArray,int tableColumnsNumber) {
+	public static ArrayList<CityMap> GetCityMapsRowsAsList(String[] rowsArray, int tableColumnsNumber) {
 		int row = 0;
 		int tableColumns = tableColumnsNumber;
 		ArrayList<CityMap> rows = new ArrayList<CityMap>();
 		// populate the array list
 		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {
-			rows.add(new CityMap(rowsArray[i+1], rowsArray[i + 2], rowsArray[i + 3]));
+
+			System.out.println(rowsArray[i] + " |" + rowsArray[i + 1] + " |" + rowsArray[i + 2]);
+			rows.add(new CityMap(rowsArray[i + 1], rowsArray[i + 2], rowsArray[i + 3]));
 		}
 		return rows;
 	}
-	
-	
-	
-	public static ArrayList<Map> GetMapRowsAsList(String tableName,String type,String searchText) {
+
+	public static ArrayList<Map> GetMapRowsAsList(String tableName, String type, String searchText) {
 		// get map list from db
-		int i1,i2,i3,i4;
-		
+		int i1, i2, i3, i4;
+
 		int row = 0;
-		int tableColumns=4;//changed to 6 by hasan was 4 before
+		int tableColumns = 4;// changed to 6 by hasan was 4 before
 		String[] mapsArray;
 		ArrayList<Map> maps = new ArrayList<Map>();
-		if(type=="CITY_NAME")
-		{
+		if (type == "CITY_NAME") {
 			DataBaseController.getMaps(tableName, type, searchText);// get maps from DB
-		}
-		else
-		{
-			if(type=="DESC")
-			DataBaseController.getMapsbydesc(tableName, type, searchText);
-			else
-			{
-				if(type=="Place")
-				DataBaseController.getMapsbyplace(tableName, null, searchText);// get maps from DB
+		} else {
+			if (type == "DESC")
+				DataBaseController.getMapsbydesc(tableName, type, searchText);
+			else {
+				if (type == "Place")
+					DataBaseController.getMapsbyplace(tableName, null, searchText);// get maps from DB
 			}
 		}
-		if(DataBaseController.clientCon.GetServerObject()==null) {
+		if (DataBaseController.clientCon.GetServerObject() == null) {
 			return null;
 		}
 		mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
 		// populate the maps array list
 		for (int i = 0; row < mapsArray.length / tableColumns; i += tableColumns, row++) {
-			i1=i;
-			i2=i+1;
-			i3=i+2;
-			i4=i+4;
-			
-			maps.add(new Map(mapsArray[i1], mapsArray[i3], mapsArray[i4],mapsArray[i2]));
+			i1 = i;
+			i2 = i + 1;
+			i3 = i + 2;
+			i4 = i + 4;
+
+			maps.add(new Map(mapsArray[i1], mapsArray[i3], mapsArray[i4], mapsArray[i2]));
 		}
 		return maps;
 	}
-	
-	
+
+	public static ArrayList<CityMap> GetCityMapsRowsAsListForRelease(String[] rowsArray, int tableColumnsNumber) {
+		int row = 0;
+		int tableColumns = tableColumnsNumber;
+		ArrayList<CityMap> rows = new ArrayList<CityMap>();
+		CityMap c;
+		// populate the array list
+		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {
+			c = new CityMap();
+			c.setMapName(rowsArray[i]);
+			c.setInfo(rowsArray[i + 1]);
+			if (rowsArray[i + 2].equals("null"))
+				c.setMapVersion("0");
+			System.out.println(rowsArray[i] + " |" + rowsArray[i + 1] + " |" + rowsArray[i + 2]);
+			rows.add(c);
+		}
+		return rows;
+	}
+
+	public static Map getSelectedMapFromCombo() {
+		return selectedMapFromCombo;
+	}
+
+	public static void setSelectedMapFromCombo(Map selectedMapFromCombo) {
+		ControllersAuxiliaryMethods.selectedMapFromCombo = selectedMapFromCombo;
+	}
+
+	/**
+	 * @param getObjectAsStringArray
+	 * @param i
+	 * @return
+	 */
+	public static Collection<? extends MapVersionNotification> GetTableNewVersionNotificationRowsAsList(String[] rowsArray,
+			int tableColumns) {
+		int row = 0;
+		ArrayList<MapVersionNotification> rows = new ArrayList<MapVersionNotification>();
+		// populate the array list
+		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {		
+			rows.add(new MapVersionNotification("AUTHORIZE MAP",rowsArray[i+4],rowsArray[i],rowsArray[i+3],rowsArray[i+1],rowsArray[i+2]));
+		}
+		return rows;
+	}
+
 }

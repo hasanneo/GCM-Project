@@ -36,8 +36,11 @@
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font></RadioButton>
-		<Button fx:id="log_out_btn" layoutX="70.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#LogOutClick" text="logout" visible="false" />
-		<Label fx:id="usernamelbl" layoutX="70.0" layoutY="14.0" text="Label" visible="false" />
+		<Button fx:id="log_out_btn" layoutX="111.0" layoutY="51.0" mnemonicParsing="false" onMouseClicked="#LogOutClick" prefHeight="31.0" prefWidth="155.0" text="logout" visible="false" />
+		<Label fx:id="usernamelbl" layoutX="111.0" prefHeight="47.0" prefWidth="211.0" text="Label" textFill="WHITE" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
       <TableView id="mapsTableView" fx:id="mapsTableView" layoutX="387.0" layoutY="180.0" prefHeight="383.0" prefWidth="615.0" visible="false">
         <columns>
           <TableColumn id="NameColumn" fx:id="NameColumn" prefWidth="75.0" text="Map Name" />
@@ -48,7 +51,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#OptionsOnActionBtn" prefHeight="60.0" prefWidth="60.0" text="Button">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#OptionsOnActionBtn" prefHeight="60.0" prefWidth="60.0" text="Button">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -100,5 +103,10 @@
          </tooltip>
       </Button>
       <Button id="searchbtn" fx:id="searchbtn" layoutX="747.0" layoutY="97.0" mnemonicParsing="false" onAction="#searchMaps" prefHeight="31.0" prefWidth="80.0" text="Search" />
+      <Label fx:id="notificationLable" layoutX="310.0" layoutY="16.0" prefHeight="25.0" prefWidth="28.0" text="(1)" textFill="#ffff00" visible="false">
+         <font>
+            <Font name="Comic Sans MS Bold" size="18.0" />
+         </font>
+      </Label>
 	</children>
 </AnchorPane>
