@@ -377,7 +377,7 @@ public class MapEditController implements Initializable {
 		String[] places = DataBaseController.clientCon.GetObjectAsStringArray();
 		ArrayList<Place> allPlaces = new ArrayList<Place>();
 		ArrayList<String> placesNames = new ArrayList<String>();
-		int colNum = 6;
+		int colNum = 7;
 		// populate the maps array list
 		for (int i = 0, row = 0; row < places.length / colNum; i += colNum, row++) {
 			placesNames.add(places[i]);
