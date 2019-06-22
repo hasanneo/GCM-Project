@@ -1,9 +1,7 @@
 package controller;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import entity.Report;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +19,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-//majd
+/**
+ * 
+ * Class that worke on view Reports. 
+ * 
+ * @author majdh
+ * */
 public class ViewReportController{
 	@FXML private TableView<Report> ReportTable;	
 	@FXML private TableColumn<Report,String>  ReportTableCity;
@@ -33,14 +36,10 @@ public class ViewReportController{
 	@FXML private TableColumn<Report,Integer> ReportTablOneTimePurchase ;
 	@FXML private ComboBox combobox;
 	@FXML private Button cancelBtn;
-	
-	FXMLLoader fxmlLoader;
-	ObservableList<Report> observableList;
-	Stage OptionsStage;
-	Report report;
-	int arrlength;
 	ArrayList<String> CitysArr = new ArrayList<String>();
-//--------------------------------------------------------------------------------------------------------------------	
+	ObservableList<Report> observableList;
+	FXMLLoader fxmlLoader;
+	
 	public void start(Stage stage) throws Exception{
 		System.out.println("start");
 		fxmlLoader = new FXMLLoader();
@@ -55,6 +54,19 @@ public class ViewReportController{
 	
 	@FXML
 	void CancelMouseClick(MouseEvent event) {
+		/*Report.AddReportTablMapsNumber("akko");
+		Report.AddReportTablSubscriptions("akko");
+		Report.AddReportTablSubscriptionRenew("akko");
+		Report.AddReportTablTablDownloads("akko");
+		Report.AddReportTablViews("akko");
+		Report.AddReportTablOneTimePurchase("akko");
+		//-----
+		Report.AddReportTablMapsNumber("nazareth");
+		Report.AddReportTablSubscriptions("nazareth");
+		Report.AddReportTablSubscriptionRenew("nazareth");
+		Report.AddReportTablTablDownloads("nazareth");
+		Report.AddReportTablViews("nazareth");
+		Report.AddReportTablOneTimePurchase("nazareth");*/
 		((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(SceneController.pop());// replace the scene
 	}
 	
@@ -75,27 +87,25 @@ public class ViewReportController{
 		    this.CitysArr.add(Arr[i]);
 			combobox.getItems().addAll(Arr[i]);
 			i=i+8;
-			combobox.getSelectionModel().select("Choose City name :");//3nwan
+			combobox.getSelectionModel().select("Choose City Name :");
         }
 	}
+	
 	@FXML
 	public void OnActionComboox() {
 		int i=1;
-		//initialize();
 		observableList = FXCollections.observableArrayList();
 		int index=combobox.getSelectionModel().getSelectedIndex();
 		String SelectedCity=this.CitysArr.get(index).toString();
-		//public static void SelectAllRowsFromTable(String tableName,String tableField,String searchValue)
 		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",SelectedCity);
 		String[] arr=DataBaseController.clientCon.GetObjectAsStringArray();
-		//--
 		Report rep;
 		rep=new Report(arr[i],Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),
 				Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]));
 		observableList.add(rep);
 		ReportTable.setItems(observableList);
-		//--
 	}
+	
 	@FXML
 	public void OnActionReportsOnAllTheCities() {
 		int i;
