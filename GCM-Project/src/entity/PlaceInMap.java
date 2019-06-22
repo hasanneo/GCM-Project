@@ -46,7 +46,17 @@ public class PlaceInMap {
 		this.mapName = mapName;
 		this.mapVersion = mapVersion;
 	}
+	public void setPinLabel() {
+		pin = new ImageView("images/pin.png");
+		placename= new Label(name);
 
+		placename.setLayoutX(x);
+		placename.setLayoutY(y + 25);
+		pin.setLayoutX(x);
+		pin.setLayoutY(y);
+		pin.setFitWidth(30);
+		pin.setFitHeight(30);
+	}
 	public Button getB() {
 		return b;
 	}

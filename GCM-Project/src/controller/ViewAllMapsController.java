@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package controller;
 
 import java.awt.Button;
@@ -15,7 +13,6 @@ import javax.imageio.ImageIO;
 
 import entity.Map;
 import entity.PlaceInMap;
-import fxmlLoaders.EditMapLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -39,6 +37,10 @@ import javafx.util.StringConverter;
 public class ViewAllMapsController implements Initializable {
 	ArrayList<Map> maps;
 	ArrayList<String> mapNames;
+
+	@FXML
+	private AnchorPane imagePane;
+
 	@FXML
 	private ImageView mapImageView;
 
@@ -55,6 +57,7 @@ public class ViewAllMapsController implements Initializable {
 	private ComboBox<String> mapCombo;
 	@FXML
 	private Button edit_btn;
+	private Map chosenMap;
 	private ArrayList<PlaceInMap> placesArr;
 
 	/**
@@ -68,8 +71,13 @@ public class ViewAllMapsController implements Initializable {
 		ObservableList<String> options = FXCollections.observableArrayList(mapNames);
 		mapCombo.setItems(options);
 		mapCombo.getSelectionModel().selectedItemProperty()
-				.addListener((v, oldValue, newValue) -> FillMapTextValues(newValue));
+		.addListener((v, oldValue, newValue) -> FillMapTextValues(newValue));
 		GetMapsPlaces();//After this you will have all of the places from the places_in_maps table
+
+
+		for (int i = 0; i < placesArr.size(); i++) {
+			placesArr.get(i).setPinLabel();
+		}
 	}
 
 	/**
@@ -88,8 +96,10 @@ public class ViewAllMapsController implements Initializable {
 		mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
 		// populate the maps array list
 		for (int i = 0; row < mapsArray.length / tableColumns; i += tableColumns, row++) {
+			System.out.println(
+					mapsArray[i] + " " + mapsArray[i + 1] + " " + mapsArray[i + 2] + " ver:" + mapsArray[i + 3]);
 			mapNames.add(mapsArray[i]);
-			maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2],mapsArray[i + 3]));
+			maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2], mapsArray[i + 3]));
 
 		}
 	}
@@ -101,18 +111,55 @@ public class ViewAllMapsController implements Initializable {
 	 * @author Hasan
 	 */
 	public void FillMapTextValues(String mapName) {
+		String filePath = null;
 		for (Map m : maps) {
 			if (m.getMapName().equals(mapName)) {
 				mapCityLabel.setText(m.getCityName());
 				mapNameLabel.setText(m.getMapName());
 				mapDescLabel.setText(m.getMapDescription());
+				mapVersion.setText(String.valueOf(m.getMapVersion()));
 				// save selected map object
-				ControllersAuxiliaryMethods.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),m.getMapVersion());
+				ControllersAuxiliaryMethods.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),
+						m.getMapVersion());
+				System.out.println(m.toString());
 				break;
 			}
 		}
 		// get map file from the data base
 		SetImageToFile(mapNameLabel.getText());
+
+		for (int j = 0; j < placesArr.size(); j++) {
+			//			imagePane.getChildren().remove(arg0)
+			//imagePane.getChildren()
+
+			//			{
+			//				if (imagePane.getChildren().isEmpty()==false) {
+			//				imagePane.getChildren().remove(placesArr.get(j).getPin());
+			//				imagePane.getChildren().remove(placesArr.get(j).getPlacename());
+			//				}
+			//		
+			//			}
+			//			else {
+			if (placesArr.get(j).getMapName().equals(mapName)) {
+				
+				
+					
+				imagePane.getChildren().add(placesArr.get(j).getPin());
+				System.out.println("-----------"+placesArr.get(j).getMapName());
+				System.out.println("map Name : "+mapName);
+				imagePane.getChildren().add(placesArr.get(j).getPlacename());
+			}
+			else
+			{
+				if (imagePane.getChildren().isEmpty()==false) {
+					imagePane.getChildren().remove(placesArr.get(j).getPin());
+					imagePane.getChildren().remove(placesArr.get(j).getPlacename());
+	}
+			}
+			//}
+		}
+
+
 	}
 
 	/**
@@ -155,12 +202,13 @@ public class ViewAllMapsController implements Initializable {
 			System.out.println("EXCEPTION IN EDIT BUTTON CLICK >> " + e.getMessage());
 		}
 	}
-/**
- * Populates the placesArr to rows of the places_in_maps tables
- * @author Hasan
- */
+	/**
+	 * Populates the placesArr to rows of the places_in_maps tables
+	 * @author Hasan
+	 */
 	private void GetMapsPlaces() {
 		String[] placesArray;
+		double x, y;
 		int row = 0;
 		int tableColumns = 5;
 		DataBaseController.SelectAllRowsFromTable("places_in_maps");
