@@ -113,7 +113,7 @@ public class PlaceInMap {
 
 	public ArrayList<String> GetFieldsAsArrayList() {
 		fields=new ArrayList<String>();
-		fields.add(mapVersion);
+		//fields.add(mapVersion);
 		fields.add(mapName);
 		fields.add(name);
 		fields.add(Double.toString(x));

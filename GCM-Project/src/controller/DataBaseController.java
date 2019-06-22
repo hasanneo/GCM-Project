@@ -208,7 +208,7 @@ public class DataBaseController {
 	 */
 	public static void InsertIntoPlacesInMaps(PlaceInMap place) {
 		ArrayList<String> queryArr = new ArrayList<String>();
-		String query = "INSERT INTO places_in_maps(MAP_VERSION, MAP_NAME, PLACE_NAME, X_LOCATION, Y_LOCATION)VALUES (?,?,?,?,?)";
+		String query = "INSERT INTO places_in_maps(MAP_NAME, PLACE_NAME, X_LOCATION, Y_LOCATION)VALUES (?,?,?,?)";
 		queryArr.addAll(place.GetFieldsAsArrayList());
 		queryArr.add(query);
 		queryArr.add("insert");
@@ -270,7 +270,6 @@ public class DataBaseController {
 	 * 
 	 * @param tableName     -name of the table in the DB
 	 * @param columnName    -name of the column that you want to show
-	 * @param compareColumn -name of the column that you want to compare values with
 	 * @author Hasan
 	 *
 	 */
@@ -308,14 +307,28 @@ public class DataBaseController {
 		queryArr.add("update");
 		clientCon.ExecuteQuery(queryArr);	
 	}
-
-	/*
-	 * majd public static void SelectUserTypeFromTable(String tableName) {
-	 * ArrayList<String> queryArr =new ArrayList<String>(); try { String query =
-	 * "SELECT * FROM "+tableName+""; queryArr.add(query); queryArr.add("select");
-	 * clientCon.ExecuteQuery(queryArr); }catch(Exception e) {
-	 * System.out.println("Exception thrown at Select from table:"+e.getMessage()
-	 * +e.getClass().getName()); } }
+	/**
+	 * 
+	 * @param tableName
+	 * @param tableColumns
+	 * @param compareColumn
+	 * @param comapreValue
+	 * @author Hasan
 	 */
+	public static void GenericSelectColumnsFromTable(String tableName, ArrayList<String> tableColumns,String compareColumn,String comapreValue) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query="SELECT ";
+		//add columns to the query
+		for (int i = 0; i < tableColumns.size(); i++) {
+			if (i == tableColumns.size()-1) {
+				query = query.concat(tableColumns.get(i) + " FROM "+tableName+" WHERE "+compareColumn+"='"+comapreValue+"'");
+			} else {
+				query = query.concat(tableColumns.get(i) + ",");
+			}
+		}
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
 
 }

@@ -174,7 +174,7 @@ public class SqlConnection {
 	/**
 	 * 
 	 * @param queryArr
-	 * @return
+	 * @return 1 when inserted successfully
 	 * @throws SQLException
 	 * @author Hasan
 	 */
@@ -187,7 +187,7 @@ public class SqlConnection {
 		ps.executeUpdate();
 		ps.close();
 		System.out.println("DB: InsertQuery => Executed Successfully");
-		return null;
+		return 1;
 
 	}
 

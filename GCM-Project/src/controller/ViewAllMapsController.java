@@ -88,10 +88,8 @@ public class ViewAllMapsController implements Initializable {
 		mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
 		// populate the maps array list
 		for (int i = 0; row < mapsArray.length / tableColumns; i += tableColumns, row++) {
-			System.out.println(
-					mapsArray[i] + " " + mapsArray[i + 1] + " " + mapsArray[i + 2] + " ver:" + mapsArray[i + 3]);
 			mapNames.add(mapsArray[i]);
-			maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2], mapsArray[i + 3]));
+			maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2],mapsArray[i + 3]));
 
 		}
 	}
@@ -108,11 +106,8 @@ public class ViewAllMapsController implements Initializable {
 				mapCityLabel.setText(m.getCityName());
 				mapNameLabel.setText(m.getMapName());
 				mapDescLabel.setText(m.getMapDescription());
-				mapVersion.setText(String.valueOf(m.getMapVersion()));
 				// save selected map object
-				ControllersAuxiliaryMethods.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),
-						m.getMapVersion());
-				System.out.println(m.toString());
+				ControllersAuxiliaryMethods.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),m.getMapVersion());
 				break;
 			}
 		}
