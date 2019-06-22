@@ -54,14 +54,15 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		myStage.close();
 
-		// create an instance of target class and try to open it's stage
-		ViewCard_DepartmentContentWorker_Controller viewCardDepWorker = new ViewCard_DepartmentContentWorker_Controller();
+		
+		ViewCard_Controller viewCard = new ViewCard_Controller();
 		try {
-			viewCardDepWorker.start(new Stage());
+			viewCard.start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	/**

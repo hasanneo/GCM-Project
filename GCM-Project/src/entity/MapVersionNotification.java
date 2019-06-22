@@ -62,8 +62,8 @@ public class MapVersionNotification extends Notification {
 		Double ver=Double.parseDouble(mapVersion);
 		ver+=(double)0.1;
 		mapVersion=ver.toString();
-		ArrayList<String> vals=new ArrayList<String>(List.of(cityName,this.getRequestInfo(),mapName,mapVersion,this.requestUser));
-		ArrayList<String> cols=new ArrayList<String>(List.of("CITY_NAME","INFO","MAP_NAME","MAP_VERSION","USER_ACCOUNT"));
-		DataBaseController.InsertIntoTable("Maps_TO_AUTHORIZE", cols, vals);
+		/*ArrayList<String> vals=new ArrayList<String>(List.of(cityName,this.getRequestInfo(),mapName,mapVersion,this.requestUser));
+		ArrayList<String> cols=new ArrayList<String>(List.of("CITY_NAME","INFO","MAP_NAME","MAP_VERSION","USER_ACCOUNT"));*/
+		//DataBaseController.InsertIntoTable("Maps_TO_AUTHORIZE", cols, vals);
 	}
 }

@@ -51,7 +51,7 @@ public class DepartmentContentManagerController extends Application {
 		thisStage.close();
 
 		// create an instance of target class and try to launch it's stage
-		ViewCard_RegisteredUser_Controller viewCardStage = new ViewCard_RegisteredUser_Controller();
+		ViewCard_Controller viewCardStage = new ViewCard_Controller();
 		try {
 			viewCardStage.start(new Stage());
 		} catch (Exception e) {

@@ -65,11 +65,12 @@ public class ReleaseMapController implements Initializable {
 	 * @return
 	 */
 	private Collection<? extends MapVersionNotification> GetNotifications() {
-		ArrayList<String> columns = new ArrayList<String>(List.of("INFO", "MAP_NAME", "MAP_VERSION", "CITY_NAME","USER_NAME"));
+		/*ArrayList<String> columns = new ArrayList<String>(List.of("INFO", "MAP_NAME", "MAP_VERSION", "CITY_NAME","USER_NAME"));
 		DataBaseController.GenericSelectColumnsFromTable("maps_to_authorize", columns);
 		// DataBaseController.select
 		return ControllersAuxiliaryMethods
-				.GetTableNewVersionNotificationRowsAsList(DataBaseController.clientCon.GetObjectAsStringArray(), 4);
+				.GetTableNewVersionNotificationRowsAsList(DataBaseController.clientCon.GetObjectAsStringArray(), 4);*/
+		return null;
 	}
 
 }
