@@ -3,8 +3,6 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import entity.Account;
 import entity.PurchaseHistory;
