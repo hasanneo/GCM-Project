@@ -53,6 +53,8 @@ import javafx.stage.Stage;
  */
 public class MapEditController implements Initializable {
 
+	
+	ArrayList<PlaceInMap> placesArr;
 	final DoubleProperty zoomProperty = new SimpleDoubleProperty(200);
 	ArrayList<PlaceInMap> places = new ArrayList<>();
 	ArrayList<String> pla = new ArrayList<>();
@@ -63,6 +65,9 @@ public class MapEditController implements Initializable {
 	double y;
 	boolean flag = true;
 	PlaceInMap p = null;
+	String mapName;
+	Map selectedMap;
+	
 	@FXML
 	private Button saveCordBtn;
 	@FXML
@@ -203,6 +208,7 @@ public class MapEditController implements Initializable {
 		if (places != null && !places.isEmpty()) {
 			System.out.println("**********INSERTING********");
 			DataBaseController.InsertIntoPlacesInMaps(places.get(0));
+			
 			if(DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
 				Map map=ControllersAuxiliaryMethods.getSelectedMapFromCombo();
 				//insert successfully
@@ -398,6 +404,7 @@ public class MapEditController implements Initializable {
 	 */
 	private void InitComboBox() {
 		DataBaseController.SelectAllRowsFromTable("places");// get the places from the db.
+	
 		String[] places = DataBaseController.clientCon.GetObjectAsStringArray();
 		ArrayList<Place> allPlaces = new ArrayList<Place>();
 		ArrayList<String> placesNames = new ArrayList<String>();
@@ -407,6 +414,8 @@ public class MapEditController implements Initializable {
 			placesNames.add(places[i]);
 			//allPlaces.add(new Place(places[i], places[i + 1], places[i + 2], places[i + 3], places[i + 4]));
 		}
+
+		
 		ObservableList<String> comboOptions = FXCollections.observableArrayList(placesNames);
 		combo.setItems(comboOptions);
 	}
@@ -431,7 +440,8 @@ public class MapEditController implements Initializable {
 	 * @author Hasan
 	 */
 	private void SetMapImage() {
-		String mapName = ControllersAuxiliaryMethods.selectedMapFromCombo.getMapName();
+		selectedMap=ControllersAuxiliaryMethods.getSelectedMapFromCombo();
+		mapName = ControllersAuxiliaryMethods.selectedMapFromCombo.getMapName();
 		// get map file from the data base
 		DataBaseController.GetFileFromTable("MAP", "MAP_NAME", mapName, "MAPFILE");
 		String filePath = (String) (DataBaseController.clientCon.GetServerObject());
@@ -450,6 +460,56 @@ public class MapEditController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SetMapImage();
 		InitComboBox();
+		
+		//DataBaseController.SelectAllRowsFromTable("places_in_maps");// get the places from the db.
+		
+		String[] placesArray;
+		double x, y;
+		int row = 0;
+		int tableColumns = 5;
+		DataBaseController.SelectAllRowsFromTable("places_in_maps");
+		placesArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
+		places = new ArrayList<PlaceInMap>();
+		// populate the maps array list
+		for (int i = 0; row < placesArray.length / tableColumns; i += tableColumns, row++) {
+			places.add(new PlaceInMap(placesArray[i + 2],placesArray[i + 1],placesArray[i],Double.parseDouble(placesArray[i + 3]),Double.parseDouble(placesArray[i + 4])));
+		}
+		
+		for (int i = 0; i < places.size(); i++) {
+			places.get(i).setPinLabel();
+		}
+		
+		for (int j = 0; j < places.size(); j++) {
+			//			imagePane.getChildren().remove(arg0)
+			//imagePane.getChildren()
+
+			//			{
+			//				if (imagePane.getChildren().isEmpty()==false) {
+			//				imagePane.getChildren().remove(placesArr.get(j).getPin());
+			//				imagePane.getChildren().remove(placesArr.get(j).getPlacename());
+			//				}
+			//		
+			//			}
+			//			else {
+			if (places.get(j).getMapName().equals( mapName)) 
+			{
+				placesList.getItems().add(places.get(j).getName());
+				p1.getChildren().add(places.get(j).getPin());
+				System.out.println("-----------"+places.get(j).getMapName());
+				System.out.println("map Name : "+"Yarka");
+				p1.getChildren().add(places.get(j).getPlacename());
+			}
+			else
+			{
+				if (p1.getChildren().isEmpty()==false)
+				{
+					p1.getChildren().remove(places.get(j).getPin());
+					p1.getChildren().remove(places.get(j).getPlacename());
+				}
+			}
+			//}
+		}
+		
 		
 		PlacePane.setVisible(false);
 		assert mapView != null : "fx:id=\"mapView\" was not injected: check your FXML file 'mapGui.fxml'.";
