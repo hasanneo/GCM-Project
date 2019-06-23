@@ -82,8 +82,11 @@ public class MainController extends Application {
 
 	@FXML
 	void LogOutClick() {
-		// System.out.println("out");
-
+		// System.out.println("LogedOut");
+	   	DataBaseController.clientCon.setLoggedIn(false);// SET LOGGED IN AS TRUE
+			DataBaseController.clientCon.SetUserAccount(null);//set the account in the logged in client
+	    	SetUserLoggedOut();
+	    	
 	}
 
 	@FXML
@@ -259,6 +262,18 @@ public class MainController extends Application {
 			this.notificationLable.setVisible(true);
 		}
 	}
+	
+	
+	public void SetUserLoggedOut()
+	{
+		this.usernamelbl.setVisible(false);
+		this.log_out_btn.setVisible(false);
+		this.login_btn.setDisable(false);
+		this.login_btn.setVisible(true);
+		this.register_btn.setVisible(true);
+		this.register_btn.setDisable(false);
+		this.notificationLable.setVisible(false);
+	}
 
 	public void start(Stage primaryStage) throws Exception {
 		System.out.println("In the start");
@@ -280,6 +295,10 @@ public class MainController extends Application {
 		return mapsList;
 	}
 
+
+   
+	
+	
 	@FXML
 	public void initialize() {
 		// set up the columns in the table
