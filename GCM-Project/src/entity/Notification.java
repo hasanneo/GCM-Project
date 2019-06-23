@@ -17,15 +17,17 @@ import controller.DataBaseController;
 public class Notification {
 	String request;
 	String requestUser;
+	String requestInfo;
 
 	/**
 	 * @param request
 	 * @param requestUser
 	 */
-	public Notification(String request, String requestUser) {
+	public Notification(String request, String requestUser, String requestInfo) {
 		super();
 		this.request = request;
 		this.requestUser = requestUser;
+		this.requestInfo = requestInfo;
 	}
 
 	public String getRequest() {
@@ -43,12 +45,13 @@ public class Notification {
 	public void setRequestUser(String requestUser) {
 		this.requestUser = requestUser;
 	}
-	public void SendNotificationForManagerApproval(String cityName,String info,String mapName,String mapVersion) {
-		Double ver=Double.parseDouble(mapVersion);
-		ver+=(double)0.1;
-		mapVersion=ver.toString();
-		ArrayList<String> vals=new ArrayList<String>(List.of(cityName,info,mapName,mapVersion));
-		ArrayList<String> cols=new ArrayList<String>(List.of("CITY_NAME","INFO","MAP_NAME","MAP_VERSION"));
-		DataBaseController.InsertIntoTable("Maps_TO_AUTHORIZE", cols, vals);
+
+	public String getRequestInfo() {
+		return requestInfo;
 	}
+
+	public void setRequestInfo(String requestInfo) {
+		this.requestInfo = requestInfo;
+	}
+
 }

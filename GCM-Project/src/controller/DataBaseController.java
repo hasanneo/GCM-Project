@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import client.ClientConnection;
 
+
 import entity.Account;
 
 import entity.City;
 import entity.Map;
 import entity.PlaceInMap;
+
 
 /**
  * 
@@ -72,6 +74,46 @@ public class DataBaseController {
 		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
 	}
+
+	
+	//majd
+	public static void InsertReportsToDB(String cityName, int reportTableMapsNumber, 
+			            int reportTablSubscriptions,int reportTablSubscriptionRenew,
+			            int reportTablViews, int reportTablDownloads,int reportTablOneTimePurchase)
+	{
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "INSERT INTO `gcm`.`viewreportstable` (`CITY_NAME`, `MapsNum`, `SubscriptionsNum`, `SubscriptionRenewNum`, `ViewsNum`, `DownloadsNum`, `OneTimePurchase`) VALUES(?,?,?,?,?,?,?)";
+		queryArr.add(cityName);
+		queryArr.add(Integer.toString(reportTableMapsNumber));
+		queryArr.add(Integer.toString(reportTablSubscriptions));
+		queryArr.add(Integer.toString(reportTablSubscriptionRenew));
+		queryArr.add(Integer.toString(reportTablViews));
+		queryArr.add(Integer.toString(reportTablDownloads));
+		queryArr.add(Integer.toString(reportTablOneTimePurchase));
+		queryArr.add(query);
+		queryArr.add("insert");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	/**
+	 * 
+	 * @author majd
+	 * 
+	 * 
+	 * Increment with value 1 in "viewreportstable" table ,
+	 * this function that takes column and city names and 
+	 * updated the wanted cell on DB.
+	 * 
+	 * */
+	
+	public static void CityIncFieldsInDB(String fName,String CityName) {
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query="UPDATE viewreportstable SET "+fName+"="+ fName +"+ 1 WHERE CITY_NAME='"+CityName+"';";
+		queryArr.add(query);
+     	queryArr.add("update");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
 
 	/**
 	 * Will get the all rows from the map table except for the blob column.
@@ -177,8 +219,9 @@ public class DataBaseController {
 	 * @author Hasan
 	 */
 	public static void SelectAllRowsFromTable(String tableName) {
-		ArrayList<String> queryArr = new ArrayList<String>();
-		String query = "SELECT * FROM `" + tableName + "`;";
+
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query="SELECT * FROM `"+tableName+"`;";
 		queryArr.add(query);
 		queryArr.add("select");
 		clientCon.ExecuteQuery(queryArr);
@@ -307,8 +350,9 @@ public class DataBaseController {
 		queryArr.add("update");
 		clientCon.ExecuteQuery(queryArr);	
 	}
+
 	/**
-	 * 
+	 * This will select the columns that is provided with on compare value.
 	 * @param tableName
 	 * @param tableColumns
 	 * @param compareColumn
@@ -330,5 +374,28 @@ public class DataBaseController {
 		queryArr.add("select");
 		clientCon.ExecuteQuery(queryArr);
 	}
+	/**
+	 * This will select the columns that is provided 
+	 * @param tableName -name of the table in the db
+	 * @param tableColumns -provided table columns
+	 * @author Hasan
+	 */
+	public static void GenericSelectColumnsFromTable(String tableName, ArrayList<String> tableColumns) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query="SELECT ";
+		//add columns to the query
+		for (int i = 0; i < tableColumns.size(); i++) {
+			if (i == tableColumns.size()-1) {
+				query = query.concat(tableColumns.get(i) + " FROM "+tableName);
+			} else {
+				query = query.concat(tableColumns.get(i) + ",");
+			}
+		}
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+
+
 
 }

@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import entity.Map;
+import entity.MapVersionNotification;
 import entity.Notification;
 import entity.Place;
 import entity.PlaceInMap;
@@ -219,8 +220,8 @@ public class MapEditController implements Initializable {
 				Optional<ButtonType> result = alert.showAndWait();
 				ButtonType button = result.orElse(ButtonType.CANCEL);
 				if (button == ButtonType.OK) {
-					Notification mgrNotification=new Notification("testing request","mgr");
-					mgrNotification.SendNotificationForManagerApproval(map.getCityName(), "SOME INFO TESTIGN", map.getMapName(), map.getMapVersion());
+					MapVersionNotification noti=new MapVersionNotification("Authorize version", DataBaseController.clientCon.GetUser().getUsername(), "Request info test", map.getCityName(), map.getMapName(), map.getMapVersion());
+					noti.SendNotificationForManagerApproval();
 					
 				} else {
 					// CANCEL BUTTON

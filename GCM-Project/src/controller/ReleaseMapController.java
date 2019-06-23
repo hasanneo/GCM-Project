@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import entity.CityMap;
+import entity.MapVersionNotification;
+import entity.Notification;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,63 +27,50 @@ import javafx.scene.control.TableView;
  * @author Hasan
  * 
  */
-public class ReleaseMapController implements Initializable{
+public class ReleaseMapController implements Initializable {
+
 
 	@FXML
-    private ComboBox<String> citiesCombo;
+	private TableView<MapVersionNotification> notificationsTable;
 
-    @FXML
-    private TableView<CityMap> mapsTable;
-    ArrayList<String> cityNames;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		FillCitiesComboBox();
-		if (cityNames != null) {
-			ObservableList<String> options = FXCollections.observableArrayList(cityNames);
-			citiesCombo.setItems(options);
-			citiesCombo.getSelectionModel().selectedItemProperty()
-					.addListener((v, oldValue, newValue) -> FillMapsTable(newValue));
-		}
+		FillNotificationsTable();
 	}
 
 	/**
 	 * 
 	 */
-	private void FillCitiesComboBox() {
-		DataBaseController.GenericSelectFromTable("city", "CITY_NAME");
-		if (DataBaseController.clientCon.GetServerObject() != null) {
-			cityNames = DataBaseController.clientCon.getList();
-		} else
-			cityNames = null;
+	private void FillNotificationsTable() {
+		ArrayList<MapVersionNotification> list = new ArrayList<MapVersionNotification>();
+		list.addAll(GetNotifications());
+		ObservableList<MapVersionNotification> details = FXCollections.observableArrayList(list);
+		TableColumn<MapVersionNotification, String> col1 = new TableColumn<>("REQUEST INFO");
+		TableColumn<MapVersionNotification, String> col2 = new TableColumn<>("REQUEST FROM");
+		TableColumn<MapVersionNotification, String> col3 = new TableColumn<>("CITY_NAME");
+		TableColumn<MapVersionNotification, String> col4 = new TableColumn<>("MAP_NAME");
+		TableColumn<MapVersionNotification, String> col5 = new TableColumn<>("MAP_VERSION");
+		col1.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getRequestInfo()));
+		col2.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getRequestUser()));
+		col3.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCityName()));
+		col4.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMapName()));
+		col5.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMapVersion()));
+		notificationsTable.getColumns().addAll(col1, col2, col3,col4,col5);
+		notificationsTable.setItems(details);
 		
-	}
-
-	/**
-	 * 
-	 */
-	private void FillMapsTable(String selectedCity) {
-		 ArrayList<CityMap> list=new ArrayList<CityMap>();
-		 list.addAll(GetCityMaps(selectedCity));
-		ObservableList<CityMap> details = FXCollections.observableArrayList(list);
-		TableColumn<CityMap, String> col1 = new TableColumn<>("MAP_NAME");
-		TableColumn<CityMap, String> col2 = new TableColumn<>("INFO");
-		TableColumn<CityMap, String> col3 = new TableColumn<>("MAP_VERSION");
-		col1.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMapName()));
-		col2.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getInfo()));
-		col3.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMapVersion()));
-		mapsTable.getColumns().addAll(col1, col2, col3);
-		mapsTable.setItems(details);
 	}
 
 	/**
 	 * @return
 	 */
-	private Collection<? extends CityMap> GetCityMaps(String selectedCity) {
-		ArrayList<String> columns=new ArrayList<String>(List.of("MAP_NAME","INFO","MAP_VERSION"));
-		
-		DataBaseController.GenericSelectColumnsFromTable("city_maps", columns, "CITY_NAME", selectedCity);		
-		return ControllersAuxiliaryMethods.GetCityMapsRowsAsListForRelease(DataBaseController.clientCon.GetObjectAsStringArray(),3);
-		
+	private Collection<? extends MapVersionNotification> GetNotifications() {
+		/*ArrayList<String> columns = new ArrayList<String>(List.of("INFO", "MAP_NAME", "MAP_VERSION", "CITY_NAME","USER_NAME"));
+		DataBaseController.GenericSelectColumnsFromTable("maps_to_authorize", columns);
+		// DataBaseController.select
+		return ControllersAuxiliaryMethods
+				.GetTableNewVersionNotificationRowsAsList(DataBaseController.clientCon.GetObjectAsStringArray(), 4);*/
+		return null;
 	}
-	
+
 }

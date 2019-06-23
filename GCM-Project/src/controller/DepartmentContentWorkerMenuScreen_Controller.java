@@ -1,5 +1,6 @@
 package controller;
 
+import fxmlLoaders.ViewAllMapsLoader;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class DepartmentContentWorkerMenuScreen_Controller extends Application {
@@ -23,15 +25,15 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 	/**
 	 * @author Ebrahem
 	 * @param event: holds the screen of where the action was made
-	 * @throws Exception, in case couldn't open the new stage (Main Menu) 
+	 * @throws Exception, in case couldn't open the new stage (Main Menu)
 	 */
 	@FXML
-	void btnBackClick(ActionEvent event) throws Exception{
-		//getting current stage and closing it
+	void btnBackClick(ActionEvent event) throws Exception {
+		// getting current stage and closing it
 		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		myStage.close();
-		
-		//try to open Main controller stage
+
+		// try to open Main controller stage
 		MainController mainControllerStage = new MainController();
 		try {
 			mainControllerStage.start(new Stage());
@@ -47,24 +49,25 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 	 * @throws Exception: on unsuccessful stage change
 	 */
 	@FXML
-	void btnViewCardClick(ActionEvent event) throws Exception{
-		//close current stage
+	void btnViewCardClick(ActionEvent event) throws Exception {
+		// close current stage
 		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		myStage.close();
+
 		
-		//create an instance of target class and try to open it's stage
-		ViewCard_DepartmentContentWorker_Controller viewCardDepWorker = new ViewCard_DepartmentContentWorker_Controller();
+		ViewCard_Controller viewCard = new ViewCard_Controller();
 		try {
-			viewCardDepWorker.start(new Stage());
+			viewCard.start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
-	
+
 	/**
 	 * @param primaryStage: is a new stage instance to be redirected to this class
-	 * start method, launches this class stage
+	 *        start method, launches this class stage
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -79,4 +82,18 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 		primaryStage.show();
 	}
 
+	/**
+	 * 
+	 * @param event click on edit map.
+	 * @author Hasan
+	 */
+	@FXML
+	void EditMapClick(MouseEvent event) {
+		try {
+			new ViewAllMapsLoader().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
 }
