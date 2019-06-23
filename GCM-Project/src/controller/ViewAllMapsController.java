@@ -67,14 +67,13 @@ public class ViewAllMapsController implements Initializable {
 	 * @author Hasan
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL arg0, ResourceBundle arg1)
+	{
 		SetMapsArrayList();// get map list from db
 		ObservableList<String> options = FXCollections.observableArrayList(mapNames);
 		mapCombo.setItems(options);
-		mapCombo.getSelectionModel().selectedItemProperty()
-		.addListener((v, oldValue, newValue) -> FillMapTextValues(newValue));
+		mapCombo.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> FillMapTextValues(newValue));
 		GetMapsPlaces();//After this you will have all of the places from the places_in_maps table
-
 
 		for (int i = 0; i < placesArr.size(); i++) {
 			placesArr.get(i).setPinLabel();
@@ -118,7 +117,7 @@ public class ViewAllMapsController implements Initializable {
 				mapCityLabel.setText(m.getCityName());
 				mapNameLabel.setText(m.getMapName());
 				mapDescLabel.setText(m.getMapDescription());
-				mapVersion.setText(String.valueOf(m.getMapVersion()));
+				//mapVersion.setText(String.valueOf(m.getMapVersion()));
 				// save selected map object
 				ControllersAuxiliaryMethods.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(), m.getCityName(),
 						m.getMapVersion());
@@ -141,10 +140,8 @@ public class ViewAllMapsController implements Initializable {
 			//		
 			//			}
 			//			else {
-			if (placesArr.get(j).getMapName().equals(mapName)) {
-				
-				
-					
+			if (placesArr.get(j).getMapName().equals(mapName)) 
+			{
 				imagePane.getChildren().add(placesArr.get(j).getPin());
 				System.out.println("-----------"+placesArr.get(j).getMapName());
 				System.out.println("map Name : "+mapName);
@@ -152,10 +149,11 @@ public class ViewAllMapsController implements Initializable {
 			}
 			else
 			{
-				if (imagePane.getChildren().isEmpty()==false) {
+				if (imagePane.getChildren().isEmpty()==false)
+				{
 					imagePane.getChildren().remove(placesArr.get(j).getPin());
 					imagePane.getChildren().remove(placesArr.get(j).getPlacename());
-	}
+				}
 			}
 			//}
 		}
