@@ -30,7 +30,7 @@ public class Account {
 		setPhoneNumber(values.get(5));
 		setMail(values.get(6));
 		setUserType(values.get(7));
-		setPermissions(values.get(8));
+		//setPermissions(values.get(8));
 	}
 	public Account(ArrayList<String> values) {
 		this.fieldsArr=new ArrayList<String>(values);
