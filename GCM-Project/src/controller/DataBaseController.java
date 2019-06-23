@@ -169,7 +169,7 @@ public class DataBaseController {
 	public static void getMaps(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
-			String query = "SELECT * FROM " + tableName + " where " + type + " LIKE " + "'%" + searchText + "%'" + ";";
+			String query = "SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where " + type + " LIKE " + "'%" + searchText + "%'" + ";";
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
@@ -182,7 +182,7 @@ public class DataBaseController {
 	public static void getMapsbyplace(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
-			String query = "SELECT * FROM map where " + "MAP_NAME"
+			String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM map where " + "MAP_NAME"
 					+ " IN (SELECT MAP_NAME FROM places_in_maps WHERE places_in_maps.PLACE_NAME like '%" + searchText
 					+ "%');";
 			queryArr.add(query);
@@ -197,9 +197,9 @@ public class DataBaseController {
 	public static void getMapsbydesc(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
-			String query = "SELECT * FROM " + tableName + " where CITY_NAME IN"
+			String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where CITY_NAME IN"
 					+ "(select CITY_NAME from city where cityDescription LIKE " + "'%" + searchText + "%')"
-					+ "UNION SELECT * FROM " + tableName + "" + " where MAP_NAME IN (SELECT "
+					+ "UNION SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + "" + " where MAP_NAME IN (SELECT "
 					+ "places_in_maps.MAP_NAME " + "FROM " + " places_in_maps " + " INNER JOIN "
 					+ " places ON places.NAME = places_in_maps.PLACE_NAME where DESCRIPTION like '%" + searchText
 					+ "%');";
