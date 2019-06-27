@@ -7,14 +7,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Purchase_Controller">
    <children>
       <Pane layoutX="6.0" prefHeight="264.0" prefWidth="496.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ComboBox fx:id="comboBox_SubscriptionType" layoutX="230.0" layoutY="103.0" prefHeight="25.0" prefWidth="179.0" promptText="Select Subscribtion Type" />
+            <ComboBox fx:id="comboBox_SubscriptionType" layoutX="230.0" layoutY="103.0" onAction="#comboBoxSelectedValueAction" prefHeight="25.0" prefWidth="179.0" promptText="Select Subscribtion Type" />
             <Label layoutX="54.0" layoutY="107.0" text="Map: " textAlignment="CENTER" />
-            <Label fx:id="lblSelectedMap_DB" layoutX="117.0" layoutY="107.0" text="Selected Map">
+            <Label fx:id="lblSelectedCity_DB" layoutX="117.0" layoutY="107.0" text="Selected City">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

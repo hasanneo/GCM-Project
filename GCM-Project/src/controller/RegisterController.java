@@ -88,7 +88,7 @@ public class RegisterController extends Application {
 	void RegisterMouseClick(MouseEvent event) {
 		if(ValidateFields()==true) {
 			//create new account
-			newAccount=new Account(fields);
+			newAccount = new Account(fields);
 			System.out.println("NEW ACCOUNT TO BE CREATED: "+newAccount.toString());
 			DataBaseController.SelectAccountFromTable("accounts", userNameTxt.getText(), passTxt.getText());
 			if(DataBaseController.clientCon.GetServerObject()==null) {//check if user already exists

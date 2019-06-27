@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class Purchase_Controller extends Application {
@@ -19,12 +20,14 @@ public class Purchase_Controller extends Application {
 	FXMLLoader fxmlLoader;
 
 	ObservableList<String> list;
+	
+	public static String selectedSubscription;
 
 	@FXML
 	private ComboBox<String> comboBox_SubscriptionType;
 
 	@FXML
-	private Label lblSelectedMap_DB;
+	private Label lblSelectedCity_DB;
 
 	@FXML
 	private Button btnProceedToPayment;
@@ -46,28 +49,84 @@ public class Purchase_Controller extends Application {
 		}
 	}
 
+	/**
+	 * proceed to payment button action event handler
+	 * 
+	 *  makes sure the user has chosen a subscription plan then redirects him to the payment screen
+	 * @param event: get current stage
+	 * @throws Exception: on failed stage opening
+	 */
 	@FXML
 	void btnProceedToPaymentClick(ActionEvent event) throws Exception {
-		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		thisStage.close();
+		//if a plan wasn't chosen	
+		if (comboBoxSelectedValueAction().equals(" ")) {
+			CheckCorrectness("fail");
+		}
+		//redirect to payment screen
+		else {
+			Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+			thisStage.close();
 
-		Payment_Controller paymentStage = new Payment_Controller();
-		try {
-			paymentStage.start(new Stage());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Payment_Controller paymentStage = new Payment_Controller();
+			try {
+				paymentStage.start(new Stage());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
+	/**
+	 * Shows an alert box in case the user didn't include a subscription plan
+	 * 
+	 * @param String that represents the correctness status of fields
+	 */
+	public void CheckCorrectness(String str) {
+		if (str.equals("fail")) {
+			//create an alert box explaining why the user can't proceed
+			Alert alert = new Alert(AlertType.ERROR, " ", ButtonType.CLOSE);
+			alert.setHeaderText("Please Select A subscription Plane Before Proceeding To Payment!");
+			alert.showAndWait();
+			//show that user the field in question
+			comboBox_SubscriptionType.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+		}
+	}
+
+	
+	/**
+	 * Function to return the subscription type the user has chosen
+	 * 
+	 * @return ComboBox selection value
+	 */
+	@FXML
+	public String comboBoxSelectedValueAction () {
+		if (comboBox_SubscriptionType.getValue() != null) {
+			selectedSubscription = comboBox_SubscriptionType.getValue().toString();
+			return selectedSubscription;
+		}
+		else {
+			return " ";
+		}
+	}
+
+	
+	/**
+	 * Initialize subscription type comboBox on each load  
+	 */
 	public void initializeComboBox() {
 		list = FXCollections.observableArrayList("One Time", "1 Month", "2 Months", "3 Months", "4 Months", "5 Months",
 				"6 Months");
 		comboBox_SubscriptionType.setItems(list);
 	}
-
+	
+	public void getCity() {
+		
+	}
+	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage/*, String selectedMap*/) throws Exception {
+		//getCity(selectedMap);
 		fxmlLoader = new FXMLLoader();
 		fxmlLoader.setLocation(getClass().getResource("/fxml/Purchase.fxml"));
 		Parent root = fxmlLoader.load();

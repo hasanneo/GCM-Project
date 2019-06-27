@@ -5,6 +5,7 @@ import java.util.*;
 import client.ClientConnection;
 import controller.DataBaseController;
 import controller.MainController;
+import controller.Payment_Controller;
 import controller.Purchase_Controller;
 import controller.ViewCityMapsCatalogController;
 import fxmlLoaders.AddMapToCityLoader;
@@ -45,7 +46,7 @@ public class MainProgram extends Application {
 
 			DataBaseController.InitiateClient(new ClientConnection(host, port));
 		
-
+			
 			Purchase_Controller purchaseWindow = new Purchase_Controller();
 			purchaseWindow.start(arg0);
 			
