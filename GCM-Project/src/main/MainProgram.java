@@ -9,6 +9,7 @@ import controller.ViewCityMapsCatalogController;
 import fxmlLoaders.AddMapToCityLoader;
 import fxmlLoaders.ChooseCityLoader;
 import fxmlLoaders.ReleaseMapLoader;
+import fxmlLoaders.UserNotificationsLoader;
 import fxmlLoaders.ViewAllMapsLoader;
 import fxmlLoaders.ViewCityMapsCatalogLoader;
 
@@ -19,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * 
@@ -29,7 +31,10 @@ import javafx.stage.Stage;
 public class MainProgram extends Application {
 
 	public static Stage stage;
+	public static MainController main;
+
 	public static void main(String[] args) {
+		main=new MainController();
 		launch(args);
 	}
 	@Override
@@ -37,6 +42,7 @@ public class MainProgram extends Application {
 		// TODO Auto-generated method stub
 		try {
 			//init the client properties from the file
+
 //			Properties props = new Properties();
 //			FileInputStream in = new FileInputStream("@/../Client.properties");
 //			props.load(in);
@@ -60,6 +66,20 @@ public class MainProgram extends Application {
 //
 			//main.start(arg0);//start main menu*/
 
+// 			Properties props = new Properties();
+// 			FileInputStream in = new FileInputStream("@/../Client.properties");
+// 			props.load(in);
+// 			in.close();
+// 			String host = props.getProperty("server.host");
+// 			int port = Integer.parseInt(props.getProperty("server.port"));
+
+// 			DataBaseController.InitiateClient(new ClientConnection(host, port));
+// 			MainController main=new MainController();			
+// 			stage=arg0=new Stage();
+// 			main.start(arg0);
+			
+
+
 
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/fxml/ClientConnection.fxml"));
@@ -76,5 +96,6 @@ public class MainProgram extends Application {
 			System.out.println("MainProgram :"+e.getMessage());
 		}
 	}
+	
 
 }

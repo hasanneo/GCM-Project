@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewCityMapsCatalogController">
 	<children>
-		<TableView fx:id="tableView" layoutY="92.0" prefHeight="306.0" prefWidth="600.0" />
+		<TableView fx:id="tableView" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" styleClass="tree-table-view" />
+      <ComboBox fx:id="cityCombo" layoutX="174.0" layoutY="32.0" prefHeight="25.0" prefWidth="231.0" promptText="CITY" styleClass="select" />
+      <Button fx:id="purchaseBtn" layoutX="425.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#PurchaseClick" text="PURCHASE" />
+      <Label layoutX="211.0" layoutY="68.0" text="PRICE:" />
+      <Label fx:id="priceLabel" layoutX="252.0" layoutY="68.0" prefHeight="17.0" prefWidth="44.0" text="Label" />
 	</children>
 </AnchorPane>

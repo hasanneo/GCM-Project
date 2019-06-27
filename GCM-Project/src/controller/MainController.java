@@ -12,6 +12,9 @@ import java.util.ResourceBundle;
 
 import entity.Account;
 import entity.Map;
+import fxmlLoaders.MapsToAuthorizeLoader;
+import fxmlLoaders.ReleaseMapLoader;
+import fxmlLoaders.UserNotificationsLoader;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +35,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 /**
@@ -79,6 +83,8 @@ public class MainController extends Application {
 
 	@FXML
 	private Label notificationLable;
+	@FXML
+	private Button refreshBtn;
 
 	@FXML
 	void LogOutClick() {
@@ -234,8 +240,10 @@ public class MainController extends Application {
 	@FXML
 	void LoginClick(ActionEvent event) throws Exception {
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		mystage.close();
-		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		mystage.setOpacity(0.9);
+		// mystage.close();
+		// SceneController.push(((Node) event.getSource()).getScene());// push current
+		// scene
 		LoginController login = new LoginController();
 		login.start(new Stage());// create the login stage
 	}
@@ -250,6 +258,8 @@ public class MainController extends Application {
 	}
 
 	public void SetUserIsLoggedIn(Account acc) {
+		System.out.println("**************************");
+		System.out.println(acc.getUsername());
 		this.usernamelbl.setText("WELCOME," + acc.getUsername());
 		this.usernamelbl.setVisible(true);
 		this.log_out_btn.setVisible(true);
@@ -257,6 +267,8 @@ public class MainController extends Application {
 		this.login_btn.setVisible(false);
 		this.register_btn.setVisible(false);
 		this.register_btn.setDisable(true);
+		this.notificationLable.setVisible(true);
+		this.refreshBtn.setVisible(true);
 		if (acc.getUserType().equals("manager")) {
 			// implement manager notifications here
 			this.notificationLable.setVisible(true);
@@ -281,6 +293,7 @@ public class MainController extends Application {
 		fxmlLoader.setLocation(getClass().getResource("/fxml/MainScreen.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/css/svg.css").toExternalForm());
 		primaryStage.setTitle("GCM");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
@@ -311,7 +324,47 @@ public class MainController extends Application {
 		// mapsTableView.setItems(getPeople());
 
 		// maintain the label at the top which shows the username
-		if (DataBaseController.clientCon.isLoggedIn() == true)
-			SetUserIsLoggedIn(DataBaseController.clientCon.GetUserAccount());
+		if (DataBaseController.clientCon.isLoggedIn() == true) {
+			Account loggedInAccount = DataBaseController.clientCon.GetUserAccount();
+			SetUserIsLoggedIn(loggedInAccount);
+			CheckNotifications();
+		}
+	}
+
+	@FXML
+	void NotificationsClick(MouseEvent event) {
+		try {
+			// new ReleaseMapLoader().start(new Stage());
+			if (DataBaseController.clientCon.GetUserType().equals("manager")) {
+				// open manager notifications (authorize map version)
+				new MapsToAuthorizeLoader().start(new Stage());
+			} else {
+				new UserNotificationsLoader().start(new Stage());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void CheckNotifications() {
+		int notificationsCount;
+		if (DataBaseController.clientCon.GetUserType().equals("manager")) {
+			DataBaseController.GetRowCount("maps_to_authorize", null, null);
+			notificationsCount = ControllersAuxiliaryMethods
+					.CountRows(DataBaseController.clientCon.GetObjectAsStringArray(), 6);
+			System.out.println(notificationsCount);
+		} else {//other types of users
+			DataBaseController.GetRowCount("user_notifications", null, null);
+			notificationsCount = ControllersAuxiliaryMethods
+					.CountRows(DataBaseController.clientCon.GetObjectAsStringArray(), 4);
+		}
+		this.notificationLable.setText("(" + notificationsCount + ")");
+	}
+
+	@FXML
+	void RefreshClick(MouseEvent event) {
+		CheckNotifications();
+
 	}
 }

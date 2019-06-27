@@ -2,6 +2,7 @@ package controller;
 
 import com.sun.glass.ui.View;
 
+import fxmlLoaders.ViewCityMapsCatalogLoader;
 import javafx.application.Application;
 /*
  * majd 
@@ -14,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class DepartmentContentManagerController extends Application {
@@ -98,5 +100,20 @@ public class DepartmentContentManagerController extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
+	}
+
+	@FXML
+	void ViewCatalog(MouseEvent event) {
+
+	}
+
+	@FXML
+	void PurchaseMapsClick(MouseEvent event) {
+		try {
+			new ViewCityMapsCatalogLoader().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

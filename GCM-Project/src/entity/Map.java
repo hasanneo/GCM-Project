@@ -27,6 +27,13 @@ public class Map {
 		setMapDescription(mapDescirption);
 		setCityName(cityName);
 	}
+	/**
+	 * 
+	 */
+	public Map() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getCityName() {
 		return cityName;
 	}

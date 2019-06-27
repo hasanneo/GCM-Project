@@ -1,6 +1,8 @@
 package controller;
 
+import fxmlLoaders.ChooseCityLoader;
 import fxmlLoaders.ViewAllMapsLoader;
+import fxmlLoaders.ViewCityMapsCatalogLoader;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -90,10 +92,35 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 	@FXML
 	void EditMapClick(MouseEvent event) {
 		try {
-			new ViewAllMapsLoader().start(new Stage());
+			new ViewAllMapsLoader(null).start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
+	}
+
+	@FXML
+	void ViewCatalog(MouseEvent event) {
+
+	}
+
+	@FXML
+	void PurchaseMapsClick(MouseEvent event) {
+		try {
+			new ViewCityMapsCatalogLoader().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	void AddMapToCityClick(MouseEvent event) {
+		try {
+			new ChooseCityLoader().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -23,6 +23,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import main.MainProgram;
 
 /**
  * 
@@ -54,7 +55,9 @@ public class LoginController extends Application {
 	@FXML
 	void CancelClick(MouseEvent event) throws IOException {
 		loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		loginStage.setScene(SceneController.pop());// replace the scene
+		//loginStage.setScene(SceneController.pop());// replace the scene
+		loginStage.close();
+		MainProgram.stage.setOpacity(1);
 	}
 	
 	/**
@@ -108,18 +111,19 @@ public class LoginController extends Application {
 			}
 		}
 	}
-
 	public void LogIntoMain(String username) throws IOException {
 		Account loggedInAccount=DataBaseController.clientCon.GetUserAccount();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainScreen.fxml"));
-		Parent root = (Parent) loader.load();
-		MainController secController = loader.getController();
-		secController.SetUserIsLoggedIn(loggedInAccount);
-		Stage stage = new Stage();
-		stage.setScene(new Scene(root));
-		stage.show();
 		loginStage = (Stage) ((Node) cancelBtn).getScene().getWindow();// get stage
 		loginStage.close();// close login stage
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(getClass().getResource("/fxml/MainScreen.fxml"));
+		Parent root = fxmlLoader.load();
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/css/svg.css").toExternalForm());
+		MainProgram.stage.setTitle("GCM");
+		MainProgram.stage.setScene(scene);
+		MainProgram.stage.setResizable(false);
+		MainProgram.stage.setOpacity(1);
 	}
 
 	@Override
@@ -152,4 +156,5 @@ public class LoginController extends Application {
 			alert.showAndWait();
 		}
 	}
+	
 }
