@@ -48,14 +48,11 @@ public class MainProgram extends Application {
 			int port = Integer.parseInt(props.getProperty("server.port"));
 
 			DataBaseController.InitiateClient(new ClientConnection(host, port));
-			
-			//new ViewCityMapsCatalogLoader().start(new Stage());
-			//new ChooseCityLoader().start(new Stage());
-			
 			MainController main=new MainController();			
 			stage=arg0=new Stage();
 			main.start(arg0);
 			
+
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
 		}

@@ -80,7 +80,7 @@ public class ControllersAuxiliaryMethods {
 		int i1, i2, i3, i4;
 
 		int row = 0;
-		int tableColumns = 4;// changed to 6 by hasan was 4 before
+		int tableColumns = 3;// changed to 6 by hasan was 4 before
 		String[] mapsArray;
 		ArrayList<Map> maps = new ArrayList<Map>();
 		if (type == "CITY_NAME") {
@@ -102,9 +102,9 @@ public class ControllersAuxiliaryMethods {
 			i1 = i;
 			i2 = i + 1;
 			i3 = i + 2;
-			i4 = i + 4;
+			//i4 = i + 4;
 
-			maps.add(new Map(mapsArray[i1], mapsArray[i3], mapsArray[i4], mapsArray[i2]));
+			maps.add(new Map(mapsArray[i1], mapsArray[i2], mapsArray[i3]));//, mapsArray[i2]));
 		}
 		return maps;
 	}

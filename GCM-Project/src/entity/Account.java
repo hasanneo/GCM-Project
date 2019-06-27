@@ -2,6 +2,8 @@ package entity;
 
 import java.util.ArrayList;
 
+import javax.swing.plaf.synth.SynthScrollBarUI;
+
 public class Account {
 	private int id;
 	private String username;
@@ -11,6 +13,7 @@ public class Account {
 	private String mail;
 	private String phoneNumber;
 	private String userType;
+	private String permissions;
 	private ArrayList<String> fieldsArr;
 	/**
 	 * set username and password from the values
@@ -27,6 +30,7 @@ public class Account {
 		setPhoneNumber(values.get(5));
 		setMail(values.get(6));
 		setUserType(values.get(7));
+		//setPermissions(values.get(8));
 	}
 	public Account(ArrayList<String> values) {
 		this.fieldsArr=new ArrayList<String>(values);
@@ -37,6 +41,12 @@ public class Account {
 		setPhoneNumber(values.get(4));
 		setMail(values.get(5));
 		setUserType(values.get(6));
+	}
+	public String getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(String permissions) {
+		this.permissions = permissions;	
 	}
 	public Account(String username, String password) {
 		setUsername(username);

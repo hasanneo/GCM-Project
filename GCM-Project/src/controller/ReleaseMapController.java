@@ -123,7 +123,6 @@ public class ReleaseMapController implements Initializable {
 			}
 		}
 		return places;
-
 	}
 
 	@FXML

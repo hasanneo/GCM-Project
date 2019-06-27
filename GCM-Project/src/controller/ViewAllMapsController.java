@@ -105,7 +105,8 @@ public class ViewAllMapsController implements Initializable {
 	 * @author Hasan
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	public void initialize(URL arg0, ResourceBundle arg1)
+	{
 		SetMapsArrayList();// get map list from db
 		if (chosenMap == null) {
 			//view all maps
@@ -166,7 +167,7 @@ public class ViewAllMapsController implements Initializable {
 				mapCityLabel.setText(m.getCityName());
 				mapNameLabel.setText(m.getMapName());
 				mapDescLabel.setText(m.getMapDescription());
-				mapVersion.setText(String.valueOf(m.getMapVersion()));
+				//mapVersion.setText(String.valueOf(m.getMapVersion()));
 				// save selected map object
 				ControllersAuxiliaryMethods.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(),
 						m.getCityName(), m.getMapVersion());
