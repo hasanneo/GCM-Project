@@ -15,6 +15,7 @@ public class CityMap {
 	private String mapName;
 	private String mapVersion;
 	private String authorized;
+
 	/**
 	 * @param cityName
 	 * @param info
@@ -26,7 +27,7 @@ public class CityMap {
 		this.info = info;
 		this.mapName = mapName;
 	}
-	
+
 	/**
 	 * @param cityName
 	 * @param info
@@ -43,33 +44,37 @@ public class CityMap {
 		this.authorized = authorized;
 	}
 
-
-
 	/**
 	 * 
 	 */
 	public CityMap() {
-		
+
 	}
 
 	public String getCityName() {
 		return cityName;
 	}
+
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
+
 	public String getInfo() {
 		return info;
 	}
+
 	public void setInfo(String info) {
 		this.info = info;
 	}
+
 	public String getMapName() {
 		return mapName;
 	}
+
 	public void setMapName(String mapName) {
 		this.mapName = mapName;
 	}
+
 	@Override
 	public String toString() {
 		return "CityMap [cityName=" + cityName + ", info=" + info + ", mapName=" + mapName + "]";
@@ -90,6 +95,5 @@ public class CityMap {
 	public void setAuthorized(String authorized) {
 		this.authorized = authorized;
 	}
-	
-	
+
 }

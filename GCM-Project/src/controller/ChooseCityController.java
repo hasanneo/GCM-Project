@@ -31,8 +31,6 @@ public class ChooseCityController implements Initializable {
 	@FXML
 	private Button nextBtn;
 	@FXML
-	private Button backBtn;
-	@FXML
 	private ComboBox<String> cityCombo;
 	ArrayList<String> cityNames;
 	String selectedCity = null;
@@ -67,10 +65,7 @@ public class ChooseCityController implements Initializable {
 		selectedCity = newValue;
 	}
 
-	@FXML
-	void BackClick(MouseEvent event) {
-
-	}
+	
 
 	@FXML
 	void NextClick(MouseEvent event) {

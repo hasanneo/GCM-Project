@@ -9,15 +9,18 @@ import controller.ViewCityMapsCatalogController;
 import fxmlLoaders.AddMapToCityLoader;
 import fxmlLoaders.ChooseCityLoader;
 import fxmlLoaders.ReleaseMapLoader;
+import fxmlLoaders.UserNotificationsLoader;
 import fxmlLoaders.ViewAllMapsLoader;
 import fxmlLoaders.ViewCityMapsCatalogLoader;
 
 import java.io.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * 
@@ -26,8 +29,10 @@ import javafx.stage.Stage;
  *The program will launch from here.
  */
 public class MainProgram extends Application {
-
+	public static Stage stage;
+	public static MainController main;
 	public static void main(String[] args) {
+		main=new MainController();
 		launch(args);
 	}
 	@Override
@@ -43,25 +48,15 @@ public class MainProgram extends Application {
 			int port = Integer.parseInt(props.getProperty("server.port"));
 
 			DataBaseController.InitiateClient(new ClientConnection(host, port));
-		
-
-			//new MapViewLoader().start(new Stage());
-
-
-
-		//	new ViewAllMapsLoader().start(new Stage());//uncomment this line and comment out the MainController loader to work on the view maps
-			//new ViewCityMapsCatalogLoader().start(new Stage());
-
-
-			MainController main=new MainController();
-			arg0=new Stage();
-//
-			main.start(arg0);//start main menu*/
-
+			MainController main=new MainController();			
+			stage=arg0=new Stage();
+			main.start(arg0);
+			
 
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
 		}
 	}
+	
 
 }

@@ -206,27 +206,46 @@ public class MapEditController implements Initializable {
 	@FXML
 	void save(ActionEvent event) {
 		if (places != null && !places.isEmpty()) {
-			System.out.println("**********INSERTING********");
-			DataBaseController.InsertIntoPlacesInMaps(places.get(0));
-			
-			if(DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
-				Map map=ControllersAuxiliaryMethods.getSelectedMapFromCombo();
-				//insert successfully
-				Alert alert = new Alert(AlertType.INFORMATION, null, ButtonType.OK,ButtonType.CANCEL);
-				alert.setTitle("PURCHASE MAP");
-				alert.setContentText("Request release approval?"+Double.parseDouble(ControllersAuxiliaryMethods.selectedMapFromCombo.getMapVersion()));
-				alert.headerTextProperty().set("PLACES ADDED SUCCESSFULLY TO "+ControllersAuxiliaryMethods.selectedMapFromCombo.getMapName());
-				alert.setContentText(null);
-				Optional<ButtonType> result = alert.showAndWait();
-				ButtonType button = result.orElse(ButtonType.CANCEL);
-				if (button == ButtonType.OK) {
-					MapVersionNotification noti=new MapVersionNotification("Authorize version", DataBaseController.clientCon.GetUser().getUsername(), "Request info test", map.getCityName(), map.getMapName(), map.getMapVersion());
+			// insert successfully
+			Alert alert = new Alert(AlertType.WARNING, null, ButtonType.OK, ButtonType.CANCEL);
+			alert.setTitle("RELEASE NEW VERSION");
+			alert.setContentText(null);
+			alert.headerTextProperty().set("Request release approval?");
+			alert.setContentText(null);
+			Optional<ButtonType> result = alert.showAndWait();
+			ButtonType button = result.orElse(ButtonType.CANCEL);
+			if (button == ButtonType.OK) {//ok click
+				System.out.println("******************");
+				System.out.println(places.get(0).toString());
+				System.out.println("******************");
+				DataBaseController.InsertIntoPlacesInMaps(places.get(0));//insert new place NEED TO INSERT ALL PLACES!!
+				if (DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
+					Map map = ControllersAuxiliaryMethods.getSelectedMapFromCombo();//get the selected map
+					Double versionDuble = Double.parseDouble(map.getMapVersion());
+					versionDuble += 0.1;
+					versionDuble=Math.round(versionDuble * 10) / 10.0;
+					String newVersion = versionDuble.toString();//set a new map version
+					//send authorization request to manager
+					MapVersionNotification noti = new MapVersionNotification("Authorize version",
+							DataBaseController.clientCon.GetUser().getUsername(), "Request info test",
+							map.getCityName(), map.getMapName(), newVersion);
+					//add to pending approval releases
 					noti.SendNotificationForManagerApproval();
-					
-				} else {
-					// CANCEL BUTTON
+					alert.setAlertType(AlertType.INFORMATION);
+					alert.setTitle(null);
+					alert.headerTextProperty().set("RELEASE REQUEST SENT TO THE MANAGER");
+					alert.setContentText(null);
+					alert.setContentText(null);
+					alert.showAndWait();
 				}
+			} else {
+				// CANCEL BUTTON
+				alert.setAlertType(AlertType.INFORMATION);
+				alert.setTitle(null);
+				alert.setContentText("CHANGES DISCARDED");
+				alert.setContentText(null);
 			}
+
 		}
 	}
 
@@ -234,7 +253,6 @@ public class MapEditController implements Initializable {
 	void cancel(ActionEvent event) {
 
 	}
-
 	/**
 	 * 
 	 * @param event
@@ -412,7 +430,8 @@ public class MapEditController implements Initializable {
 		// populate the maps array list
 		for (int i = 0, row = 0; row < places.length / colNum; i += colNum, row++) {
 			placesNames.add(places[i]);
-			//allPlaces.add(new Place(places[i], places[i + 1], places[i + 2], places[i + 3], places[i + 4]));
+			// allPlaces.add(new Place(places[i], places[i + 1], places[i + 2], places[i +
+			// 3], places[i + 4]));
 		}
 
 		
@@ -509,8 +528,6 @@ public class MapEditController implements Initializable {
 			}
 			//}
 		}
-		
-		
 		PlacePane.setVisible(false);
 		assert mapView != null : "fx:id=\"mapView\" was not injected: check your FXML file 'mapGui.fxml'.";
 
