@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controller.DataBaseController;
+import javafx.scene.control.CheckBox;
 
 /**
  * 
@@ -18,7 +19,8 @@ public class MapVersionNotification extends Notification {
 	String cityName;
 	String mapName;
 	String mapVersion;
-
+	CheckBox approaveCheck=new CheckBox();
+	PlaceInMap[] placesList;
 	/**
 	 * @param request
 	 * @param requestUser
@@ -66,4 +68,13 @@ public class MapVersionNotification extends Notification {
 		ArrayList<String> cols=new ArrayList<String>(List.of("CITY_NAME","INFO","MAP_NAME","MAP_VERSION","USER_ACCOUNT"));
 		DataBaseController.InsertIntoTable("Maps_TO_AUTHORIZE", cols, vals);
 	}
+
+	public CheckBox getApproaveCheck() {
+		return approaveCheck;
+	}
+
+	public void setApproaveCheck(CheckBox approaveCheck) {
+		this.approaveCheck = approaveCheck;
+	}
+	
 }

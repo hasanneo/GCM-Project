@@ -60,11 +60,17 @@ public class ControllersAuxiliaryMethods {
 		int row = 0;
 		int tableColumns = tableColumnsNumber;
 		ArrayList<CityMap> rows = new ArrayList<CityMap>();
+		CityMap cityMap;
 		// populate the array list
 		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {
 
-			System.out.println(rowsArray[i] + " |" + rowsArray[i + 1] + " |" + rowsArray[i + 2]);
-			rows.add(new CityMap(rowsArray[i + 1], rowsArray[i + 2], rowsArray[i + 3]));
+			if (tableColumnsNumber == 2) {
+				cityMap=new CityMap();
+				cityMap.setMapName(rowsArray[i]);
+				cityMap.setInfo(rowsArray[i+1]);
+				rows.add(cityMap);
+			} else
+				rows.add(new CityMap(rowsArray[i + 1], rowsArray[i + 2], rowsArray[i + 3]));
 		}
 		return rows;
 	}
@@ -134,15 +140,29 @@ public class ControllersAuxiliaryMethods {
 	 * @param i
 	 * @return
 	 */
-	public static Collection<? extends MapVersionNotification> GetTableNewVersionNotificationRowsAsList(String[] rowsArray,
-			int tableColumns) {
+	public static Collection<? extends MapVersionNotification> GetTableNewVersionNotificationRowsAsList(
+			String[] rowsArray, int tableColumns) {
 		int row = 0;
 		ArrayList<MapVersionNotification> rows = new ArrayList<MapVersionNotification>();
 		// populate the array list
-		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {		
-			rows.add(new MapVersionNotification("AUTHORIZE MAP",rowsArray[i+4],rowsArray[i],rowsArray[i+3],rowsArray[i+1],rowsArray[i+2]));
+		for (int i = 0; row < rowsArray.length / tableColumns; i += tableColumns, row++) {
+			rows.add(new MapVersionNotification("AUTHORIZE MAP", rowsArray[i + 4], rowsArray[i], rowsArray[i + 3],
+					rowsArray[i + 1], rowsArray[i + 2]));
 		}
 		return rows;
 	}
 
+	/**
+	 * 
+	 * @param rowsArray -array of the rows after the select
+	 * @param columns   -number of columns specified in the select
+	 * @return number of rows
+	 * @author Hasan
+	 */
+	public static int CountRows(String[] rowsArray, int columns) {
+		return rowsArray.length / columns;
+	}
+	/*public static String ConvertToConventionalPath(String path) {
+		
+	}*/
 }

@@ -10,7 +10,6 @@
 	<children>
 		<ComboBox fx:id="cityCombo" layoutX="60.0" layoutY="174.0" prefHeight="25.0" prefWidth="466.0" promptText="CHOOSE A CITY" />
 		<Button fx:id="nextBtn" layoutX="526.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#NextClick" text="NEXT" />
-		<Button fx:id="backBtn" layoutX="460.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#BackClick" text="BACK" />
       <Label text="ADD MAP TO CITY">
          <font>
             <Font size="57.0" />
