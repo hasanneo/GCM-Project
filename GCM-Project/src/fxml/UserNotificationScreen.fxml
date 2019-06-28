@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserNotificationController">
+    <top>
+        <BorderPane styleClass="header-section">
+            <left>
+                <Label id="header-text" text="NOTIFICATIONS" />
+            </left>
+        </BorderPane>
+    </top>
+    <left>
+        <VBox styleClass="sidebar-section">
+         <children>
+            <ListView fx:id="mapsList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+         </children>
+        </VBox>
+    </left>
+    <center>
+        <VBox styleClass="content-section">
+            <children>
+                <Label id="content-header" text="Content header" />
+                <Label id="content" fx:id="notificationContent">
+                    <text>
+                        TEXT GOES HERE
+                    </text>
+                </Label>
+            </children>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox id="footer-section">
+            <children>
+                <Label text="H" />
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -39,6 +39,7 @@ public class ViewCityMapsCatalogLoader extends Application {
 		fxmlLoader.setLocation(getClass().getResource("/fxml/CityMapCatalogScreen.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/css/tableview.css").toExternalForm());
 		stage.setTitle("Catalog");
 		stage.setScene(scene);
 		stage.setResizable(false);

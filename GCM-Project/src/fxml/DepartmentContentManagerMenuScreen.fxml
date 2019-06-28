@@ -23,7 +23,7 @@
             <Font name="Comic Sans MS Bold" size="24.0" />
          </font>
       </Label>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="40.0" layoutY="132.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="40.0" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#ViewCatalog" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -38,7 +38,7 @@
             <Tooltip text="View maps catalog" />
          </tooltip>
       </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="209.0" layoutY="132.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="209.0" layoutY="132.0" mnemonicParsing="false" onMousePressed="#PurchaseMapsClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
