@@ -94,6 +94,41 @@ public class DataBaseController {
 		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
 	}
+	//UPDATE `gcm`.`city_maps_rate` SET `status` = 'mm' WHERE (`ID` = '7');
+
+	/**
+	 * @author majdh
+	 * */
+	public static void UpdateCityMapsRates(String CityName,String Onetimepurchase,String SubscriptionPurchase,String status) {
+		//UPDATE `gcm`.`city_maps_rate` SET `OneTimePurchase_price` = '60', `SubsciptionPurchase_price` = '60', `status` = 'waiting' WHERE (`CITY_NAME` = 'Sekhnin');
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "UPDATE `gcm`.`city_maps_rate` SET `OneTimePurchase_price` = '"+Onetimepurchase+"', `SubsciptionPurchase_price` = '"+SubscriptionPurchase+"',`status` = '"+status+"' WHERE (`CITY_NAME` = '"+CityName+"')";
+		queryArr.add(query);
+     	queryArr.add("update");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * @author majdh
+	 * 
+	 * */
+	public static void InsertCityMapsRates(String CityName,String Onetimepurchase,String SubscriptionPurchase,String status) {
+		//INSERT INTO `gcm`.`city_maps_rate` (`CITY_NAME`, `OneTimePurchase_price`, `SubsciptionPurchase_price`, `status`) VALUES ('Nazerth', '10', '10', 'disapprove');
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "INSERT INTO `gcm`.`city_maps_rate` (`CITY_NAME`, `OneTimePurchase_price`, `SubsciptionPurchase_price`, `status`) VALUES(?,?,?,?)";
+		queryArr.add(CityName);
+		queryArr.add(Onetimepurchase);
+		queryArr.add(SubscriptionPurchase);
+		queryArr.add(status);
+		queryArr.add(query);
+		queryArr.add("insert");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	
 	
 	/**
 	 * 
@@ -105,7 +140,6 @@ public class DataBaseController {
 	 * updated the wanted cell on DB.
 	 * 
 	 * */
-	
 	public static void CityIncFieldsInDB(String fName,String CityName) {
 		ArrayList<String> queryArr =new ArrayList<String>();
 		String query="UPDATE viewreportstable SET "+fName+"="+ fName +"+ 1 WHERE CITY_NAME='"+CityName+"';";

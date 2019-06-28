@@ -41,7 +41,6 @@ public class ViewReportController{
 	FXMLLoader fxmlLoader;
 	
 	public void start(Stage stage) throws Exception{
-		System.out.println("start");
 		fxmlLoader = new FXMLLoader();
 		fxmlLoader.setLocation(getClass().getResource("/fxml/ViewReportMainScreen.fxml"));
 		Parent root = fxmlLoader.load();
@@ -96,7 +95,7 @@ public class ViewReportController{
 		int i=1;
 		observableList = FXCollections.observableArrayList();
 		int index=combobox.getSelectionModel().getSelectedIndex();
-		String SelectedCity=this.CitysArr.get(index).toString();
+		String SelectedCity=CitysArr.get(index).toString();
 		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",SelectedCity);
 		String[] arr=DataBaseController.clientCon.GetObjectAsStringArray();
 		Report rep;

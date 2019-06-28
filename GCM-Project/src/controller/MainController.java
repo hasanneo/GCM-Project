@@ -153,6 +153,7 @@ public class MainController extends Application {
 	 * * Registered User
 	 * * Worker
 	 * * Manager
+	 * *Company Manager
 	 */
 	@FXML 
 	void OptionsOnActionBtn(ActionEvent event) throws Exception {
@@ -197,21 +198,37 @@ public class MainController extends Application {
 				e.printStackTrace();
 			}
 		 }
-		}
+		else if (UserType.equals("Cmanager")) {
+			 thisStage.close(); //close current stage
+			 CompanyManagerController CManager = new CompanyManagerController(); //creating an instance of department worker controller 
+			 try {
+				 
+				 CManager.start(new Stage()); //invoking department controller start method
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+			}
+		} 
+	
 		//if non of the above conditions were met then the user is an unregistered user, is redirected to the appropriate window
 		else {
 			thisStage.close(); //close current stage
-			UserMenuScreen_Controller userMenuControllerStage = new UserMenuScreen_Controller(); //create an instance of target class
+			
+		// DepartmentContentManagerController departmentManager = new DepartmentContentManagerController(); //creating an instance of department worker controller 
+
+		UserMenuScreen_Controller userMenuControllerStage = new UserMenuScreen_Controller(); //create an instance of target class
 			try {
+				
+				//departmentManager.start(new Stage());
 				userMenuControllerStage.start(new Stage()); //invoke start to get the appropriate UI
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+
 	}
-
-
 	@FXML
 	void LoginClick(ActionEvent event) throws Exception {
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage

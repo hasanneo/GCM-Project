@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class DepartmentContentManagerController extends Application {
@@ -28,16 +29,52 @@ public class DepartmentContentManagerController extends Application {
 	private Button btnBack;
 
 	FXMLLoader fxmlLoader;
+	
+	public static String SetORUpdateMapsRates="";
+	/**
+	 * 
+	 * @author majdh
+	 * */
+	@FXML 
+	void SetMapsRates(ActionEvent event) throws Exception {
+		SetORUpdateMapsRates="set";
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		SetUpdateApproveMapsRatesController map_rates = new SetUpdateApproveMapsRatesController();
+		map_rates.start(new Stage());// create the option stage
+	}
+	
 
-	@FXML //
+	/**
+	 * 
+	 * @author majdh
+	 * */
+	@FXML 
+	void UpdateMapsRates(ActionEvent event) throws Exception {
+		SetORUpdateMapsRates="update";
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		SetUpdateApproveMapsRatesController map_rates = new SetUpdateApproveMapsRatesController();
+		map_rates.start(new Stage());// create the option stage
+	}
+
+/**
+ * 
+ * @author majdh
+ * 
+ * */
+	@FXML 
 	void OnActionViewReports(ActionEvent event) throws Exception {
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		mystage.close();
 		SceneController.push(((Node) event.getSource()).getScene());// push current scene
-		ViewReportController view_repor = new ViewReportController();
-		view_repor.start(new Stage());// create the option stage
+		ViewReportController view_report = new ViewReportController();
+		view_report.start(new Stage());// create the option stage
 	}
 
+	
 	/**
 	 * @author Ebrahem
 	 * @param event: get the current stage
@@ -83,6 +120,7 @@ public class DepartmentContentManagerController extends Application {
 		}
 	}
 
+	
 	/**
 	 * @param primaryStage: is a new stage instance to be redirected to this class
 	 *        start method, launches this class stage

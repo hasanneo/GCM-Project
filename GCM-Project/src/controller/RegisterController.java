@@ -61,6 +61,9 @@ public class RegisterController extends Application {
 	private RadioButton managerRadio;
 
 	@FXML
+	private RadioButton CompanyManagerRadio;
+	
+	@FXML
 	private Button registerBtn;
 
 	@FXML
@@ -208,6 +211,8 @@ public class RegisterController extends Application {
 			return "worker";
 		if(managerRadio.isSelected())
 			return "manager";
+		if(CompanyManagerRadio.isSelected())
+			return "Cmanager";
 		return null;
 	}
 	private boolean CheckEmptyFields() {
