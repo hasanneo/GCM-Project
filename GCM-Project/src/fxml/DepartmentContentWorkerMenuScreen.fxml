@@ -126,5 +126,7 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button fx:id="BtnAddTour" layoutX="556.0" layoutY="489.0" mnemonicParsing="false" onAction="#AddTourToMap" text="Add Tour To Map" />
+      <Button fx:id="EditPlaceBtn" layoutX="374.0" layoutY="489.0" mnemonicParsing="false" onAction="#EditPlace" text="Edit Place" />
    </children>
 </AnchorPane>

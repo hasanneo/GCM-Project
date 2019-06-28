@@ -64,6 +64,39 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 		}
 
 	}
+	
+	 @FXML
+	    void AddTourToMap(ActionEvent event)  throws Exception {
+			// close current stage
+			Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			myStage.close();
+
+			
+			AddTourToMapController AddTour = new AddTourToMapController();
+			try {
+				AddTour.start(new Stage());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 }
+	
+	 
+	    @FXML
+	    void EditPlace(ActionEvent event) throws Exception {
+			// close current stage
+			Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			myStage.close();
+
+			
+			EditPlaceController EditPlace = new EditPlaceController();
+			try {
+				EditPlace.start(new Stage());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 }
 
 	/**
 	 * @param primaryStage: is a new stage instance to be redirected to this class
