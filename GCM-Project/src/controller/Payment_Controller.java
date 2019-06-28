@@ -1,12 +1,17 @@
 package controller;
 
+import com.sun.deploy.uitoolkit.impl.fx.ui.FXConsole;
+
 import javafx.application.Application;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,6 +21,8 @@ import javafx.stage.Stage;
 public class Payment_Controller extends Application {
 
 	FXMLLoader fxmlLoader;
+	
+	ObservableList<String> list;
 
 	@FXML
 	private Label lblDesiredMap_DB;
@@ -36,10 +43,10 @@ public class Payment_Controller extends Application {
 	private TextField CreditCardField;
 
 	@FXML
-	private SplitMenuButton MonthSelection;
+	private ComboBox<String> comboBoxYear;
 
 	@FXML
-	private SplitMenuButton yearSelection;
+	private ComboBox<String> comboBoxMonth;
 
 	@FXML
 	private Label lblLoadPrice_DB;
@@ -50,147 +57,162 @@ public class Payment_Controller extends Application {
 	@FXML
 	private Button btnPay;
 
+	
+	/**
+	 *  Function to initialize all the necessary data regarding the form 
+	 *  Including comboboxes
+	 *  Text field values 
+	 *  and insuring to load the correct data into the labels
+	 */
 	public void setValuesAndProperties() {
-		lblSubscriptionType_DB.setText(Purchase_Controller.selectedSubscription.toString());
-		
-		//setting text property to only numerical for ID Number
-		IDNumberField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("\\d*")) {
-		        	IDNumberField.setText(newValue.replaceAll("[^\\d]", ""));
-		        }
-		    }
-		});
-		
-		
-		IDNumberField.textProperty().addListener(
-				  (observable, oldValue, newValue) -> {
-					  if (newValue.length() > 9) ((StringProperty)observable).setValue(oldValue);
-					  if (newValue.length() == 9) IDNumberField.setStyle("-fx-border-color: green ; -fx-border-width: 1px ;");
-					    }
-					);
-		
-		//setting text property to only numerical for Credit Card
-		CreditCardField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("\\d*")) {
-		        	CreditCardField.setText(newValue.replaceAll("[^\\d]", ""));
-		        }
-		    }
-		});
-		
-		CreditCardField.textProperty().addListener(
-				  (observable, oldValue, newValue) -> {
-					  if (newValue.length() > 16) ((StringProperty)observable).setValue(oldValue);
-					  if (newValue.length() == 16) CreditCardField.setStyle("-fx-border-color: green ; -fx-border-width: 1px ;");
-					    }
-					);
-		
-		//setting text property to only numerical for CVV
-		CVVField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("\\d*")) {
-		        	CVVField.setText(newValue.replaceAll("[^\\d]", ""));
-		        }
-		    }
-		});
-		
-		CVVField.textProperty().addListener(
-				  (observable, oldValue, newValue) -> {
-					  if (newValue.length() > 3) ((StringProperty)observable).setValue(oldValue);
-					  if (newValue.length() == 3) CVVField.setStyle("-fx-border-color: green ; -fx-border-width: 1px ;");
-					    }
-					);
-		
-		
-		
-		
+		initializeComboBox();
 //		lblDesiredMap_DB.setText();
 //		lblLoadPrice_DB.setText(value);
+		lblSubscriptionType_DB.setText(Purchase_Controller.selectedSubscription.toString());
+
+		// setting text property to only numerical for ID Number
+		IDNumberField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) {
+					IDNumberField.setText(newValue.replaceAll("[^\\d]", ""));
+				}
+			}
+		});
+
+		IDNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.length() > 9)
+				((StringProperty) observable).setValue(oldValue);
+			if (newValue.length() == 9)
+				IDNumberField.setStyle("-fx-border-color: green ; -fx-border-width: 1px ;");
+		});
+
+		// setting text property to only numerical for Credit Card
+		CreditCardField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) {
+					CreditCardField.setText(newValue.replaceAll("[^\\d]", ""));
+				}
+			}
+		});
+
+		CreditCardField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.length() > 16)
+				((StringProperty) observable).setValue(oldValue);
+			if (newValue.length() == 16)
+				CreditCardField.setStyle("-fx-border-color: green ; -fx-border-width: 1px ;");
+		});
+
+		// setting text property to only numerical for CVV
+		CVVField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) {
+					CVVField.setText(newValue.replaceAll("[^\\d]", ""));
+				}
+			}
+		});
+
+		CVVField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.length() > 3)
+				((StringProperty) observable).setValue(oldValue);
+			if (newValue.length() == 3)
+				CVVField.setStyle("-fx-border-color: green ; -fx-border-width: 1px ;");
+		});
 
 	}
 
-	public void checkFields() {
-		
-		
-		//check first name field
+	/**
+	 * Initialize subscription type comboBox on each load  
+	 */
+	public void initializeComboBox() {
+		list = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10","11","12");
+		comboBoxMonth.setItems(list);
+		list = FXCollections.observableArrayList("19", "20", "21", "22", "23", "24");
+		comboBoxYear.setItems(list);
+	}
+
+	/**
+	 * Function to check the correctness of the values the user inserted
+	 * i.e. ID correctness, correct name and credit card
+	 *
+	 */
+	public boolean checkFields() {
+
+		// check first name field
 		if (FirstNameField.getText().toString().equals(null)) {
 			alertBox("Please Insert Your Name!");
 			FirstNameField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
 		if (FirstNameField.getText().length() < 3) {
 			alertBox("Name must be 3 letters at least!");
 			FirstNameField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
-		
-		//check last name field
+
+		// check last name field
 		if (LastNameField.getText().toString().equals(null)) {
 			alertBox("Last must be 3 letters at least!");
 			LastNameField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
 		if (LastNameField.getText().length() < 3) {
 			alertBox("Last must be 3 letters at least!");
 			LastNameField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
-		
-		//making sure to display a message on empty texts
+
+		// making sure to display a message on empty texts
 		if (IDNumberField.getText().length() == 0) {
 			alertBox("Please fill in your ID!");
 			IDNumberField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
-		
-		//correct ID length message
+
+		// correct ID length message
 		if (IDNumberField.getText().length() < 9) {
 			alertBox("ID must be 9 numbers!");
 			IDNumberField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
-		
-		//making sure to display a message on empty texts
+
+		// making sure to display a message on empty texts
 		if (CreditCardField.getText().length() == 0) {
 			alertBox("Please fill in your Credit Card!");
 			CreditCardField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
-		
-		//correct credit card length message
+
+		// correct credit card length message
 		if (CreditCardField.getText().length() < 16) {
 			alertBox("Credit Card should be 16 numbers!");
 			CreditCardField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
-		
-		//making sure to display a message on empty texts
+
+		// making sure to display a message on empty texts
 		if (CVVField.getText().length() == 0) {
 			alertBox("Please fill in your CVV!");
 			CVVField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
-		//CVV length
+		// CVV length
 		if (CVVField.getText().length() < 3) {
 			alertBox("CVV must be 3 numbers!");
 			CVVField.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			return false;
 		}
-		
-		//making sure expiration date was included
-		if (MonthSelection.getText().toString().equals("Month") || yearSelection.getText().toString().equals("Year")) {
+
+		// making sure expiration date was included
+		if (comboBoxMonth.getValue() == null || comboBoxYear.getValue() == null) {
 			alertBox("Please check expiration date!");
-			MonthSelection.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			yearSelection.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-			return;
+			comboBoxMonth.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+			comboBoxYear.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -202,7 +224,25 @@ public class Payment_Controller extends Application {
 	 */
 	@FXML
 	void btnPayClick(ActionEvent event) {
-		checkFields();
+		if (checkFields()) {
+			Alert alert = new Alert(AlertType.CONFIRMATION, " ", ButtonType.OK);
+			alert.setHeaderText("Thank you for your purchase :)");
+			alert.showAndWait();
+			
+			
+			//close this stage
+			Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+			thisStage.close();
+			
+			//return to main screen
+			MainController mainStage = new MainController();
+			try {
+				mainStage.start(new Stage());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -233,5 +273,6 @@ public class Payment_Controller extends Application {
 	@FXML
 	void initialize() {
 		setValuesAndProperties();
+		initializeComboBox();
 	}
 }
