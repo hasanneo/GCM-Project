@@ -53,21 +53,19 @@ import javafx.stage.Stage;
 public class MainController extends Application {
 
 	@FXML
-    private Pane PlaceSearchCityPane;
+	private Pane PlaceSearchCityPane;
 
-    @FXML
-    private Label PlaceCityLabel;
+	@FXML
+	private Label PlaceCityLabel;
 
-    @FXML
-    private Label mapsPlacenumLabel;
+	@FXML
+	private Label mapsPlacenumLabel;
 
-	
 	@FXML
 	private Pane citySearchPane;
-	
-	@FXML
-    private Pane noResultPane;
 
+	@FXML
+	private Pane noResultPane;
 
 	@FXML
 	private Label cityLabel;
@@ -128,7 +126,7 @@ public class MainController extends Application {
 	void LogOutClick() {
 		// System.out.println("LogedOut");
 		DataBaseController.clientCon.setLoggedIn(false);// SET LOGGED IN AS TRUE
-		DataBaseController.clientCon.SetUserAccount(null);//set the account in the logged in client
+		DataBaseController.clientCon.SetUserAccount(null);// set the account in the logged in client
 		SetUserLoggedOut();
 
 	}
@@ -154,30 +152,28 @@ public class MainController extends Application {
 			System.out.println("name");
 			PlaceSearchCityPane.setVisible(false);
 			noResultPane.setVisible(false);
-			
+
 			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "CITY_NAME", search_text.getText());
-			//	ControllersAuxiliaryMethods.CountRows(rowsArray, columns)
-			if(mapsList==null){
-				mapsList=new ArrayList<>();
+			// ControllersAuxiliaryMethods.CountRows(rowsArray, columns)
+			if (mapsList == null) {
+				mapsList = new ArrayList<>();
 			}
 			mapsTableView.setItems(getMapObservableList(mapsList));
 			mapsTableView.getColumns().get(1).setVisible(false);
 			if (mapsList.isEmpty()) {
-				mapscnt=0;
+				mapscnt = 0;
+			} else {
+				mapscnt = mapsList.size();
 			}
-			else {
-				mapscnt=mapsList.size();
-			}
-			
-			
+
 			citySearchPane.toFront();
 			citySearchPane.setVisible(true);
-			citySearchPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null,null)));//CornerRadii.EMPTY, Insets.EMPTY)));
+			citySearchPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));// CornerRadii.EMPTY,
+																										// Insets.EMPTY)));
 			City city = ControllersAuxiliaryMethods.getcitydetails(search_text.getText());
-			if(city!=null)
-			{
+			if (city != null) {
 				noResultPane.setVisible(false);
-				
+
 				mapsNumberLabel.setText(Integer.toString(mapscnt));
 				citySearchPane.setVisible(true);
 				mapsTableView.setItems(getMapObservableList(mapsList));
@@ -187,12 +183,11 @@ public class MainController extends Application {
 				cityDescriptionText.setBackground(Background.EMPTY);
 				cityDescriptionText.setEditable(false);
 				cityDescriptionText.setText(city.getCityDescription());
-			}
-			else
-			{
+			} else {
 				citySearchPane.setVisible(false);
 				noResultPane.toFront();
-				noResultPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null,null)));//CornerRadii.EMPTY, Insets.EMPTY)));
+				noResultPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));// CornerRadii.EMPTY,
+																										// Insets.EMPTY)));
 				noResultPane.setVisible(true);
 			}
 			break;
@@ -201,15 +196,13 @@ public class MainController extends Application {
 			PlaceSearchCityPane.setVisible(false);
 			citySearchPane.setVisible(false);
 			noResultPane.setVisible(false);
-			
-			
-			
+
 			mapsTableView.getColumns().get(1).setVisible(true);
 			citySearchPane.setVisible(false);
 			System.out.println("description");
 
 			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "DESC", search_text.getText());
-			//			mapscnt=mapsList.size();
+			// mapscnt=mapsList.size();
 
 			break;
 
@@ -217,40 +210,34 @@ public class MainController extends Application {
 			noResultPane.setVisible(false);
 			citySearchPane.setVisible(false);
 			mapsTableView.getColumns().get(1).setVisible(false);
-			//mapsTableView.getColumns().get(1).setVisible(false);
+			// mapsTableView.getColumns().get(1).setVisible(false);
 			System.out.println("place");
 
 			mapsList = ControllersAuxiliaryMethods.GetMapRowsAsList("map", "Place", search_text.getText());
-			if(mapsList==null){
-				mapsList=new ArrayList<>();
+			if (mapsList == null) {
+				mapsList = new ArrayList<>();
 			}
 			mapsTableView.setItems(getMapObservableList(mapsList));
-			
-			
-			
-			mapscnt=mapsList.size();
+
+			mapscnt = mapsList.size();
 			mapsPlacenumLabel.setText(Integer.toString(mapscnt));
 			String cityName = ControllersAuxiliaryMethods.getPlaceCityName(search_text.getText());
-			if(cityName!=null)
-			{
-				
+			if (cityName != null) {
+
 				noResultPane.setVisible(false);
-			
-			PlaceCityLabel.setText(cityName);
-			PlaceSearchCityPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null,null)));
-			PlaceSearchCityPane.toFront();
-			PlaceSearchCityPane.setVisible(true);
-			
-			}
-			else
-			{
+
+				PlaceCityLabel.setText(cityName);
+				PlaceSearchCityPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+				PlaceSearchCityPane.toFront();
+				PlaceSearchCityPane.setVisible(true);
+
+			} else {
 				PlaceSearchCityPane.setVisible(false);
 				noResultPane.toFront();
-				noResultPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null,null)));
+				noResultPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 				noResultPane.setVisible(true);
 			}
-			
-			
+
 			break;
 
 		default:
@@ -391,9 +378,7 @@ public class MainController extends Application {
 		}
 	}
 
-
-	public void SetUserLoggedOut()
-	{
+	public void SetUserLoggedOut() {
 		this.usernamelbl.setVisible(false);
 		this.log_out_btn.setVisible(false);
 		this.login_btn.setDisable(false);
@@ -423,10 +408,6 @@ public class MainController extends Application {
 		}
 		return mapsList;
 	}
-
-
-
-
 
 	@FXML
 	public void initialize() {
@@ -470,7 +451,7 @@ public class MainController extends Application {
 			notificationsCount = ControllersAuxiliaryMethods
 					.CountRows(DataBaseController.clientCon.GetObjectAsStringArray(), 6);
 			System.out.println(notificationsCount);
-		} else {//other types of users
+		} else {// other types of users
 			DataBaseController.GetRowCount("user_notifications", null, null);
 			notificationsCount = ControllersAuxiliaryMethods
 					.CountRows(DataBaseController.clientCon.GetObjectAsStringArray(), 4);
