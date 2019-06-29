@@ -68,7 +68,7 @@ public class ReleaseMapController implements Initializable {
 		this.mapName = mapName;
 		this.mapSerial = mapSerial;
 		this.mapCity = mapCity;
-
+		System.out.println("****************MAP SERIAL NUMBER IS "+mapSerial+"***************");
 	}
 
 	@Override
@@ -164,6 +164,9 @@ public class ReleaseMapController implements Initializable {
 				success.setHeaderText("PLACES HAVE BEEN UPDATED AND NOTIFICATION WAS SENT TO USERS");
 				success.setContentText(null);
 				success.showAndWait();
+				//close stage
+				Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+				myStage.close();
 				break;
 			case 0:
 				success = new Alert(AlertType.CONFIRMATION, null, ButtonType.OK);

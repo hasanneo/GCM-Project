@@ -298,6 +298,6 @@ public class ViewMapController implements Initializable {
 
 	@FXML
 	void EditBtnClick(MouseEvent event) {
-
+			//remove click??
 	}
 }
