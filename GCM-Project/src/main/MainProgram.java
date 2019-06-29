@@ -12,6 +12,7 @@ import fxmlLoaders.ReleaseMapLoader;
 import fxmlLoaders.UserNotificationsLoader;
 import fxmlLoaders.ViewAllMapsLoader;
 import fxmlLoaders.ViewCityMapsCatalogLoader;
+import fxmlLoaders.ViewMapLoader;
 
 import java.io.*;
 import javafx.application.Application;
@@ -26,37 +27,34 @@ import javafx.stage.StageStyle;
  * 
  * @author Hasan
  *
- *The program will launch from here.
+ *         The program will launch from here.
  */
 public class MainProgram extends Application {
 	public static Stage stage;
 	public static MainController main;
+
 	public static void main(String[] args) {
-		main=new MainController();
+		main = new MainController();
 		launch(args);
 	}
+
 	@Override
 	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
 		try {
-			//init the client properties from the file
+			// init the client properties from the file
 			Properties props = new Properties();
 			FileInputStream in = new FileInputStream("@/../Client.properties");
 			props.load(in);
 			in.close();
 			String host = props.getProperty("server.host");
 			int port = Integer.parseInt(props.getProperty("server.port"));
-
-			DataBaseController.InitiateClient(new ClientConnection(host, port));
-			MainController main=new MainController();			
-			stage=arg0=new Stage();
-			main.start(arg0);
-			
-
+			DataBaseController.InitiateClient(new ClientConnection(host, port));			
+			 MainController main=new MainController(); stage=arg0=new Stage();
+			 main.start(arg0);			
+			//new ViewMapLoader("Mazraa").start(new Stage());
 		} catch (Exception e) {
-			System.out.println("MainProgram :"+e.getMessage());
+			System.out.println("MainProgram :" + e.getMessage());
+			e.printStackTrace();
 		}
 	}
-	
-
 }

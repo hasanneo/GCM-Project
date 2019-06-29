@@ -119,6 +119,7 @@ public class DataBaseController {
 		String query = "SELECT `MAP_NAME`,`MAP_DESC`,`CITY_NAME`,`MAP_VERSION` FROM `MAP`";
 		queryArr.add(query);
 		queryArr.add("select");
+		System.out.println("ABOUT TO EXECUTE >>" + queryArr.toString());
 		clientCon.ExecuteQuery(queryArr);
 	}
 
@@ -163,7 +164,8 @@ public class DataBaseController {
 	public static void getMaps(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
-			String query = "SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where " + type + " LIKE " + "'%" + searchText + "%'" + ";";
+			String query = "SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where " + type + " LIKE " + "'%"
+					+ searchText + "%'" + ";";
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
@@ -185,18 +187,23 @@ public class DataBaseController {
 		} catch (Exception e) {
 			System.out.println("Exception thrown at Select from table:" + e.getMessage() + e.getClass().getName());
 		}
-
 	}
 
 	public static void getMapsbydesc(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
-			String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where CITY_NAME IN"
-					+ "(select CITY_NAME from city where cityDescription LIKE " + "'%" + searchText + "%')"
-					+ "UNION SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + "" + " where MAP_NAME IN (SELECT "
-					+ "places_in_maps.MAP_NAME " + "FROM " + " places_in_maps " + " INNER JOIN "
-					+ " places ON places.NAME = places_in_maps.PLACE_NAME where DESCRIPTION like '%" + searchText
-					+ "%');";
+			/*
+			 * String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName +
+			 * " where CITY_NAME IN" +
+			 * "(select CITY_NAME from city where cityDescription LIKE " + "'%" + searchText
+			 * + "%')" + "UNION SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + ""
+			 * + " where MAP_NAME IN (SELECT " + "places_in_maps.MAP_NAME " + "FROM " +
+			 * " places_in_maps " + " INNER JOIN " +
+			 * " places ON places.NAME = places_in_maps.PLACE_NAME where DESCRIPTION like '%"
+			 * + searchText + "%');";
+			 */
+			String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " WHERE MAP_DESC LIKE '%"
+					+ searchText + "%'";
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
@@ -375,8 +382,13 @@ public class DataBaseController {
 		}
 		queryArr.add(query);
 		queryArr.add("select");
+		System.out.println("ABOUT TO EXECUTE>>" + queryArr.toString());
 		clientCon.ExecuteQuery(queryArr);
 	}
+/*
+	public static void SelectPurchasesBasedOnCityAndUserName(String userName, String cityName) {
+		String query="SELECT CITY FROM purchase_history WHERE USERNAME='"+userName+"' AND CITY='"+
+	}*/
 
 	/**
 	 * This will select the columns that is provided
@@ -411,27 +423,32 @@ public class DataBaseController {
 		queryArr.add("select");
 		clientCon.ExecuteQuery(queryArr);
 	}
-/**
- * Delete a row from table.
- * @param tableName -name of the table in the DB.
- * @param columnName -name of the column that you compare by.
- * @param columnCompare -the compare value that is given
- * @author Hasan
- */
+
+	/**
+	 * Delete a row from table.
+	 * 
+	 * @param tableName     -name of the table in the DB.
+	 * @param columnName    -name of the column that you compare by.
+	 * @param columnCompare -the compare value that is given
+	 * @author Hasan
+	 */
 	public static void DeleteRow(String tableName, String columnName, String columnCompare) {
-		String query="DELETE FROM "+tableName+" WHERE "+columnName+"='"+columnCompare+"'";
+		String query = "DELETE FROM " + tableName + " WHERE " + columnName + "='" + columnCompare + "'";
 		ArrayList<String> queryArr = new ArrayList<String>();
 		queryArr.add(query);
 		queryArr.add("delete");
+		clientCon.ExecuteQuery(queryArr);
 	}
+
 	/**
 	 * Insert into user_notifications table.
+	 * 
 	 * @param values -username and notification header and content
 	 * @author Hasan
 	 */
 	public static void InsertIntoUsersNotifications(ArrayList<String> values) {
-		String query="INSERT INTO user_notifications(USERNAME,NOTIFICATION_HEADER,NOTIFICATION)VALUES (?,?,?)";
-		ArrayList<String> queryArr=new ArrayList<String>();
+		String query = "INSERT INTO user_notifications(USERNAME,NOTIFICATION_HEADER,NOTIFICATION)VALUES (?,?,?)";
+		ArrayList<String> queryArr = new ArrayList<String>();
 		queryArr.add(values.get(0));
 		queryArr.add(values.get(1));
 		queryArr.add(values.get(2));

@@ -91,6 +91,7 @@ public class MainController extends Application {
 		// System.out.println("LogedOut");
 	   	DataBaseController.clientCon.setLoggedIn(false);// SET LOGGED IN AS TRUE
 			DataBaseController.clientCon.SetUserAccount(null);//set the account in the logged in client
+			this.refreshBtn.setVisible(false);
 	    	SetUserLoggedOut();
 	    	
 	}
@@ -250,9 +251,10 @@ public class MainController extends Application {
 
 	@FXML
 	void RegisterClick(ActionEvent event) throws Exception {
-		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		mystage.close();
-		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		//Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		//mystage.setOpacity(0.9);
+		//mystage.close();
+		//SceneController.push(((Node) event.getSource()).getScene());// push current scene
 		RegisterController register = new RegisterController();
 		register.start(new Stage());// create the register stage
 	}
@@ -348,11 +350,13 @@ public class MainController extends Application {
 	}
 
 	public void CheckNotifications() {
-		int notificationsCount;
+		int notificationsCount=0;
 		if (DataBaseController.clientCon.GetUserType().equals("manager")) {
 			DataBaseController.GetRowCount("maps_to_authorize", null, null);
+			if(DataBaseController.clientCon.GetServerObject()!=null) {//check if there are any notifications
 			notificationsCount = ControllersAuxiliaryMethods
 					.CountRows(DataBaseController.clientCon.GetObjectAsStringArray(), 6);
+			}
 			System.out.println(notificationsCount);
 		} else {//other types of users
 			DataBaseController.GetRowCount("user_notifications", null, null);

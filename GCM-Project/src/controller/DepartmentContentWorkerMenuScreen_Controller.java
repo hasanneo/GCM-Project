@@ -1,6 +1,7 @@
 package controller;
 
 import fxmlLoaders.ChooseCityLoader;
+import fxmlLoaders.PurchasedMapsLoader;
 import fxmlLoaders.ViewAllMapsLoader;
 import fxmlLoaders.ViewCityMapsCatalogLoader;
 import javafx.application.Application;
@@ -123,4 +124,14 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 			e.printStackTrace();
 		}
 	}
+	 @FXML
+	    void ViewMapsClick(MouseEvent event) {
+		 	try {
+				new PurchasedMapsLoader().start(new Stage());
+			} catch (Exception e) {
+				System.out.println("ERROR AT VIEW MAPS>>"+e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
 }

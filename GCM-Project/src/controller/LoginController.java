@@ -23,6 +23,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import main.MainProgram;
 
 /**
@@ -133,9 +134,11 @@ public class LoginController extends Application {
 		fxmlLoader.setLocation(getClass().getResource("/fxml/LogInScreen.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		stage.setTitle("LogIn");
 		stage.setScene(scene);
 		stage.setResizable(false);
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
 
 	}

@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * 
@@ -44,9 +45,11 @@ public class AddMapToCityLoader extends Application{
 		fxmlLoader.setController(controller);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		stage.setTitle("Add Map To City");
 		stage.setScene(scene);
-		stage.setResizable(false);
+		stage.setResizable(false);	
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
 	}
 

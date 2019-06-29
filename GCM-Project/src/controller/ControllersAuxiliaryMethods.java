@@ -162,7 +162,7 @@ public class ControllersAuxiliaryMethods {
 	public static int CountRows(String[] rowsArray, int columns) {
 		return rowsArray.length / columns;
 	}
-	/*public static String ConvertToConventionalPath(String path) {
-		
-	}*/
+	public static void SetCityToMap(String cityName) {
+		selectedMapFromCombo.setCityName(cityName);
+	}
 }

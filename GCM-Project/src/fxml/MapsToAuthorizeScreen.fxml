@@ -8,10 +8,11 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.SVGPath?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="682.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ComboBox fx:id="mapsCombo" layoutX="50.0" layoutY="65.0" prefHeight="25.0" prefWidth="178.0" promptText="PENDING REQUESTS" styleClass="combo-box"/>
+      <ComboBox fx:id="mapsCombo" layoutX="21.0" layoutY="120.0" prefHeight="25.0" prefWidth="277.0" promptText="PENDING REQUESTS" styleClass="combo-box" />
       <GridPane layoutX="258.0" layoutY="48.0" prefHeight="287.0" prefWidth="397.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -24,13 +25,16 @@
          </rowConstraints>
          <children>
             <TextArea fx:id="requestInfo" prefHeight="198.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="From:" />
-            <Label fx:id="userLabel" prefHeight="17.0" prefWidth="209.0" text="Label" GridPane.columnIndex="1" />
-            <Label text="Map:" GridPane.rowIndex="1" />
-            <Label fx:id="mapLabel" prefHeight="17.0" prefWidth="216.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="fromLabel" styleClass="label" text="From:" />
+            <Label fx:id="userLabel" prefHeight="17.0" prefWidth="209.0" styleClass="label" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="mapNameLbl" text="Map:" GridPane.rowIndex="1" />
+            <Label fx:id="mapLabel" prefHeight="17.0" prefWidth="216.0" styleClass="label" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="nextBtn" layoutX="610.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#NextClick" text="NEXT" />
-      <Button fx:id="backBtn" layoutX="525.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#BackClick" text="BACK" />
+      <Button fx:id="nextBtn" layoutX="610.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#NextClick" styleClass="ripple-button" text="NEXT" />
+      <Button fx:id="backBtn" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#BackClick" prefHeight="35.0" prefWidth="30.0" styleClass="mybutton">
+         <graphic>
+            <SVGPath content="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z" styleClass="svg-icon"/>
+         </graphic></Button>
    </children>
 </AnchorPane>

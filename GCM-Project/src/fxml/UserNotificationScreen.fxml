@@ -17,7 +17,7 @@
     <left>
         <VBox styleClass="sidebar-section">
          <children>
-            <ListView fx:id="mapsList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="mapsList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" styleClass="list-view"/>
          </children>
         </VBox>
     </left>

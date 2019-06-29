@@ -63,3 +63,30 @@
     -fx-border-width: 1;
     -fx-border-color: #E8E8E8 transparent transparent transparent;
 }
+
+.list-view{
+    -fx-effect: dropshadow( gaussian,rgba(0,0,0,0.16),5,0,0,2);
+    -fx-background-radius: 3px;
+    -fx-background-color: white;
+}
+.list-view:focused{
+    -fx-background-insets: 0;
+}
+
+.list-view .list-cell{
+    -fx-background-color: transparent;
+    -fx-padding: 8px;
+    -fx-font-size: 16px;
+    -fx-text-fill: black;
+}
+.list-view .list-cell:hover{
+	-fx-background-color: rgba(235,235,235,0.7);
+    -fx-text-fill:-color-primary;
+}
+.list-view .list-cell:filled:selected:focused{
+
+    -fx-text-fill:-color-accent;
+}
+.list-cell .list-cell:empty:hover{
+    -fx-background-color: transparent;
+}
