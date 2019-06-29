@@ -106,23 +106,16 @@ public class ViewCityMapsCatalogController implements Initializable {
 	 */
 	private void GetCitiesFromDB() {
 		// TODO Auto-generated method stub
-		DataBaseController.SelectAllRowsFromTable("city");
-		String[] cityArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
-		GetCityNamesFromRows(cityArray, 4);
-	}
-
-	/**
-	 * @param cityNames2
-	 * @param cityArray
-	 */
-	private void GetCityNamesFromRows(String[] cityArray, int tableColumns) {
+		//DataBaseController.SelectAllRowsFromTable("city");
+		//String[] cityArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
+		//GetCityNamesFromRows(cityArray, 4);
 		cityNames = new ArrayList<String>();
-		// populate the array list
-		for (int i = 0, row = 0; row < cityArray.length / tableColumns; i += tableColumns, row++) {
-			cityNames.add(cityArray[i]);
-		}
-
+		ArrayList<String> columnsToSelect=new ArrayList<String>();
+		columnsToSelect.add("CITY_NAME");
+		DataBaseController.GenericSelectColumnsFromTable("city", columnsToSelect);
+		cityNames.addAll(DataBaseController.clientCon.getList());
 	}
+
 
 	private void FillMaps(String cityName) {
 		tableView.getItems().clear();

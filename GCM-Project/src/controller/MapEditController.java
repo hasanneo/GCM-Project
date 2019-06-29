@@ -26,6 +26,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -204,9 +205,9 @@ public class MapEditController implements Initializable {
 
 	@FXML
 	void save(ActionEvent event) {
-		if (places != null && !places.isEmpty()) {// if something new was added
+		Alert alert = new Alert(AlertType.WARNING, null, ButtonType.OK, ButtonType.CANCEL);
+		if (combo!=null&&places != null && !places.isEmpty()) {// if something new was added
 			// insert successfully
-			Alert alert = new Alert(AlertType.WARNING, null, ButtonType.OK, ButtonType.CANCEL);
 			alert.setTitle("RELEASE NEW VERSION");
 			alert.setContentText(null);
 			alert.headerTextProperty().set("Request release approval?");
@@ -215,7 +216,7 @@ public class MapEditController implements Initializable {
 			ButtonType button = result.orElse(ButtonType.CANCEL);
 			if (button == ButtonType.OK) {// ok click
 				// NEED TO INSERT ALL PLACES!!
-				Map map = ControllersAuxiliaryMethods.getSelectedMapFromCombo();// get the selected map				
+				Map map = ControllersAuxiliaryMethods.getSelectedMapFromCombo();// get the selected map
 				InsertMapPlaces(map.getMapName());// insert new places for map
 				if (DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
 					// if insert was successful
@@ -244,6 +245,12 @@ public class MapEditController implements Initializable {
 				alert.setContentText(null);
 			}
 
+		}else {
+			// CANCEL BUTTON
+			alert.setAlertType(AlertType.INFORMATION);
+			alert.setTitle(null);
+			alert.setContentText("NO PLACES SELECTED");
+			alert.setContentText(null);
 		}
 	}
 
@@ -257,7 +264,7 @@ public class MapEditController implements Initializable {
 		// send authorization request to manager
 		MapVersionNotification noti = new MapVersionNotification("Authorize version", requestingUser,
 				GetRequestedPlaces(map.getMapName()), map, newVersion);
-		noti.setCityName(map.getCityName());//setting city name for map
+		noti.setCityName(map.getCityName());// setting city name for map
 		// add to pending approval releases
 		noti.SendNotificationForManagerApproval();
 	}
@@ -287,9 +294,6 @@ public class MapEditController implements Initializable {
 		return placesRequests;
 	}
 
-	private void SendNotificationToManager() {
-
-	}
 
 	private void InsertMapPlaces(String map) {
 		ArrayList<String> alreadyInsertedPlaces = new ArrayList<String>();
@@ -311,7 +315,8 @@ public class MapEditController implements Initializable {
 					newValues.clear();
 					newValues.add(Double.toString(p.getX()));
 					newValues.add(Double.toString(p.getY()));
-					DataBaseController.GenericUpdateTableRow("places_in_maps", tableColumns, newValues, "PLACE_NAME",p.getName());
+					DataBaseController.GenericUpdateTableRow("places_in_maps", tableColumns, newValues, "PLACE_NAME",
+							p.getName());
 				} else {
 					// if the place is not in the map then insert it as a new place
 					DataBaseController.InsertIntoPlacesInMaps(p);
@@ -323,7 +328,8 @@ public class MapEditController implements Initializable {
 
 	@FXML
 	void cancel(ActionEvent event) {
-
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		stage.close();
 	}
 
 	/**
@@ -427,7 +433,7 @@ public class MapEditController implements Initializable {
 	@FXML
 	void saveCordinates(MouseEvent event) {
 		try {
-			if (combo.getSelectionModel().getSelectedItem() != null || chflag == true) {
+			if (combo!=null&&(combo.getSelectionModel().getSelectedItem() != null || chflag == true)) {
 				PlacePane.setVisible(true);
 				x = event.getX() - 15;
 				y = event.getY() - 25;
@@ -481,21 +487,30 @@ public class MapEditController implements Initializable {
 	 * 
 	 */
 	private void InitComboBox() {
-		DataBaseController.SelectAllRowsFromTable("places");// get the places from the db.
-
+		DataBaseController.SelectAllRowsFromTable("places", "CITY_NAME",
+				ControllersAuxiliaryMethods.getSelectedMapFromCombo().getCityName());
 		String[] places = DataBaseController.clientCon.GetObjectAsStringArray();
-		ArrayList<Place> allPlaces = new ArrayList<Place>();
+		ArrayList<String> mapPlaces = new ArrayList<String>();
 		ArrayList<String> placesNames = new ArrayList<String>();
 		int colNum = 7;
-		// populate the maps array list
-		for (int i = 0, row = 0; row < places.length / colNum; i += colNum, row++) {
-			placesNames.add(places[i]);
-			// allPlaces.add(new Place(places[i], places[i + 1], places[i + 2], places[i +
-			// 3], places[i + 4]));
+		if (places != null) {
+			//get places that are already in the map
+			DataBaseController.GenericSelectFromTable("places_in_maps", "PLACE_NAME", "MAP_NAME", ControllersAuxiliaryMethods.getSelectedMapFromCombo().getMapName());
+			if(DataBaseController.clientCon.GetServerObject()!=null)
+				mapPlaces.addAll(DataBaseController.clientCon.getList());
+			// populate the maps array list
+			for (int i = 0, row = 0; row < places.length / colNum; i += colNum, row++) {
+				if(!mapPlaces.isEmpty()&&!mapPlaces.contains(places[i])) {
+					//if the place isn't in the map places then add it.
+					//if there are no places in the map then add it.
+					placesNames.add(places[i]);
+				}
+			}
+			ObservableList<String> comboOptions = FXCollections.observableArrayList(placesNames);
+			combo.setItems(comboOptions);
+		} else {
+			combo = null;
 		}
-
-		ObservableList<String> comboOptions = FXCollections.observableArrayList(placesNames);
-		combo.setItems(comboOptions);
 	}
 
 	/**
@@ -538,8 +553,9 @@ public class MapEditController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SetMapImage();
 		InitComboBox();
-		DataBaseController.SelectAllRowsFromTable("places_in_maps");
-		FillPlacesListFromTable();
+		if (combo != null) {
+			FillPlacesListFromTable();
+		}
 
 	}
 
@@ -549,6 +565,7 @@ public class MapEditController implements Initializable {
 	private void FillPlacesListFromTable() {
 		PlaceInMap tablePlace;
 		String[] placesArray;
+		DataBaseController.SelectAllRowsFromTable("places_in_maps");
 		// if select query isnt empty
 		if (DataBaseController.clientCon.GetServerObject() != null) {// added by H
 			placesArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array

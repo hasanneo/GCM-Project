@@ -471,4 +471,14 @@ public class DataBaseController {
 		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
 	}
+	/**
+	 * Delete all records present in the table that is given.
+	 * @param tableName -table name in the DB
+	 */
+	public static void DeleteAllRecordFromTable(String tableName) {
+		String query = "DELETE FROM " + tableName + ";";
+		ArrayList<String> queryArr = new ArrayList<String>();
+		queryArr.add(query);
+		queryArr.add("delete");
+	}
 }
