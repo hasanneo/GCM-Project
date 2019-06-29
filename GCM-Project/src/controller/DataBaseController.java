@@ -164,8 +164,10 @@ public class DataBaseController {
 	public static void getMaps(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
+
 			String query = "SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where " + type + " LIKE " + "'%"
 					+ searchText + "%'" + ";";
+
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
@@ -174,13 +176,14 @@ public class DataBaseController {
 		}
 
 	}
+	
 
 	public static void getMapsbyplace(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
 			String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM map where " + "MAP_NAME"
 					+ " IN (SELECT MAP_NAME FROM places_in_maps WHERE places_in_maps.PLACE_NAME like '%" + searchText
-					+ "%');";
+					+ "%' AND APPROVED = 1);";
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
@@ -211,6 +214,18 @@ public class DataBaseController {
 			System.out.println("Exception thrown at Select from table:" + e.getMessage() + e.getClass().getName());
 		}
 
+	}
+	public static void getCityByName(String cityName)
+	{
+		ArrayList<String> queryArr = new ArrayList<String>();
+		try {
+			String query = "SELECT * FROM city where CITY_NAME = '"  + cityName + "';";
+			queryArr.add(query);
+			queryArr.add("select");
+			clientCon.ExecuteQuery(queryArr);
+		} catch (Exception e) {
+			System.out.println("Exception thrown at Select from table:" + e.getMessage() + e.getClass().getName());
+		}
 	}
 
 	/**

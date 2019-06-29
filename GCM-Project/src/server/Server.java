@@ -1,14 +1,27 @@
 package server;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.URL;
 import java.util.Properties;
 
 import controller.DataBaseController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
-public class Server extends AbstractServer{
+
+	
+
+public class Server extends AbstractServer {
+	public static boolean connected=false; 
+	static Server server;
 	private Object clientMessageResult;
 	private SqlConnection sqlConnection;
 	public SqlConnection getSqlConnection() {
@@ -37,10 +50,16 @@ public class Server extends AbstractServer{
 		
 		  
 	}
-	public static void main(String[] args) {
-		int DEFAULT_PORT = 5555; // Port to listen on
-		int port;
-		Server server;
+	public static void StartServer(int myport) {
+
+		
+		//int myport;
+		//int DEFAULT_PORT = 5555; // Port to listen on
+		
+		//myport=DEFAULT_PORT;
+		
+		
+		
 		Properties props;
 		FileInputStream in;
 		//open the server properties file for reading		
@@ -54,14 +73,43 @@ public class Server extends AbstractServer{
 			String username = props.getProperty("jdbc.username");
 			String password = props.getProperty("jdbc.password");
 			String hostname =props.getProperty("jdbc.host");
-			port = Integer.parseInt(props.getProperty("server.port"));//get port from the properties
-			server = new Server(DEFAULT_PORT);
+			int port = Integer.parseInt(props.getProperty("server.port"));//get port from the properties
+			server = new Server(myport);
 			server.setSqlConnection(new SqlConnection(schema, username, password,hostname,props.getProperty("server.port")));
 			server.listen(); // Start listening for connections
 			server.serverStarted();
+			
+			connected=true;
+//			
+//			  InetAddress inetAddress = InetAddress.getLocalHost();
+//		        System.out.println("Local IP Address:- " + inetAddress.getHostAddress());
+//		        
+//		        URL whatismyip = new URL("http://checkip.amazonaws.com");
+//		        BufferedReader in1 = new BufferedReader(new InputStreamReader(
+//		                        whatismyip.openStream()));
+//
+//		        String ip = in1.readLine(); //you get the IP as a String
+//		        System.out.println("Public IP Address:- "+ip);
+//		        
+		        
+		        
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void stopServer() throws IOException
+	{
+		connected=false;
+		server.stopListening();
+		
+		
+		
+	}
+	public static void openServer()
+	{
+		connected=true;
+		server.run();
 	}
 }

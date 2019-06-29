@@ -25,15 +25,16 @@ public class ClientConnection implements GCMIF {
 	 * 
 	 * @param host for connection
 	 * @param port to send and recieve messages on
+	 * @throws IOException 
 	 */
-	public ClientConnection(String host, int port) {
-		try {
+	public ClientConnection(String host, int port) throws IOException {
+	//	try {
 			client = new GcmClient(host, port, this);
 			System.out.println("Client connection established [" + host + "," + port + "]");
-		} catch (IOException exception) {
-			System.out.println("Error: Can't setup connection!" + " Terminating client.");
-			System.exit(1);
-		}
+		//}// catch (IOException exception) {
+			//System.out.println("Error: Can't setup connection!");
+			//System.exit(1);
+		//}
 	}
 
 	public boolean isLoggedIn() {
@@ -128,6 +129,9 @@ public class ClientConnection implements GCMIF {
 	}
 
 	public String[] GetObjectAsStringArray() {
+		if (serverObject==null) {
+			return null;
+		}
 		String str = serverObject.toString();
 		str = str.replace("[", "");
 		str = str.replace("]", "");
