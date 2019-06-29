@@ -15,10 +15,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 /**
@@ -33,7 +38,6 @@ public class UserNotificationController implements Initializable {
 	private ListView<UserNotification> mapsList;
 	@FXML
 	private Label notificationContent;
-	ArrayList<String> headers;
 	ArrayList<UserNotification> notifications;
 
 	@Override
@@ -85,21 +89,10 @@ public class UserNotificationController implements Initializable {
 	}
 
 	/**
-	 * @param newValue
-	 * @return
-	 */
-	private Object FillNotificationContent(SelectionMode newValue) {
-		System.out.println("***************************");
-		System.out.println(newValue.toString());
-		return null;
-	}
-
-	/**
 	 * 
 	 */
 	private void SetNotificationsArrayList() {
 		notifications = new ArrayList<UserNotification>();
-		headers = new ArrayList<String>();
 		ArrayList<String> columns = new ArrayList<String>();
 		columns.add("ID");
 		columns.add("USERNAME");
@@ -107,7 +100,7 @@ public class UserNotificationController implements Initializable {
 		columns.add("NOTIFICATION");
 		DataBaseController.GenericSelectColumnsFromTable("user_notifications", columns, "USERNAME",
 				DataBaseController.clientCon.GetUser().getUsername());
-		if (DataBaseController.clientCon.GetServerObject()!=null) {
+		if (DataBaseController.clientCon.GetServerObject() != null) {
 			String[] notificationsArr = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
 			int tableColumns = 4;
 			// populate the maps array list
@@ -118,4 +111,11 @@ public class UserNotificationController implements Initializable {
 		}
 	}
 
+	@FXML
+	void DeleteNotificationsClick(MouseEvent event) {
+		// DELETE NOTIFICATIONS
+		DataBaseController.DeleteRow("user_notifications", "USERNAME",
+				DataBaseController.clientCon.GetUser().getUsername());
+
+	}
 }

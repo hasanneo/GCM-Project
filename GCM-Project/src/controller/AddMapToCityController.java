@@ -82,7 +82,7 @@ public class AddMapToCityController implements Initializable {
 		mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
 		// populate the maps array list
 		for (int i = 0, row = 0, tableColumns = 4; row < mapsArray.length / tableColumns; i += tableColumns, row++) {
-			if (associatedMapsWithCity.isEmpty()||!associatedMapsWithCity.contains(mapsArray[i])) {
+			if (associatedMapsWithCity.isEmpty() || !associatedMapsWithCity.contains(mapsArray[i])) {
 				// if the map is not already added in the city then add it to the list
 				mapNames.add(mapsArray[i]);
 				maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2], mapsArray[i + 3]));
@@ -96,7 +96,7 @@ public class AddMapToCityController implements Initializable {
 	 */
 	private Collection<? extends String> GetCityMaps(String selectedCity) {
 		String[] associatedMapsWithCityArr;
-		ArrayList<String> result =new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 		ArrayList<String> tableColumns = new ArrayList<String>();
 		tableColumns.add("City_NAME");
 		tableColumns.add("MAP_NAME");
@@ -155,31 +155,45 @@ public class AddMapToCityController implements Initializable {
 
 	@FXML
 	void AddBtnClick(MouseEvent event) {
+		// check if map is already added to the city
+		ArrayList<String> alreadyAddedMaps = new ArrayList<String>();
 		ArrayList<String> columns = new ArrayList<String>();
 		ArrayList<String> values = new ArrayList<String>();
-		columns.add("CITY_NAME");
-		columns.add("INFO");
 		columns.add("MAP_NAME");
-		values.add(cityLbl.getText());
-		values.add(infoText.getText());
-		values.add(selectedMap);
-		DataBaseController.InsertIntoTable("city_maps", columns, values);
-		if (DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
-			Alert alert = new Alert(AlertType.CONFIRMATION, null, ButtonType.OK);
-			alert.setTitle(null);
-			alert.headerTextProperty().set("SUCCESSFULLY ADDED");
-			alert.setContentText(null);
-			alert.showAndWait();
-		} else {
+		DataBaseController.GenericSelectColumnsFromTable("city_maps", columns, "CITY_NAME", cityName);
+		if (DataBaseController.clientCon.GetServerObject() != null) {
+			alreadyAddedMaps.addAll(DataBaseController.clientCon.getList());
+		}
+		if (alreadyAddedMaps.isEmpty() || !alreadyAddedMaps.contains(selectedMap)) {
+			columns.add("CITY_NAME");
+			columns.add("INFO");
+			columns.add("MAP_NAME");
+			values.add(cityLbl.getText());
+			values.add(infoText.getText());
+			values.add(selectedMap);
+			DataBaseController.InsertIntoTable("city_maps", columns, values);
+			if (DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
+				Alert alert = new Alert(AlertType.CONFIRMATION, null, ButtonType.OK);
+				alert.setTitle(null);
+				alert.headerTextProperty().set("SUCCESSFULLY ADDED");
+				alert.setContentText(null);
+				alert.showAndWait();
+			} else {
+				Alert alert = new Alert(AlertType.ERROR, null, ButtonType.OK);
+				alert.setTitle(null);
+				alert.headerTextProperty().set("FAILED TO ADD");
+				alert.setContentText(null);
+				alert.showAndWait();
+			}
+		}else {
 			Alert alert = new Alert(AlertType.ERROR, null, ButtonType.OK);
 			alert.setTitle(null);
-			alert.headerTextProperty().set("FAILED TO ADD");
+			alert.headerTextProperty().set("MAP IS ALREADY ADDED TO "+cityName+" CITY! ");
 			alert.setContentText(null);
 			alert.showAndWait();
 		}
 
 	}
-
 	@FXML
 	void CancelBtnClick(MouseEvent event) {
 		// get current stage and close it
