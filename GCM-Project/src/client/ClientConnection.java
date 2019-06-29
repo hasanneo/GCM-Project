@@ -129,6 +129,9 @@ public class ClientConnection implements GCMIF {
 	}
 
 	public String[] GetObjectAsStringArray() {
+		if (serverObject==null) {
+			return null;
+		}
 		String str = serverObject.toString();
 		str = str.replace("[", "");
 		str = str.replace("]", "");
