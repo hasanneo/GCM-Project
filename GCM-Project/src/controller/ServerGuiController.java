@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -32,14 +33,14 @@ public class ServerGuiController {
     private TextField portText;
 
     @FXML
-    private Button StartStopBtn;
+    private Button StartBtn;
 
     @FXML
     private Label statusLabel;
 
     @FXML
     void ButtonClick(ActionEvent event) throws IOException {
-    	
+
     	Alert a = null;
     	//if (Server.connected==false) {
     		//if (cnt==0) {
@@ -54,13 +55,14 @@ public class ServerGuiController {
     		try
     		{
     			
-    			
+    		
     			Server.StartServer(Integer.parseInt(portText.getText()));
         		portText.setEditable(false);
         		statusLabel.setText("online");
         		statusLabel.setTextFill(Color.GREEN);
         		//StartStopBtn.setText("Stop Server");
-        		StartStopBtn.setDisable(true);
+        		StartBtn.setDisable(true);
+        		
     		}
     		catch (NumberFormatException e)
     		{
@@ -92,7 +94,7 @@ public class ServerGuiController {
     	ipLabel.setText(inetAddress.getHostAddress());
         assert ipLabel != null : "fx:id=\"ipLabel\" was not injected: check your FXML file 'ServerGui.fxml'.";
         assert portText != null : "fx:id=\"portText\" was not injected: check your FXML file 'ServerGui.fxml'.";
-        assert StartStopBtn != null : "fx:id=\"StartStopBtn\" was not injected: check your FXML file 'ServerGui.fxml'.";
+        assert StartBtn != null : "fx:id=\"StartStopBtn\" was not injected: check your FXML file 'ServerGui.fxml'.";
         assert statusLabel != null : "fx:id=\"statusLabel\" was not injected: check your FXML file 'ServerGui.fxml'.";
 
     }

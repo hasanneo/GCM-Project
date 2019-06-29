@@ -6,6 +6,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import entity.City;
 import entity.CityMap;
 import entity.Map;
 import entity.MapVersionNotification;
@@ -85,6 +86,7 @@ public class ControllersAuxiliaryMethods {
 		ArrayList<Map> maps = new ArrayList<Map>();
 		if (type == "CITY_NAME") {
 			DataBaseController.getMaps(tableName, type, searchText);// get maps from DB
+			
 		} else {
 			if (type == "DESC")
 				DataBaseController.getMapsbydesc(tableName, type, searchText);
@@ -165,4 +167,34 @@ public class ControllersAuxiliaryMethods {
 	/*public static String ConvertToConventionalPath(String path) {
 		
 	}*/
+	
+	
+	
+	public static City getcitydetails(String cityName)
+	{
+		City city=null;
+		DataBaseController.getCityByName(cityName);
+		String[] cityarray = DataBaseController.clientCon.GetObjectAsStringArray();
+		if( cityarray==null)
+			return null;
+		city=new City(cityName);
+		city.setNumberOfPOI(Integer.parseInt(cityarray[1]));
+		city.setNumberOfTours(Integer.parseInt(cityarray[2]));
+		city.setCityDescription(cityarray[3]);
+		return city;
+		
+		
+	}
+	
+	public static String getPlaceCityName(String PlaceName)
+	{
+		String cityName = null;
+		
+		DataBaseController.GenericSelectFromTable("places", "CITY_NAME", "NAME", PlaceName);
+		if (DataBaseController.clientCon.GetServerObject()!=null) {
+			cityName= DataBaseController.clientCon.GetObjectAsStringArray()[0];
+		}
+
+		return cityName;
+	}
 }

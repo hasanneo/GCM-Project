@@ -5,12 +5,14 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
@@ -22,7 +24,7 @@
 			</image>
 		</ImageView>
 		<TextField id="search_txt" fx:id="search_text" layoutX="206.0" layoutY="95.0" prefHeight="35.0" prefWidth="525.0" promptText="search" style="-fx-border-radius: 0; -fx-border-style: SOLID; -fx-border-width: 2; -fx-effect: BLOOM; -fx-border-color: #00FF7F;" />
-		<RadioButton layoutX="241.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" selected="true" text="Name" textFill="RED">
+		<RadioButton layoutX="238.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="83.0" selected="true" text="Name" textFill="RED">
 			<font>
 				<Font name="System Bold Italic" size="15.0" />
 			</font>
@@ -83,6 +85,24 @@
 				<Font name="Comic Sans MS Bold" size="50.0" />
 			</font>
 		</Label>
+      <Pane id="noResultPane" fx:id="noResultPane" layoutX="117.0" layoutY="180.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+         <children>
+            <Label layoutX="36.0" layoutY="14.0" text="There are no results!" />
+         </children>
+      </Pane>
+      <Pane id="citySearchPane" fx:id="citySearchPane" layoutX="87.0" layoutY="178.0" prefHeight="322.0" prefWidth="286.0" visible="false">
+         <children>
+            <Label id="cityLabel" fx:id="cityLabel" layoutX="71.0" layoutY="14.0" text="City Name" />
+            <Label layoutX="14.0" layoutY="42.0" text="maps number:" />
+            <Label layoutX="10.0" layoutY="129.0" text="city description:" />
+            <Label id="mapsNumberLabel" fx:id="mapsNumberLabel" layoutX="101.0" layoutY="42.0" text="number" />
+            <Label layoutX="12.0" layoutY="68.0" prefHeight="17.0" prefWidth="155.0" text="point of interests number:" />
+            <Label id="PoiNumLabel" fx:id="PoiNumLabel" layoutX="155.0" layoutY="68.0" text="poi num" />
+            <Label id="toursNumLabel" fx:id="toursNumLabel" layoutX="94.0" layoutY="93.0" text="tours num" />
+            <Label layoutX="14.0" layoutY="93.0" text="tours number:" />
+            <TextArea id="cityDescriptionText" fx:id="cityDescriptionText" layoutX="1.0" layoutY="146.0" prefHeight="87.0" prefWidth="286.0" />
+         </children>
+      </Pane>
 		<Button fx:id="login_btn" contentDisplay="GRAPHIC_ONLY" layoutX="902.0" layoutY="13.0" mnemonicParsing="false" onAction="#LoginClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: transparent;" text="Button">
 			<graphic>
 				<ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
@@ -119,6 +139,13 @@
 				<Font name="Comic Sans MS Bold" size="18.0" />
 			</font>
 		</Label>
+      <Pane id="PlaceSearchCityPane" fx:id="PlaceSearchCityPane" layoutX="25.0" layoutY="218.0" prefHeight="70.0" prefWidth="328.0" visible="false">
+         <children>
+            <Label id="PlaceCityLabel" fx:id="PlaceCityLabel" layoutX="150.0" layoutY="14.0" text="city" />
+            <Label layoutY="31.0" prefHeight="17.0" prefWidth="229.0" text="number of maps that contains this place :" />
+            <Label id="mapsPlacenumLabel" fx:id="mapsPlacenumLabel" layoutX="229.0" layoutY="31.0" text="mapsPlacenum" />
+         </children>
+      </Pane>
 		
 	</children>
 </AnchorPane>
