@@ -1,6 +1,7 @@
 package controller;
 
 import fxmlLoaders.ChooseCityLoader;
+import fxmlLoaders.PurchasedMapsLoader;
 import fxmlLoaders.ViewAllMapsLoader;
 import fxmlLoaders.ViewCityMapsCatalogLoader;
 import javafx.application.Application;
@@ -52,11 +53,6 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 	 */
 	@FXML
 	void btnViewCardClick(ActionEvent event) throws Exception {
-		// close current stage
-		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		myStage.close();
-
-		
 		ViewCard_Controller viewCard = new ViewCard_Controller();
 		try {
 			viewCard.start(new Stage());
@@ -123,4 +119,14 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 			e.printStackTrace();
 		}
 	}
+	 @FXML
+	    void ViewMapsClick(MouseEvent event) {
+		 	try {
+				new PurchasedMapsLoader().start(new Stage());
+			} catch (Exception e) {
+				System.out.println("ERROR AT VIEW MAPS>>"+e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
 }

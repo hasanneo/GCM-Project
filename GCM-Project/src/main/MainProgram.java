@@ -1,3 +1,4 @@
+
 package main;
 
 import java.util.*;
@@ -5,7 +6,6 @@ import java.util.*;
 import client.ClientConnection;
 import controller.DataBaseController;
 import controller.MainController;
-import controller.ViewCityMapsCatalogController;
 import fxmlLoaders.AddMapToCityLoader;
 import fxmlLoaders.ChooseCityLoader;
 import fxmlLoaders.ReleaseMapLoader;

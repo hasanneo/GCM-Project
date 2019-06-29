@@ -90,12 +90,15 @@ public class ViewAllMapsController implements Initializable {
 	private Button DownloadBtn;
 	private Map chosenMap = null;
 	private ArrayList<PlaceInMap> placesArr;
+	private String mapCity = null;
 
-	public ViewAllMapsController(String mapName) {
-		if (mapName != null) {
-			chosenMap = new Map();
-			chosenMap.setMapName(mapName);
-			this.mapCombo.setVisible(false);
+	public ViewAllMapsController(String mapCity) {
+		if (mapCity != null) {
+			/*
+			 * chosenMap = new Map(); chosenMap.setMapName(mapName);
+			 * this.mapCombo.setVisible(false);
+			 */
+			this.mapCity = mapCity;
 		}
 	}
 
@@ -105,22 +108,23 @@ public class ViewAllMapsController implements Initializable {
 	 * @author Hasan
 	 */
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1)
-	{
+	public void initialize(URL arg0, ResourceBundle arg1) {
 		SetMapsArrayList();// get map list from db
 		if (chosenMap == null) {
-			//view all maps
+			// view all maps
 			ObservableList<String> options = FXCollections.observableArrayList(mapNames);
 			mapCombo.setItems(options);
 			mapCombo.getSelectionModel().selectedItemProperty()
 					.addListener((v, oldValue, newValue) -> FillMapTextValues(newValue));
 			GetMapsPlaces();// After this you will have all of the places from the places_in_maps table
 			// setting a pin for each place
-			for (int i = 0; i < placesArr.size(); i++) {
-				placesArr.get(i).setPinLabel();
+			if (placesArr != null) {
+				for (int i = 0; i < placesArr.size(); i++) {
+					placesArr.get(i).setPinLabel();
+				}
 			}
 		} else {
-			//just view the chosen map
+			// just view the chosen map
 			FillMapTextValues(chosenMap.getMapName());
 			GetMapsPlaces();
 			// setting a pin for each place
@@ -136,21 +140,55 @@ public class ViewAllMapsController implements Initializable {
 	 * @author Hasan
 	 */
 	public void SetMapsArrayList() {
-		// get map list from db
-		int row = 0;
-		int tableColumns = 4;
-		String[] mapsArray;
+		if (mapCity != null) {
+			GetMapsByCity(mapCity);
+		} else {
+			// get map list from db
+			int row = 0;
+			int tableColumns = 4;
+			String[] mapsArray;
+			maps = new ArrayList<Map>();
+			mapNames = new ArrayList<String>();
+			DataBaseController.GetMapsFromDB();// get maps from DB
+			mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
+			// populate the maps array list
+			for (int i = 0; row < mapsArray.length / tableColumns; i += tableColumns, row++) {
+				System.out.println(
+						mapsArray[i] + " " + mapsArray[i + 1] + " " + mapsArray[i + 2] + " ver:" + mapsArray[i + 3]);
+				mapNames.add(mapsArray[i]);
+				maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2], mapsArray[i + 3]));
+
+			}
+		}
+	}
+
+	/**
+	 * Fill the maps based on the city that they belong to.
+	 * 
+	 * @param mapCity
+	 */
+	private void GetMapsByCity(String mapCity) {
+		// should check when list is empty
 		maps = new ArrayList<Map>();
 		mapNames = new ArrayList<String>();
-		DataBaseController.GetMapsFromDB();// get maps from DB
-		mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
-		// populate the maps array list
-		for (int i = 0; row < mapsArray.length / tableColumns; i += tableColumns, row++) {
-			System.out.println(
-					mapsArray[i] + " " + mapsArray[i + 1] + " " + mapsArray[i + 2] + " ver:" + mapsArray[i + 3]);
-			mapNames.add(mapsArray[i]);
-			maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2], mapsArray[i + 3]));
-
+		ArrayList<String> correspondingCityMaps = new ArrayList<String>();
+		DataBaseController.GenericSelectFromTable("city_maps", "MAP_NAME", "CITY_NAME", mapCity);
+		if (DataBaseController.clientCon.GetServerObject() != null) {
+			correspondingCityMaps.addAll(DataBaseController.clientCon.getList());
+			String[] mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get list result of the rows
+			DataBaseController.GetMapsFromDB();// get maps from DB
+			if (DataBaseController.clientCon.GetServerObject() != null) {
+				mapsArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
+				// populate the maps array list based on the corresponding city maps list
+				for (int i = 0, row = 0, tableColumns = 4; row < mapsArray.length
+						/ tableColumns; i += tableColumns, row++) {
+					if (correspondingCityMaps.contains(mapsArray[i])) {
+						// only add maps if they belong to the given city
+						mapNames.add(mapsArray[i]);
+						maps.add(new Map(mapsArray[i], mapsArray[i + 1], mapsArray[i + 2], mapsArray[i + 3]));
+					}
+				}
+			}
 		}
 	}
 
@@ -167,7 +205,7 @@ public class ViewAllMapsController implements Initializable {
 				mapCityLabel.setText(m.getCityName());
 				mapNameLabel.setText(m.getMapName());
 				mapDescLabel.setText(m.getMapDescription());
-				//mapVersion.setText(String.valueOf(m.getMapVersion()));
+				mapVersion.setText(String.valueOf(m.getMapVersion()));
 				// save selected map object
 				ControllersAuxiliaryMethods.SetSelectedMapFromCombo(m.getMapName(), m.getMapDescription(),
 						m.getCityName(), m.getMapVersion());
@@ -178,23 +216,24 @@ public class ViewAllMapsController implements Initializable {
 		// get map file from the data base
 		SetImageToFile(mapName);
 		this.DownloadBtn.setDisable(false);
-		for (int j = 0; j < placesArr.size(); j++) {
+		if (placesArr != null) {// newly added check
+			for (int j = 0; j < placesArr.size(); j++) {
 
-			if (placesArr.get(j).getMapName().equals(mapName)) {
+				if (placesArr.get(j).getMapName().equals(mapName)) {
 
-				imagePane.getChildren().add(placesArr.get(j).getPin());
-				System.out.println("-----------" + placesArr.get(j).getMapName());
-				System.out.println("map Name : " + mapName);
-				imagePane.getChildren().add(placesArr.get(j).getPlacename());
-			} else {
-				if (imagePane.getChildren().isEmpty() == false) {
-					imagePane.getChildren().remove(placesArr.get(j).getPin());
-					imagePane.getChildren().remove(placesArr.get(j).getPlacename());
+					imagePane.getChildren().add(placesArr.get(j).getPin());
+					System.out.println("-----------" + placesArr.get(j).getMapName());
+					System.out.println("map Name : " + mapName);
+					imagePane.getChildren().add(placesArr.get(j).getPlacename());
+				} else {
+					if (imagePane.getChildren().isEmpty() == false) {
+						imagePane.getChildren().remove(placesArr.get(j).getPin());
+						imagePane.getChildren().remove(placesArr.get(j).getPlacename());
+					}
 				}
+
 			}
-
 		}
-
 	}
 
 	/**
@@ -232,9 +271,11 @@ public class ViewAllMapsController implements Initializable {
 		SceneController.push(((Node) event.getSource()).getScene());// push current scene
 		mystage.close();// close stage
 		try {
+			ControllersAuxiliaryMethods.SetCityToMap(mapCity);
 			new EditMapLoader().start(new Stage());
 		} catch (Exception e) {
 			System.out.println("EXCEPTION IN EDIT BUTTON CLICK >> " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -245,18 +286,19 @@ public class ViewAllMapsController implements Initializable {
 	 */
 	private void GetMapsPlaces() {
 		String[] placesArray;
-		double x, y;
 		int row = 0;
 		int tableColumns = 6;// was 5
 		DataBaseController.SelectAllRowsFromTable("places_in_maps");
-		placesArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
-		placesArr = new ArrayList<PlaceInMap>();
-		// populate the maps array list
-		for (int i = 0; row < placesArray.length / tableColumns; i += tableColumns, row++) {
-			// if place is within the authorized list then add it to the arraylist
-			if (placesArray[i + 5].equals("1")) {
-				placesArr.add(new PlaceInMap(placesArray[i + 2], placesArray[i + 1], placesArray[i],
-						Double.parseDouble(placesArray[i + 3]), Double.parseDouble(placesArray[i + 4])));
+		if (DataBaseController.clientCon.GetServerObject() != null) {
+			placesArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
+			placesArr = new ArrayList<PlaceInMap>();
+			// populate the maps array list
+			for (int i = 0; row < placesArray.length / tableColumns; i += tableColumns, row++) {
+				// if place is within the authorized list then add it to the arraylist
+				if (placesArray[i + 5].equals("1")) {
+					placesArr.add(new PlaceInMap(placesArray[i + 2], placesArray[i + 1], placesArray[i],
+							Double.parseDouble(placesArray[i + 3]), Double.parseDouble(placesArray[i + 4])));
+				}
 			}
 		}
 	}
@@ -265,17 +307,18 @@ public class ViewAllMapsController implements Initializable {
 	void DownloadClick(MouseEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save Image");
-		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));// jpg																										// format
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));// jpg //
+																												// format
 		File file = fileChooser.showSaveDialog(new Stage());
 		if (file != null) {
 			SnapshotParameters sp = new SnapshotParameters();
 			sp.setTransform(Transform.scale(10, 10));
 			WritableImage writableImage = imagePane.snapshot(sp, null);
 			try {
-				Stage progressBarStage=new Stage();
+				Stage progressBarStage = new Stage();
 				Thread downloadThread;
-				DownloadThread fileDownload=new DownloadThread(writableImage,file);				
-				downloadThread=new Thread(fileDownload);
+				DownloadThread fileDownload = new DownloadThread(writableImage, file);
+				downloadThread = new Thread(fileDownload);
 				downloadThread.start();
 				downloadThread.join();
 				Alert alert = new Alert(AlertType.INFORMATION, null, ButtonType.OK, ButtonType.CANCEL);
@@ -284,44 +327,52 @@ public class ViewAllMapsController implements Initializable {
 				alert.setContentText("OPEN THE MAP?");
 				Optional<ButtonType> result = alert.showAndWait();
 				ButtonType button = result.orElse(ButtonType.CANCEL);
-				if (button == ButtonType.OK) {				
-					  Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+file.getPath());
-					  p.waitFor();
+				if (button == ButtonType.OK) {
+					Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file.getPath());
+					p.waitFor();
 				}
 			} catch (Exception ex) {
 
 			}
 		}
 	}
-	private class DownloadThread implements Runnable{
+
+	private class DownloadThread implements Runnable {
 		WritableImage image;
 		File file;
-		public DownloadThread(WritableImage image,File file) {
-			this.image=image;
-			this.file=file;
+
+		public DownloadThread(WritableImage image, File file) {
+			this.image = image;
+			this.file = file;
 		}
+
 		@Override
 		public void run() {
 			try {
 				Platform.runLater(new Runnable() {
-				    @Override
-				    public void run() {
-				    	try {
-				    		ImageIO.setUseCache(false);//better performance				    		
+					@Override
+					public void run() {
+						try {
+							ImageIO.setUseCache(false);// better performance
 							ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-				    }
+					}
 				});
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}			
+			}
 		}
-		
+
 	}
 
+	@FXML
+	void BackClick(MouseEvent event) {
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		stage.close();
+	}
 
 }

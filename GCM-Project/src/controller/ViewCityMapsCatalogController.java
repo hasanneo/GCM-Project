@@ -47,7 +47,6 @@ public class ViewCityMapsCatalogController implements Initializable {
 	@FXML
 	private Button purchaseBtn;
 	@FXML
-    private Label priceLabel;
 	CityMap selectedMapRow;
 	TableColumn<CityMap, String> col1;
 	TableColumn<CityMap, String> col2;
@@ -69,6 +68,9 @@ public class ViewCityMapsCatalogController implements Initializable {
 		col2.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getInfo()));
 		tableView.getColumns().addAll(col1, col2);
 		InitComboBox();// init combobox
+		if (DataBaseController.clientCon.isLoggedIn() == false) {
+			purchaseBtn.setVisible(false);
+		}
 	}
 
 	/**
@@ -94,6 +96,9 @@ public class ViewCityMapsCatalogController implements Initializable {
 
 	}
 
+	/**
+	 * function to initialize the combobox with the latest maps depending on the selection
+	 */
 	public void InitComboBox() {
 		GetCitiesFromDB();
 		ObservableList<String> options = FXCollections.observableArrayList(cityNames);
@@ -102,7 +107,7 @@ public class ViewCityMapsCatalogController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * runs a query that gets all the cities from the database
 	 */
 	private void GetCitiesFromDB() {
 		// TODO Auto-generated method stub
@@ -124,6 +129,10 @@ public class ViewCityMapsCatalogController implements Initializable {
 
 	}
 
+	/**
+	 * filss that maps if the city into the table view 
+	 * @param cityName: city to display its maps
+	 */
 	private void FillMaps(String cityName) {
 		tableView.getItems().clear();
 		GetDataFromDB(cityName);
@@ -144,6 +153,7 @@ public class ViewCityMapsCatalogController implements Initializable {
 	 *  
 	 *  @param city: city name, get city status from DB
 	 *  @return true, false, depending on the result
+	 *  @author Ebrahem
 	 */
 	public boolean getMapRateStatus(String city) {
 		DataBaseController.GenericSelectFromTable("city_maps_rate", "status", "CITY_NAME", city);

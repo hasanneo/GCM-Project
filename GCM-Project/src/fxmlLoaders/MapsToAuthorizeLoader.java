@@ -23,7 +23,6 @@ import javafx.stage.Stage;
  * 
  */
 public class MapsToAuthorizeLoader extends Application{
-
 	 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -34,7 +33,7 @@ public class MapsToAuthorizeLoader extends Application{
 		fxmlLoader.setController(controller);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/css/combobox.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		stage.setTitle("MAPS TO AUTHORIZE");
 		stage.setScene(scene);
 		stage.setResizable(false);
@@ -46,6 +45,7 @@ public class MapsToAuthorizeLoader extends Application{
 	 * @return
 	 */
 	private ObservableList<String> GetMapsList() {
+		ObservableList<String> options=null;
 		ArrayList<String> columns=new ArrayList<String>();
 		columns.add("MAP_NAME");
 		ArrayList<String> mapNames=null;
@@ -61,7 +61,9 @@ public class MapsToAuthorizeLoader extends Application{
 				mapNames.add(mapsArray[i]);
 			}
 		}
-		ObservableList<String> options = FXCollections.observableArrayList(mapNames);
+		if(mapNames!=null) {
+		 options = FXCollections.observableArrayList(mapNames);
+		}
 		return options;
 	}
 	

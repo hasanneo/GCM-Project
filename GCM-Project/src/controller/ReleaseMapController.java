@@ -86,18 +86,30 @@ public class ReleaseMapController implements Initializable {
 		ArrayList<PlaceInMap> list = new ArrayList<PlaceInMap>();
 		list.addAll(GetNotifications());
 		ObservableList<PlaceInMap> details = FXCollections.observableArrayList(list);
+		InitiateTableViewColumns();
+		placesTable.getColumns().addAll(col0, col1, col2, col3, col4);
+		placesTable.setItems(details);
+	}
+
+	/**
+	 * 
+	 */
+	private void InitiateTableViewColumns() {
 		col0 = new TableColumn<>("SERIAL");
 		col1 = new TableColumn<>("PLACE NAME");
 		col2 = new TableColumn<>("X LOCATION");
 		col3 = new TableColumn<>("Y LOCATION");
 		col4 = new TableColumn<>("AUTHORIZE");
+		col0.prefWidthProperty().bind(placesTable.widthProperty().multiply(0.1));
+		col1.prefWidthProperty().bind(placesTable.widthProperty().multiply(0.2));
+        col2.prefWidthProperty().bind(placesTable.widthProperty().multiply(0.2));
+        col3.prefWidthProperty().bind(placesTable.widthProperty().multiply(0.2));
+        col4.prefWidthProperty().bind(placesTable.widthProperty().multiply(0.3));
 		col0.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSerialNumber()));
 		col1.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
 		col2.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getX())));
 		col3.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getY())));
 		col4.setCellValueFactory(new PropertyValueFactory<PlaceInMap, CheckBox>("authorized"));
-		placesTable.getColumns().addAll(col0, col1, col2, col3, col4);
-		placesTable.setItems(details);
 	}
 
 	/**
@@ -144,13 +156,28 @@ public class ReleaseMapController implements Initializable {
 		// remove the notification
 		DataBaseController.DeleteRow("maps_to_authorize", "SERIAL_NUMBER", mapSerial);
 		if (DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
-			Alert success = new Alert(AlertType.CONFIRMATION, null, ButtonType.OK, null);
-			success.setHeaderText("PLACES HAS BEEN UPDATED");
-			success.setContentText(null);
-			success.showAndWait();
-			if (usersNotificationFlag == 1) {
+			Alert success;
+			switch (usersNotificationFlag) {
+			case 1:
 				SendNotificationToUsers();
+				success = new Alert(AlertType.CONFIRMATION, null, ButtonType.OK);
+				success.setHeaderText("PLACES HAVE BEEN UPDATED AND NOTIFICATION WAS SENT TO USERS");
+				success.setContentText(null);
+				success.showAndWait();
+				break;
+			case 0:
+				success = new Alert(AlertType.CONFIRMATION, null, ButtonType.OK);
+				success.setHeaderText("PLACES HAVE BEEN UPDATED");
+				success.setContentText(null);
+				success.showAndWait();
+				break;
 			}
+		} else {
+			Alert alert = new Alert(AlertType.ERROR, null, ButtonType.OK);
+			alert.setTitle(null);
+			alert.headerTextProperty().set("FAILED TO ADD");
+			alert.setContentText(null);
+			alert.showAndWait();
 		}
 	}
 
@@ -159,22 +186,24 @@ public class ReleaseMapController implements Initializable {
 	 */
 	private void SendNotificationToUsers() {
 		// send notification to all of the users that own this map (update by map name)
+		System.out.println("IN SEND USER NOTIFICATIONS *************"+mapCity);
 		ArrayList<String> columns = new ArrayList<String>();
-
 		columns.add("USERNAME");
 		columns.add("CITY");
-		DataBaseController.GenericSelectColumnsFromTable("purchase_history", columns, "CITY", mapCity);// get users that
-																										// have this
-																										// city
-		if (!DataBaseController.clientCon.getList().isEmpty())// if the list returned is not empty
+		//Get purchase history rows
+		DataBaseController.GenericSelectColumnsFromTable("purchase_history", columns, "CITY", mapCity);
+		
+		//if the there are returned rows															
+		if (DataBaseController.clientCon.GetServerObject() != null && !DataBaseController.clientCon.getList().isEmpty())	
 		{
 			ArrayList<String> rows = DataBaseController.clientCon.getList();
 			for (int i = 0; i < rows.size() / 2; i += 2) {
+				System.out.println("******ABOUT TO INSERT >>"+rows.get(i)+" cityName:"+mapCity+" mapName:"+mapName);
 				columns.clear();
 				// insert into the users notifications table
 				columns.add(rows.get(i));
 				columns.add(mapCity);
-				columns.add(mapName+" has been updated !");
+				columns.add(mapName + " has been updated !");
 				DataBaseController.InsertIntoUsersNotifications(columns);
 			}
 		}

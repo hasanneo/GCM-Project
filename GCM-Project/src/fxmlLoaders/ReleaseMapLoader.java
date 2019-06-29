@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * 
@@ -44,10 +45,11 @@ public class ReleaseMapLoader extends Application {
 		fxmlLoader.setController(controller);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/css/tableview.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		stage.setTitle("RELEASE MAP VERISON");
 		stage.setScene(scene);
 		stage.setResizable(false);
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
 
 	}
