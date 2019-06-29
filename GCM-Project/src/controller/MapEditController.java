@@ -157,7 +157,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * changes the cordinates of places in map  
 	 * @param event
 	 * @author Jawad
 	 */
@@ -174,7 +174,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * remove site from edited map
 	 * @param event
 	 * @author Jawad
 	 */
@@ -202,7 +202,10 @@ public class MapEditController implements Initializable {
 			changeBtn.setVisible(false);
 		}
 	}
-
+	/**
+	 *asks if the user wants to save changes if yes it saves them if no dont save
+	 * @param event
+	 */
 	@FXML
 	void save(ActionEvent event) {
 		Alert alert = new Alert(AlertType.WARNING, null, ButtonType.OK, ButtonType.CANCEL);
@@ -255,6 +258,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
+	 * Send Notification Form Manager Approval
 	 * @param map
 	 */
 	private void SendNotificationFormManagerApproval(Map map) {
@@ -270,6 +274,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
+	 * Extract New Map Version
 	 * @param map
 	 * @return
 	 */
@@ -294,7 +299,10 @@ public class MapEditController implements Initializable {
 		return placesRequests;
 	}
 
-
+	/**
+	 * saves the places that in the map to database
+	 * @param map
+	 */
 	private void InsertMapPlaces(String map) {
 		ArrayList<String> alreadyInsertedPlaces = new ArrayList<String>();
 		// select the places that are already in the map
@@ -333,7 +341,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * saves new cordinates of place on the map
 	 * @param event
 	 * @author Jawad
 	 */
@@ -369,7 +377,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * adds place to map (saves place in the placesList) and puts pin where is it on the map 
 	 * @param event
 	 * @author Jawad
 	 */
@@ -426,7 +434,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * moves the placePace to cordinates of the mouse 
 	 * @param event
 	 * @author Jawad
 	 */
@@ -454,7 +462,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * set the remove and change buttons to visible
 	 * @param event
 	 * @author Jawad
 	 */
