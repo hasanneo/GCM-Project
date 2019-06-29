@@ -120,43 +120,6 @@ public class MapEditController implements Initializable {
 	EventHandler<MouseEvent> h;
 
 	/**
-	 * 
-	 * @param event
-	 * @author Jawad
-	 */
-	@FXML
-	void moveSite(MouseEvent event) {
-//		System.out.println("1");
-//		x=event.getX();
-//		y=event.getY();
-//		//	button1.setTranslateX(x);
-//
-//		//	button1.setTranslateY(y);
-//
-//
-//		h=new EventHandler<MouseEvent>() {
-//
-//			@Override
-//			public void handle(MouseEvent event) {
-//				// TODO Auto-generated method stub
-//				x=event.getX();
-//				y=event.getY();
-//				PlacePane.setLayoutX(x-15);
-//				PlacePane.setLayoutY(y-20);
-//				SiteNameLbl.setText(PlaceNameTxt.getText());
-//			}
-//		};
-//
-//
-//		if (cnt==0) {
-//
-//		//	flag=false;
-//			mapView.addEventHandler(MouseEvent.MOUSE_MOVED,h);
-//			cnt++;
-//		}
-	}
-
-	/**
 	 * changes the cordinates of places in map  
 	 * @param event
 	 * @author Jawad
@@ -415,24 +378,7 @@ public class MapEditController implements Initializable {
 		}
 	}
 
-	/**
-	 * 
-	 * @param event
-	 * @author Jawad
-	 */
-	@FXML
-	void zoom(ScrollEvent event) {
-		scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-			public void handle(ScrollEvent event) {
-				if (event.getDeltaY() > 0) {
-					zoomProperty.set(zoomProperty.get() * 1.1);
-				} else if (event.getDeltaY() < 0) {
-					zoomProperty.set(zoomProperty.get() / 1.1);
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * moves the placePace to cordinates of the mouse 
 	 * @param event
@@ -473,20 +419,6 @@ public class MapEditController implements Initializable {
 			changeBtn.setVisible(true);
 		}
 
-	}
-
-	/**
-	 * 
-	 * @param event
-	 * @author Jawad
-	 */
-	@FXML
-	void stopHandler(MouseEvent event) {
-		if (cnt == 1) {
-			// flag=true;
-			mapView.removeEventHandler(MouseEvent.MOUSE_MOVED, h);
-
-		}
 	}
 
 	/**
