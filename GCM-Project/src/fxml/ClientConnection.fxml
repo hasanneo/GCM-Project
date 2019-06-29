@@ -15,6 +15,8 @@
       </Label>
       <Label layoutX="124.0" layoutY="179.0" text="Server's IP:" />
       <TextField id="IpText" fx:id="IpText" layoutX="196.0" layoutY="175.0" prefHeight="25.0" prefWidth="218.0" promptText="LocalHost" />
-      <Button id="connectBtn" fx:id="connectBtn" layoutX="271.0" layoutY="244.0" mnemonicParsing="false" onAction="#connectToServer" text="Connect" />
+      <Button id="connectBtn" fx:id="connectBtn" layoutX="270.0" layoutY="267.0" mnemonicParsing="false" onAction="#connectToServer" text="Connect" />
+      <Label layoutX="124.0" layoutY="208.0" text="Port:" />
+      <TextField id="portTxt" fx:id="portTxt" layoutX="196.0" layoutY="204.0" prefHeight="25.0" prefWidth="218.0" text="5555" />
    </children>
 </AnchorPane>
