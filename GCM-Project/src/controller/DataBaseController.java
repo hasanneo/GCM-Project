@@ -165,8 +165,8 @@ public class DataBaseController {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
 
-			String query = "SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where " + type + " LIKE " + "'%"
-					+ searchText + "%'" + ";";
+			String query = "SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where " + type + " = " + "'"
+					+ searchText + "'" + ";";
 
 			queryArr.add(query);
 			queryArr.add("select");
@@ -182,8 +182,8 @@ public class DataBaseController {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
 			String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM map where " + "MAP_NAME"
-					+ " IN (SELECT MAP_NAME FROM places_in_maps WHERE places_in_maps.PLACE_NAME like '%" + searchText
-					+ "%' AND APPROVED = 1);";
+					+ " IN (SELECT MAP_NAME FROM places_in_maps WHERE places_in_maps.PLACE_NAME = '" + searchText
+					+ "' AND APPROVED = 1);";
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
