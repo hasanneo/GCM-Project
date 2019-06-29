@@ -25,7 +25,7 @@ public class PlaceInMap {
 	ArrayList<String> fields;
 	CheckBox authorized;
 	String serialNumber;
-
+	String approved;
 	public PlaceInMap(String serialNumber) {
 		this.serialNumber = serialNumber;
 		this.authorized = new CheckBox();
@@ -56,7 +56,21 @@ public class PlaceInMap {
 		this.mapName = mapName;
 		this.mapVersion = mapVersion;
 	}
-
+	/**
+	 * Addded for the map view
+	 * 
+	 * @param name
+	 * @param x
+	 * @param y
+	 * @param pin
+	 * @param placename
+	 */
+	public PlaceInMap(String name, String mapName, double x, double y) {
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.mapName = mapName;
+	}
 	public void setPinLabel() {
 		pin = new ImageView("images/pin.png");
 		placename = new Label(name);
@@ -168,4 +182,12 @@ public class PlaceInMap {
 		this.serialNumber = serialNumber;
 	}
 
+	public String getApproved() {
+		return approved;
+	}
+
+	public void setApproved(String approved) {
+		this.approved = approved;
+	}
+	
 }

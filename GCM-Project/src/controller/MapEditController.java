@@ -53,7 +53,6 @@ import javafx.stage.Stage;
  */
 public class MapEditController implements Initializable {
 
-	
 	ArrayList<PlaceInMap> placesArr;
 	final DoubleProperty zoomProperty = new SimpleDoubleProperty(200);
 	ArrayList<PlaceInMap> places = new ArrayList<>();
@@ -67,7 +66,7 @@ public class MapEditController implements Initializable {
 	PlaceInMap p = null;
 	String mapName;
 	Map selectedMap;
-	
+
 	@FXML
 	private Button saveCordBtn;
 	@FXML
@@ -205,7 +204,7 @@ public class MapEditController implements Initializable {
 
 	@FXML
 	void save(ActionEvent event) {
-		if (places != null && !places.isEmpty()) {
+		if (places != null && !places.isEmpty()) {// if something new was added
 			// insert successfully
 			Alert alert = new Alert(AlertType.WARNING, null, ButtonType.OK, ButtonType.CANCEL);
 			alert.setTitle("RELEASE NEW VERSION");
@@ -214,29 +213,28 @@ public class MapEditController implements Initializable {
 			alert.setContentText(null);
 			Optional<ButtonType> result = alert.showAndWait();
 			ButtonType button = result.orElse(ButtonType.CANCEL);
-			if (button == ButtonType.OK) {//ok click
-				System.out.println("******************");
-				System.out.println(places.get(0).toString());
-				System.out.println("******************");
-				DataBaseController.InsertIntoPlacesInMaps(places.get(0));//insert new place NEED TO INSERT ALL PLACES!!
+			if (button == ButtonType.OK) {// ok click
+				// NEED TO INSERT ALL PLACES!!
+				Map map = ControllersAuxiliaryMethods.getSelectedMapFromCombo();// get the selected map				
+				InsertMapPlaces(map.getMapName());// insert new places for map
 				if (DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
-					Map map = ControllersAuxiliaryMethods.getSelectedMapFromCombo();//get the selected map
-					Double versionDuble = Double.parseDouble(map.getMapVersion());
-					versionDuble += 0.1;
-					versionDuble=Math.round(versionDuble * 10) / 10.0;
-					String newVersion = versionDuble.toString();//set a new map version
-					//send authorization request to manager
-					MapVersionNotification noti = new MapVersionNotification("Authorize version",
-							DataBaseController.clientCon.GetUser().getUsername(), "Request info test",
-							map.getCityName(), map.getMapName(), newVersion);
-					//add to pending approval releases
-					noti.SendNotificationForManagerApproval();
-					alert.setAlertType(AlertType.INFORMATION);
-					alert.setTitle(null);
-					alert.headerTextProperty().set("RELEASE REQUEST SENT TO THE MANAGER");
-					alert.setContentText(null);
-					alert.setContentText(null);
-					alert.showAndWait();
+					// if insert was successful
+					SendNotificationFormManagerApproval(map);
+					if (DataBaseController.clientCon.GetServerObject() != null
+							&& DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
+						alert.setAlertType(AlertType.INFORMATION);
+						alert.setTitle(null);
+						alert.headerTextProperty().set("REQUEST SENT TO MANAGER FOR APPROVAL");
+						alert.setContentText(null);
+						alert.setContentText(null);
+						alert.showAndWait();
+					} else {
+						alert.setAlertType(AlertType.ERROR);
+						alert.setTitle(null);
+						alert.headerTextProperty().set("FAILED TO SEND");
+						alert.setContentText(null);
+						alert.showAndWait();
+					}
 				}
 			} else {
 				// CANCEL BUTTON
@@ -249,10 +247,85 @@ public class MapEditController implements Initializable {
 		}
 	}
 
+	/**
+	 * @param map
+	 */
+	private void SendNotificationFormManagerApproval(Map map) {
+		Double newVersionDouble = ExtractNewMapVersion(map);
+		String newVersion = newVersionDouble.toString();// set a new map version
+		String requestingUser = DataBaseController.clientCon.GetUser().getUsername();
+		// send authorization request to manager
+		MapVersionNotification noti = new MapVersionNotification("Authorize version", requestingUser,
+				GetRequestedPlaces(map.getMapName()), map, newVersion);
+		noti.setCityName(map.getCityName());//setting city name for map
+		// add to pending approval releases
+		noti.SendNotificationForManagerApproval();
+	}
+
+	/**
+	 * @param map
+	 * @return
+	 */
+	private Double ExtractNewMapVersion(Map map) {
+		// get the current map version and round it to 1 number after the decimal point
+		Double versionDuble = Double.parseDouble(map.getMapVersion());
+		versionDuble += 0.1;
+		versionDuble = Math.round(versionDuble * 10) / 10.0;
+		return versionDuble;
+	}
+
+	private ArrayList<String> GetRequestedPlaces(String map) {
+		ArrayList<String> placesRequests = new ArrayList<String>();
+		for (PlaceInMap p : places) {
+			if (p.getMapName().equals(map)) {
+				// insert unauthorized only and send for approval
+				if (p.getApproved().equals("0")) {
+					placesRequests.add(p.getName());
+				}
+			}
+		}
+		return placesRequests;
+	}
+
+	private void SendNotificationToManager() {
+
+	}
+
+	private void InsertMapPlaces(String map) {
+		ArrayList<String> alreadyInsertedPlaces = new ArrayList<String>();
+		// select the places that are already in the map
+		DataBaseController.GenericSelectFromTable("places_in_maps", "PLACE_NAME", "MAP_NAME", map);
+		if (DataBaseController.clientCon.GetServerObject() != null) {
+			alreadyInsertedPlaces.addAll(DataBaseController.clientCon.getList());
+		}
+		ArrayList<String> tableColumns = new ArrayList<String>();
+		ArrayList<String> newValues = new ArrayList<String>();
+		tableColumns.add("X_LOCATION");
+		tableColumns.add("Y_LOCATION");
+		for (PlaceInMap p : places) {
+			if (p.getMapName().equals(map)) {
+				// insert new places as unauthorized only and send for approval
+				p.setApproved("0");
+				// should check if the place is already in the map (if yes then do an update)
+				if (!alreadyInsertedPlaces.isEmpty() && alreadyInsertedPlaces.contains(p.getName())) {
+					newValues.clear();
+					newValues.add(Double.toString(p.getX()));
+					newValues.add(Double.toString(p.getY()));
+					DataBaseController.GenericUpdateTableRow("places_in_maps", tableColumns, newValues, "PLACE_NAME",p.getName());
+				} else {
+					// if the place is not in the map then insert it as a new place
+					DataBaseController.InsertIntoPlacesInMaps(p);
+				}
+			}
+
+		}
+	}
+
 	@FXML
 	void cancel(ActionEvent event) {
 
 	}
+
 	/**
 	 * 
 	 * @param event
@@ -304,6 +377,7 @@ public class MapEditController implements Initializable {
 			combo.getItems().remove(p.getName());
 			p.setMapName(ControllersAuxiliaryMethods.selectedMapFromCombo.getMapName());
 			p.setMapVersion(ControllersAuxiliaryMethods.selectedMapFromCombo.getMapVersion());
+			p.setApproved("0");// added new place is unapproved
 			places.add(p);
 			b = new Label(p.getName());
 			b.setLayoutX(x);
@@ -345,16 +419,6 @@ public class MapEditController implements Initializable {
 		});
 	}
 
-	// scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-	// @Override
-	// public void handle(ScrollEvent event) {
-	// if (event.getDeltaY() > 0) {
-	// zoomProperty.set(zoomProperty.get() * 1.1);
-	// } else if (event.getDeltaY() < 0) {
-	// zoomProperty.set(zoomProperty.get() / 1.1);
-	// }
-	// }
-	// });
 	/**
 	 * 
 	 * @param event
@@ -367,10 +431,6 @@ public class MapEditController implements Initializable {
 				PlacePane.setVisible(true);
 				x = event.getX() - 15;
 				y = event.getY() - 25;
-				// button1.setTranslateX(x);
-				// button1.setTranslateY(y);
-				// button1.setLayoutX(x);
-				// button1.setLayoutY(y);
 				PlacePane.setLayoutX(x);
 				PlacePane.setLayoutY(y);
 				if (chflag == false) {
@@ -422,7 +482,7 @@ public class MapEditController implements Initializable {
 	 */
 	private void InitComboBox() {
 		DataBaseController.SelectAllRowsFromTable("places");// get the places from the db.
-	
+
 		String[] places = DataBaseController.clientCon.GetObjectAsStringArray();
 		ArrayList<Place> allPlaces = new ArrayList<Place>();
 		ArrayList<String> placesNames = new ArrayList<String>();
@@ -434,7 +494,6 @@ public class MapEditController implements Initializable {
 			// 3], places[i + 4]));
 		}
 
-		
 		ObservableList<String> comboOptions = FXCollections.observableArrayList(placesNames);
 		combo.setItems(comboOptions);
 	}
@@ -459,7 +518,7 @@ public class MapEditController implements Initializable {
 	 * @author Hasan
 	 */
 	private void SetMapImage() {
-		selectedMap=ControllersAuxiliaryMethods.getSelectedMapFromCombo();
+		selectedMap = ControllersAuxiliaryMethods.getSelectedMapFromCombo();
 		mapName = ControllersAuxiliaryMethods.selectedMapFromCombo.getMapName();
 		// get map file from the data base
 		DataBaseController.GetFileFromTable("MAP", "MAP_NAME", mapName, "MAPFILE");
@@ -479,57 +538,50 @@ public class MapEditController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SetMapImage();
 		InitComboBox();
-		
-		//DataBaseController.SelectAllRowsFromTable("places_in_maps");// get the places from the db.
-		
-		String[] placesArray;
-		double x, y;
-		int row = 0;
-		int tableColumns = 5;
 		DataBaseController.SelectAllRowsFromTable("places_in_maps");
-		placesArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
-		places = new ArrayList<PlaceInMap>();
-		// populate the maps array list
-		for (int i = 0; row < placesArray.length / tableColumns; i += tableColumns, row++) {
-			places.add(new PlaceInMap(placesArray[i + 2],placesArray[i + 1],placesArray[i],Double.parseDouble(placesArray[i + 3]),Double.parseDouble(placesArray[i + 4])));
-		}
-		
-		for (int i = 0; i < places.size(); i++) {
-			places.get(i).setPinLabel();
-		}
-		
-		for (int j = 0; j < places.size(); j++) {
-			//			imagePane.getChildren().remove(arg0)
-			//imagePane.getChildren()
+		FillPlacesListFromTable();
 
-			//			{
-			//				if (imagePane.getChildren().isEmpty()==false) {
-			//				imagePane.getChildren().remove(placesArr.get(j).getPin());
-			//				imagePane.getChildren().remove(placesArr.get(j).getPlacename());
-			//				}
-			//		
-			//			}
-			//			else {
-			if (places.get(j).getMapName().equals( mapName)) 
-			{
-				placesList.getItems().add(places.get(j).getName());
-				p1.getChildren().add(places.get(j).getPin());
-				System.out.println("-----------"+places.get(j).getMapName());
-				System.out.println("map Name : "+"Yarka");
-				p1.getChildren().add(places.get(j).getPlacename());
+	}
+
+	/**
+	 * Fill the places arraylist and set the pins on the map
+	 */
+	private void FillPlacesListFromTable() {
+		PlaceInMap tablePlace;
+		String[] placesArray;
+		// if select query isnt empty
+		if (DataBaseController.clientCon.GetServerObject() != null) {// added by H
+			placesArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
+			places = new ArrayList<PlaceInMap>();
+			// populate the places array list
+			for (int i = 0, row = 0, tableColumns = 6; row < placesArray.length
+					/ tableColumns; i += tableColumns, row++) {
+				tablePlace = new PlaceInMap(placesArray[i + 2], placesArray[i + 1],
+						Double.parseDouble(placesArray[i + 3]), Double.parseDouble(placesArray[i + 4]));
+				tablePlace.setApproved(placesArray[i + 5]);
+				places.add(tablePlace);
 			}
-			else
-			{
-				if (p1.getChildren().isEmpty()==false)
-				{
-					p1.getChildren().remove(places.get(j).getPin());
-					p1.getChildren().remove(places.get(j).getPlacename());
+			// set pins for the places
+			for (int i = 0; i < places.size(); i++) {
+				places.get(i).setPinLabel();
+			}
+
+			for (int j = 0; j < places.size(); j++) {
+				if (places.get(j).getMapName().equals(mapName)) {
+					placesList.getItems().add(places.get(j).getName());
+					p1.getChildren().add(places.get(j).getPin());
+					System.out.println("-----------" + places.get(j).getMapName());
+					System.out.println("map Name : " + "Yarka");
+					p1.getChildren().add(places.get(j).getPlacename());
+				} else {
+					if (p1.getChildren().isEmpty() == false) {
+						p1.getChildren().remove(places.get(j).getPin());
+						p1.getChildren().remove(places.get(j).getPlacename());
+					}
 				}
 			}
-			//}
 		}
 		PlacePane.setVisible(false);
 		assert mapView != null : "fx:id=\"mapView\" was not injected: check your FXML file 'mapGui.fxml'.";
-
 	}
 }

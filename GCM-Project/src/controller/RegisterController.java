@@ -72,6 +72,7 @@ public class RegisterController extends Application {
 		fxmlLoader.setLocation(getClass().getResource("/fxml/RegisterScreen.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		stage.setTitle("Register");
 		stage.setScene(scene);
 		stage.setResizable(false);
@@ -81,7 +82,10 @@ public class RegisterController extends Application {
 
 	@FXML
 	void CancelMouseClick(MouseEvent event) {
-		((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(SceneController.pop());// replace the scene
+		//((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(SceneController.pop());// replace the scene
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		//loginStage.setScene(SceneController.pop());// replace the scene
+		stage.close();
 	}
 
 	@FXML

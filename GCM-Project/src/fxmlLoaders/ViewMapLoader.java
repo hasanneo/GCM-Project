@@ -3,6 +3,8 @@
  */
 package fxmlLoaders;
 
+import controller.ViewAllMapsController;
+import controller.ViewMapController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,17 +18,21 @@ import javafx.stage.StageStyle;
  * @author Hasan
  * 
  */
-public class ChooseCityLoader extends Application {
-	
+public class ViewMapLoader extends Application{
+	String mapName;
+	public ViewMapLoader(String mapName) {
+		this.mapName=mapName;
+	}
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader fxmlLoader;
-		fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(getClass().getResource("/fxml/ChooseCityScreen.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(getClass().getResource("/fxml/ViewMap.fxml"));
+		ViewMapController controller=new ViewMapController(mapName);
+		fxmlLoader.setController(controller);
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
-		stage.setTitle("Choose City");
+		stage.setTitle("VIEW MAP");
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.initStyle(StageStyle.UNDECORATED);

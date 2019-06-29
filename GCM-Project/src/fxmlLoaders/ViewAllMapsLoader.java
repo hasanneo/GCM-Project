@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * @author Hasan
@@ -23,14 +24,13 @@ import javafx.stage.Stage;
  */
 public class ViewAllMapsLoader extends Application{
 	
-		String map;
+		String mapCity;
 		
 		/**
 		 * @param map
 		 */
-		public ViewAllMapsLoader(String map) {
-			super();
-			this.map = map;
+		public ViewAllMapsLoader(String mapCity) {
+			this.mapCity = mapCity;
 		}
 
 		/* (non-Javadoc)
@@ -40,13 +40,15 @@ public class ViewAllMapsLoader extends Application{
 		public void start(Stage stage) throws Exception {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/fxml/ViewAllMapScreen.fxml"));
-			ViewAllMapsController controller = new ViewAllMapsController(map);
+			ViewAllMapsController controller = new ViewAllMapsController(mapCity);
 			fxmlLoader.setController(controller);
 			Parent root = fxmlLoader.load();
 			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 			stage.setTitle("Maps");
 			stage.setScene(scene);
 			stage.setResizable(false);
+			stage.initStyle(StageStyle.UNDECORATED);
 			stage.show();
 			
 		}

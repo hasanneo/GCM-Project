@@ -4,16 +4,23 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChooseCityController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChooseCityController">
 	<children>
-		<ComboBox fx:id="cityCombo" layoutX="60.0" layoutY="174.0" prefHeight="25.0" prefWidth="466.0" promptText="CHOOSE A CITY" />
-		<Button fx:id="nextBtn" layoutX="526.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#NextClick" text="NEXT" />
-      <Label text="ADD MAP TO CITY">
+		<ComboBox fx:id="cityCombo" layoutX="71.0" layoutY="173.0" prefHeight="25.0" prefWidth="466.0" promptText="CHOOSE A CITY" styleClass="combo-box" />
+		<Button fx:id="nextBtn" layoutX="592.0" layoutY="432.0" mnemonicParsing="false" onMouseClicked="#NextClick" prefHeight="25.0" prefWidth="100.0" styleClass="ripple-button" text="NEXT" />
+      <Label layoutX="205.0" layoutY="54.0" styleClass="row-header" text="ADD MAP TO CITY">
          <font>
-            <Font size="57.0" />
-         </font>
-      </Label>
+            <Font size="32.0" />
+         </font></Label>
+      <Button fx:id="createCityBtn" layoutX="564.0" layoutY="173.0" mnemonicParsing="false" onMousePressed="#CreateCityClick" styleClass="ripple-button" text="CREATE CITY" />
+      <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#BackClick" prefHeight="47.0" prefWidth="38.0" styleClass="mybutton">
+         <graphic>
+            <SVGPath content="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z" styleClass="svg-icon" />
+         </graphic>
+      </Button>
+      <Button fx:id="editBtn" disable="true" layoutX="480.0" layoutY="432.0" mnemonicParsing="false" onMouseClicked="#EditClick" prefHeight="25.0" prefWidth="84.0" text="EDIT MAPS" styleClass="ripple-button"/>
 	</children>
 </AnchorPane>

@@ -6,12 +6,14 @@ import javafx.fxml.FXMLLoader;
 import java.util.ArrayList;
 import entity.Account;
 import entity.PurchaseHistory;
+import fxmlLoaders.EditInfoLoader;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import javafx.application.*;
@@ -31,7 +33,6 @@ public class ViewCard_Controller extends Application {
 	Account userInfo;
 	ArrayList<PurchaseHistory> historyFromDB = new ArrayList<PurchaseHistory>();
 
-
 	@FXML
 	private Label lblUserCard_DB; // label to hold first name of user to display as title
 
@@ -43,31 +44,31 @@ public class ViewCard_Controller extends Application {
 
 	@FXML
 	private Label lblEmail_DB; // label to hold the user email
-	
+
 	@FXML
 	private Label lblWorkerID_DB;
 
 	@FXML
 	private Label lblPermissions_DB;
-	
+
 	@FXML
 	private Label lblWorker_UI;
 
 	@FXML
 	private Label lblPermissions_UI;
-	
+
 	@FXML
 	private TableView<PurchaseHistory> tableView_PurchaseHistory;
-	
+
 	@FXML
 	private TableColumn<PurchaseHistory, String> cityColumn;
-	
+
 	@FXML
 	private TableColumn<PurchaseHistory, String> subscriptionColumn;
 
 	@FXML
 	private Button btnClose; // close button, gets back to options screen
-	
+
 	public ObservableList<PurchaseHistory> list = FXCollections.observableArrayList();
 
 	/**
@@ -82,7 +83,6 @@ public class ViewCard_Controller extends Application {
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		thisStage.close();
 
-		
 		MainController mainController = new MainController();
 		try {
 			mainController.OptionsOnActionBtn(event);
@@ -91,6 +91,7 @@ public class ViewCard_Controller extends Application {
 			e.printStackTrace();
 		}
 	}
+
 	
 	
 	/**
@@ -107,6 +108,7 @@ public class ViewCard_Controller extends Application {
 		}
 		return list;
 	}
+
 	
 	
 	/**
@@ -117,6 +119,7 @@ public class ViewCard_Controller extends Application {
 	 */
 	public ArrayList<PurchaseHistory> loadPurchaseHistory() {
 		PurchaseHistory userHistory;
+
 		try {
 			DataBaseController.SelectAllRowsFromTable("purchase_history", "USERNAME",
 					DataBaseController.clientCon.GetUser().getUsername().toString());
@@ -135,13 +138,11 @@ public class ViewCard_Controller extends Application {
 		}
 		return historyFromDB;
 	}
-		
-	
+
 	/**
-	 * @author Ebrahem
-	 * 		Class to load the user data
-	 * 		if the user is a department worker, then we need to fetch permissions and worker ID
-	 * 		Manager and normal user don't require those fields
+	 * @author Ebrahem Class to load the user data if the user is a department
+	 *         worker, then we need to fetch permissions and worker ID Manager and
+	 *         normal user don't require those fields
 	 */
 	public void loadUserData() {
 		Account userInfo;
@@ -157,6 +158,7 @@ public class ViewCard_Controller extends Application {
 			lblWorker_UI.setVisible(false);
 			lblPermissions_DB.setVisible(false);
 			lblWorkerID_DB.setVisible(false);
+
 			
 			//in case the user is a content worker, then worker ID and permissions need to be added
 			if (!(DataBaseController.clientCon.GetUserType().equals("user"))) {
@@ -164,8 +166,8 @@ public class ViewCard_Controller extends Application {
 				lblWorker_UI.setVisible(true);
 				lblPermissions_DB.setVisible(true);
 				lblWorkerID_DB.setVisible(true);
-				lblPermissions_DB.setText(""+userInfo.getPermissions());
-				lblWorkerID_DB.setText("#"+userInfo.getId());
+				lblPermissions_DB.setText("" + userInfo.getPermissions());
+				lblWorkerID_DB.setText("#" + userInfo.getId());
 			}
 		}
 		list = loadDataIntolist();
@@ -202,6 +204,16 @@ public class ViewCard_Controller extends Application {
 	@FXML
 	void initialize() {
 		loadUserData();
+	}
+
+	@FXML
+	void EditInfoClick(MouseEvent event) {
+		try {
+			new EditInfoLoader().start(new Stage());
+		} catch (Exception e) {
+			System.out.println("ERROR AT EDIT CLICK: "+e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 }
