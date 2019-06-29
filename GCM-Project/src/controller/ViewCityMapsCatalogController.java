@@ -3,11 +3,9 @@
  */
 package controller;
 
-import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import entity.City;
@@ -29,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 
@@ -40,6 +39,7 @@ import javafx.scene.control.TableView;
  */
 public class ViewCityMapsCatalogController implements Initializable {
 
+	public static String desiredMap;
 	@FXML
 	private TableView<CityMap> tableView;
 	ArrayList<CityMap> list;
@@ -131,8 +131,108 @@ public class ViewCityMapsCatalogController implements Initializable {
 		tableView.setItems(details);
 	}
 	
-    @FXML
-    void PurchaseClick(MouseEvent event) {
+	
+	/**
+	 *  Function that runs a query to check the map status, 
+	 *  If it has an approved price, then the user can proceed to purchase
+	 *  In case the price isn't approved yet then the user gets an information
+	 *  message telling him that it isn't available at the moment
+	 *  
+	 *  In the function: we get the desired map into city.
+	 *  Run a query to get the city status
+	 *  Check the city status and display an appropriate message
+	 *  
+	 *  @param city: city name, get city status from DB
+	 *  @return true, false, depending on the result
+	 */
+	public boolean getMapRateStatus(String city) {
+		DataBaseController.GenericSelectFromTable("city_maps_rate", "status", "CITY_NAME", city);
+		String[] cityStatus = DataBaseController.clientCon.GetObjectAsStringArray();
+		if (cityStatus.length != 0) {
+			if (!(cityStatus[0].equals("approve"))) {
+				Alert alert = new Alert(AlertType.INFORMATION, " ", ButtonType.CLOSE);
+				alert.setHeaderText("Sorry, This City Isn't Available For Purchase At The Moment");
+				alert.showAndWait();
+			} else {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * @author Ebrahem
+	 * @param city: city name to search in user history
+	 * @return true: in case the city isn't in the user history.
+	 * 		   false: in case the user already bought the city.
+	 * 
+	 * 		Query function to check if the user has bought the city before
+	 */
+	public boolean checkCityNotInUserHistory(String city) {
+		String userName = DataBaseController.clientCon.GetUser().getUsername().toString();
+		try {
+			DataBaseController.GenericSelectFromTable("Purchase_history","CITY", "USERNAME", userName);
+			String[] userCities = DataBaseController.clientCon.GetObjectAsStringArray();
+			if (userCities.length == 0) {
+				return true;
+			}
+			else {
+				for (int i = 0; i < userCities.length; i++) {
+					if (userCities[i].equals(city)) {
+						return false;
+					}
+				}
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	/**
+	 * Purchase click
+	 * Makes sure the user has selected a city to purchase 
+	 * Then redirects him to the correct screen
+	 * 
+	 * In case no city was chosen, a message is presented
+	 * @param event
+	 */
+	@FXML
+	void PurchaseClick(MouseEvent event) {
+		// check combo box value
+		if (cityCombo.getValue() != null) {
+			// open purchase window
+			desiredMap = cityCombo.getValue().toString();
 
-    }
+			if (checkCityNotInUserHistory(desiredMap)) {
+				if (getMapRateStatus(desiredMap)) {
+					System.out.println("hiiii");
+					Purchase_Controller purchaseStage = new Purchase_Controller();
+					try {
+						purchaseStage.start(new Stage());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+			//in case the user already bought this map
+			else {
+				Alert alert = new Alert(AlertType.ERROR, " ", ButtonType.CLOSE);
+				alert.setHeaderText("The city already exists in your list");
+				alert.showAndWait();
+			}
+		}
+		// in case nothing was chosen in the combo box
+		else {
+			Alert alert = new Alert(AlertType.ERROR, " ", ButtonType.CLOSE);
+			alert.setHeaderText("Please Select A City first!");
+			cityCombo.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+			alert.showAndWait();
+		}
+	}
+
 }

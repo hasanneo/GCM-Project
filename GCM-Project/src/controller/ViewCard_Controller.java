@@ -29,6 +29,7 @@ public class ViewCard_Controller extends Application {
 
 	FXMLLoader fxmlLoader;
 	Account userInfo;
+	ArrayList<PurchaseHistory> historyFromDB = new ArrayList<PurchaseHistory>();
 
 
 	@FXML
@@ -92,26 +93,49 @@ public class ViewCard_Controller extends Application {
 	}
 	
 	
+	/**
+	 * @author Ebrahem
+	 * 		Get user purchase history and adds it to the observable list
+	 * @return observable list that contains the purchase history of current user to be loaded into the table
+	 */
 	public ObservableList<PurchaseHistory> loadDataIntolist() {
-		ArrayList<PurchaseHistory> historyList = loadPurchaseHistory();
-		for (PurchaseHistory pH : historyList)
-			list.add(pH);
+		historyFromDB = loadPurchaseHistory();
+		if (historyFromDB.size() != 0) {
+			for (PurchaseHistory pH : historyFromDB)
+				list.add(pH);
+			return list;
+		}
 		return list;
 	}
 	
 	
+	/**
+	 * @author Ebrahem
+	 *	 	Function that runs a query to fetch purchase history for current user
+	 *		and adds each item to the array list
+	 * @return arraylist of purchase history
+	 */
 	public ArrayList<PurchaseHistory> loadPurchaseHistory() {
-		ArrayList<PurchaseHistory> historyFromDB = new ArrayList<PurchaseHistory>();
 		PurchaseHistory userHistory;
-		DataBaseController.SelectAllRowsFromTable("purchase_history", "USERNAME", DataBaseController.clientCon.GetUser().getUsername());
-		String[] getAllhistory = DataBaseController.clientCon.GetObjectAsStringArray();
-		for (int i = 1; i < getAllhistory.length + 1; ) {
-			userHistory = new PurchaseHistory(getAllhistory[++i], getAllhistory[++i]);
-			historyFromDB.add(userHistory);
-			i+=2;
+		try {
+			DataBaseController.SelectAllRowsFromTable("purchase_history", "USERNAME",
+					DataBaseController.clientCon.GetUser().getUsername().toString());
+			String[] getAllhistory = DataBaseController.clientCon.GetObjectAsStringArray();
+			if (getAllhistory.length == 0)
+				return historyFromDB;
+			for (int i = 1; i < getAllhistory.length + 1;) {
+				userHistory = new PurchaseHistory(getAllhistory[++i], getAllhistory[++i]);
+				historyFromDB.add(userHistory);
+				i += 2;
+			}
+			return historyFromDB;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return historyFromDB;
 	}
+		
 	
 	/**
 	 * @author Ebrahem
@@ -121,9 +145,10 @@ public class ViewCard_Controller extends Application {
 	 */
 	public void loadUserData() {
 		Account userInfo;
+		//load user details into the labels
 		if (DataBaseController.clientCon.isLoggedIn()) {
+			//fetch current user 
 			userInfo = DataBaseController.clientCon.GetUser();
-			userInfo.toString();
 			lblUserCard_DB.setText("" + userInfo.getFirstName() + " " + userInfo.getLastName() + " Card:");
 			lblUserName_DB.setText("" + userInfo.getUsername());
 			lblPhoneNumber_DB.setText("" + userInfo.getPhoneNumber());
@@ -134,7 +159,7 @@ public class ViewCard_Controller extends Application {
 			lblWorkerID_DB.setVisible(false);
 			
 			//in case the user is a content worker, then worker ID and permissions need to be added
-			if (DataBaseController.clientCon.GetUserType().equals("worker")) {
+			if (!(DataBaseController.clientCon.GetUserType().equals("user"))) {
 				lblPermissions_UI.setVisible(true);
 				lblWorker_UI.setVisible(true);
 				lblPermissions_DB.setVisible(true);
@@ -143,9 +168,15 @@ public class ViewCard_Controller extends Application {
 				lblWorkerID_DB.setText("#"+userInfo.getId());
 			}
 		}
-		cityColumn.setCellValueFactory(new PropertyValueFactory<PurchaseHistory, String>("City"));
-		subscriptionColumn.setCellValueFactory(new PropertyValueFactory<PurchaseHistory, String>("Subscription"));
-		tableView_PurchaseHistory.setItems(loadDataIntolist());
+		list = loadDataIntolist();
+		if (list.size() != 0) {
+			// set the table columns for purchase history
+			cityColumn.setCellValueFactory(new PropertyValueFactory<PurchaseHistory, String>("City"));
+			subscriptionColumn.setCellValueFactory(new PropertyValueFactory<PurchaseHistory, String>("Subscription"));
+			// load purchase history into the table
+			tableView_PurchaseHistory.setItems(list);
+		}
+		 
 	}
 
 	/**
@@ -165,6 +196,9 @@ public class ViewCard_Controller extends Application {
 		primaryStage.show();
 	}
 
+	/**
+	 * Initialize method, load all necessary data on load
+	 */
 	@FXML
 	void initialize() {
 		loadUserData();
