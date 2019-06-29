@@ -126,6 +126,11 @@ public class MainController extends Application {
 
 	@FXML
 	void LogOutClick() {
+		
+		ArrayList<String> logOut=new ArrayList<>();
+    	logOut.add("logOut");
+    	logOut.add(DataBaseController.clientCon.GetUserAccount().getUsername());
+		DataBaseController.clientCon.ExecuteQuery(logOut);
 	   	DataBaseController.clientCon.setLoggedIn(false);// SET LOGGED IN AS TRUE
 			DataBaseController.clientCon.SetUserAccount(null);//set the account in the logged in client
 			this.refreshBtn.setVisible(false);
