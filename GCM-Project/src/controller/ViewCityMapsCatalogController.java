@@ -179,7 +179,7 @@ public class ViewCityMapsCatalogController implements Initializable {
 			}
 			else {
 				for (int i = 0; i < userCities.length; i++) {
-					if (userCities[i].equals(city)) {
+					if (userCities[i].toString().contains(city)) {
 						return false;
 					}
 				}
@@ -208,7 +208,6 @@ public class ViewCityMapsCatalogController implements Initializable {
 
 			if (checkCityNotInUserHistory(desiredMap)) {
 				if (getMapRateStatus(desiredMap)) {
-					System.out.println("hiiii");
 					Purchase_Controller purchaseStage = new Purchase_Controller();
 					try {
 						purchaseStage.start(new Stage());
