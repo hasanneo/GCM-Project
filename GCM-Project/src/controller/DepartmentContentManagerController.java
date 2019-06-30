@@ -48,10 +48,6 @@ public class DepartmentContentManagerController extends Application {
 	 */
 	@FXML
 	void btnViewCardClick(ActionEvent event) throws Exception {
-		// get current stage and close it
-		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		thisStage.close();
-
 		// create an instance of target class and try to launch it's stage
 		ViewCard_Controller viewCardStage = new ViewCard_Controller();
 		try {

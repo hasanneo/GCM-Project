@@ -120,44 +120,7 @@ public class MapEditController implements Initializable {
 	EventHandler<MouseEvent> h;
 
 	/**
-	 * 
-	 * @param event
-	 * @author Jawad
-	 */
-	@FXML
-	void moveSite(MouseEvent event) {
-//		System.out.println("1");
-//		x=event.getX();
-//		y=event.getY();
-//		//	button1.setTranslateX(x);
-//
-//		//	button1.setTranslateY(y);
-//
-//
-//		h=new EventHandler<MouseEvent>() {
-//
-//			@Override
-//			public void handle(MouseEvent event) {
-//				// TODO Auto-generated method stub
-//				x=event.getX();
-//				y=event.getY();
-//				PlacePane.setLayoutX(x-15);
-//				PlacePane.setLayoutY(y-20);
-//				SiteNameLbl.setText(PlaceNameTxt.getText());
-//			}
-//		};
-//
-//
-//		if (cnt==0) {
-//
-//		//	flag=false;
-//			mapView.addEventHandler(MouseEvent.MOUSE_MOVED,h);
-//			cnt++;
-//		}
-	}
-
-	/**
-	 * 
+	 * changes the cordinates of places in map  
 	 * @param event
 	 * @author Jawad
 	 */
@@ -174,7 +137,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * remove site from edited map
 	 * @param event
 	 * @author Jawad
 	 */
@@ -202,7 +165,10 @@ public class MapEditController implements Initializable {
 			changeBtn.setVisible(false);
 		}
 	}
-
+	/**
+	 *asks if the user wants to save changes if yes it saves them if no dont save
+	 * @param event
+	 */
 	@FXML
 	void save(ActionEvent event) {
 		Alert alert = new Alert(AlertType.WARNING, null, ButtonType.OK, ButtonType.CANCEL);
@@ -255,6 +221,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
+	 * Send Notification Form Manager Approval
 	 * @param map
 	 */
 	private void SendNotificationFormManagerApproval(Map map) {
@@ -270,6 +237,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
+	 * Extract New Map Version
 	 * @param map
 	 * @return
 	 */
@@ -294,7 +262,10 @@ public class MapEditController implements Initializable {
 		return placesRequests;
 	}
 
-
+	/**
+	 * saves the places that in the map to database
+	 * @param map
+	 */
 	private void InsertMapPlaces(String map) {
 		ArrayList<String> alreadyInsertedPlaces = new ArrayList<String>();
 		// select the places that are already in the map
@@ -333,7 +304,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * saves new cordinates of place on the map
 	 * @param event
 	 * @author Jawad
 	 */
@@ -369,7 +340,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * adds place to map (saves place in the placesList) and puts pin where is it on the map 
 	 * @param event
 	 * @author Jawad
 	 */
@@ -407,26 +378,9 @@ public class MapEditController implements Initializable {
 		}
 	}
 
+	
 	/**
-	 * 
-	 * @param event
-	 * @author Jawad
-	 */
-	@FXML
-	void zoom(ScrollEvent event) {
-		scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-			public void handle(ScrollEvent event) {
-				if (event.getDeltaY() > 0) {
-					zoomProperty.set(zoomProperty.get() * 1.1);
-				} else if (event.getDeltaY() < 0) {
-					zoomProperty.set(zoomProperty.get() / 1.1);
-				}
-			}
-		});
-	}
-
-	/**
-	 * 
+	 * moves the placePace to cordinates of the mouse 
 	 * @param event
 	 * @author Jawad
 	 */
@@ -454,7 +408,7 @@ public class MapEditController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * set the remove and change buttons to visible
 	 * @param event
 	 * @author Jawad
 	 */
@@ -465,20 +419,6 @@ public class MapEditController implements Initializable {
 			changeBtn.setVisible(true);
 		}
 
-	}
-
-	/**
-	 * 
-	 * @param event
-	 * @author Jawad
-	 */
-	@FXML
-	void stopHandler(MouseEvent event) {
-		if (cnt == 1) {
-			// flag=true;
-			mapView.removeEventHandler(MouseEvent.MOUSE_MOVED, h);
-
-		}
 	}
 
 	/**

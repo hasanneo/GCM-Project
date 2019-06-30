@@ -108,6 +108,22 @@ public class DataBaseController {
 		queryArr.add("update");
 		clientCon.ExecuteQuery(queryArr);
 	}
+	/**
+	 * @author mohamed
+	 * @param TableName the name of the table we want to update
+	 * @param ColumnName the name of the column that we want to make changes on it
+	 * @param NewValue   the new value that we want to put(the updated data)
+	 * @param KeyCol     the key column that we choose the cell according to it
+	 * @param NameOfKeyColumn   the name of the key column
+	 */
+	public static void updatefield(String TableName, String ColumnName, int NewValue,String KeyCol,String NameOfKeyColumn ) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query = "UPDATE " + TableName+ " SET " + ColumnName + " = " + NewValue + " WHERE " + KeyCol + " = '"+ NameOfKeyColumn+"';";
+		queryArr.add(query);
+		queryArr.add("update");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
 
 	/**
 	 * Will get the all rows from the map table except for the blob column.
@@ -323,7 +339,28 @@ public class DataBaseController {
 		queryArr.add("select");
 		clientCon.ExecuteQuery(queryArr);
 	}
-
+/**
+ * @author mohamed
+ * @param tableName
+ * @param columnName
+ * @param compareColumn
+ * @param value
+ * @param compareColumn2
+ * @param authorized
+ * @param compareColumn3
+ * @param map_version
+ */
+	public static void SelectCityNameFieldFromTable(String tableName, String columnName, String compareColumn, String value,String compareColumn2,int authorized,String compareColumn3,int map_version) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query = "SELECT " + columnName + " FROM `" + tableName + "` WHERE " + compareColumn + "='" + value
+				+"' AND "+compareColumn2+"="+authorized + " AND "+compareColumn3+"="+map_version+ ";";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	
+	
 	/**
 	 * Generic select one column from table query without compare
 	 * 
@@ -363,7 +400,7 @@ public class DataBaseController {
 		for (int i = 0; i < tableColumns.size(); i++) {
 			if (i == tableColumns.size() - 1) {
 				query = query.concat("`" + tableColumns.get(i) + "` = '" + newValues.get(i) + "' WHERE ");
-				query = query.concat(compareColumn + "='" + comepareValue + "';");
+				query = query.concat("`" + compareColumn + "`='" + comepareValue + "';");
 			} else {
 				query = query.concat("`" + tableColumns.get(i) + "` = '" + newValues.get(i) + "' ,");
 			}

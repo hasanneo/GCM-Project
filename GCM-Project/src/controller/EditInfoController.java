@@ -55,6 +55,12 @@ public class EditInfoController implements Initializable{
     	stage.close();
     }
 
+    /**
+     * @author Hasan
+     * @param event: gets the mouse click location
+     * 
+     * 	Save the edited data about the user to database
+     */
     @FXML
     void SaveClick(MouseEvent event) {
     	//update values in the DB
@@ -65,25 +71,39 @@ public class EditInfoController implements Initializable{
 		columns.add("PASS_WORD");
 		columns.add("PHONE_NUMBER");
 		columns.add("EMAIL");
+		columns.add("Permissions");
 		newValues.add(firstNameTxt.getText());
 		newValues.add(lastNameTxt.getText());
 		newValues.add(passWordTxt.getText());
 		newValues.add(phoneNumberTxt.getText());
 		newValues.add(emailTxt.getText());
-    	DataBaseController.GenericUpdateTableRow("accounts", columns, newValues, "USER_NAME", currentUser.getUsername());
-    	//show appropriate alert result
-    	if(DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
-    		Alert alert = new Alert(AlertType.CONFIRMATION, null, ButtonType.OK);
-			alert.setTitle(null);
-			alert.headerTextProperty().set("SUCCESSFULLY UPDATED");
-			alert.setContentText(null);
-			alert.showAndWait();
-		}else {
-			Alert alert = new Alert(AlertType.ERROR, null, ButtonType.OK);
-			alert.setTitle(null);
-			alert.headerTextProperty().set("FAILED TO UPDATE");
-			alert.setContentText(null);
-			alert.showAndWait();
+		if (!(currentUser.getUserType().equals("user"))) {
+			newValues.add("View/Edit");
+		}
+		else {
+			newValues.add("View");
+		}
+    	try {
+			DataBaseController.GenericUpdateTableRow("accounts", columns, newValues, "USERNAME", currentUser.getUsername());
+			//show appropriate alert result
+			if(DataBaseController.clientCon.GetServerObject().toString().equals("1")) {
+				Alert alert = new Alert(AlertType.CONFIRMATION, null, ButtonType.OK);
+				alert.setTitle(null);
+				alert.headerTextProperty().set("SUCCESSFULLY UPDATED");
+				alert.setContentText(null);
+				alert.showAndWait();
+				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		    	stage.close();
+			}else {
+				Alert alert = new Alert(AlertType.ERROR, null, ButtonType.OK);
+				alert.setTitle(null);
+				alert.headerTextProperty().set("FAILED TO UPDATE");
+				alert.setContentText(null);
+				alert.showAndWait();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
     }
 	@Override

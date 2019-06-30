@@ -1,11 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Optional;
 
 import javax.swing.Action;
 
-import com.sun.deploy.uitoolkit.impl.fx.ui.FXConsole;
 
 import javafx.application.Application;
 import javafx.beans.property.StringProperty;
@@ -136,7 +136,7 @@ public class Payment_Controller extends Application {
 	public void initializeComboBox() {
 		list = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10","11","12");
 		comboBoxMonth.setItems(list);
-		list = FXCollections.observableArrayList("19", "20", "21", "22", "23", "24");
+		list = FXCollections.observableArrayList("20", "21", "22", "23", "24");
 		comboBoxYear.setItems(list);
 	}
 
@@ -244,6 +244,7 @@ public class Payment_Controller extends Application {
 				Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 				thisStage.close();
 				
+
 				//ready array lists for insert into table purchase history for user
 				ArrayList<String> Purchase_HistoryColumns = new ArrayList<>();
 				Purchase_HistoryColumns.add("USERNAME");
@@ -252,8 +253,9 @@ public class Payment_Controller extends Application {
 				ArrayList<String> Purchase_HistoryValues = new ArrayList<>();
 				Purchase_HistoryValues.add(DataBaseController.clientCon.GetUser().getUsername().toString());
 				Purchase_HistoryValues.add(lblDesiredMap_DB.getText().toString());
-				Purchase_HistoryValues.add(lblSubscriptionType_DB.getText().toString());
+				Purchase_HistoryValues.add(lblSubscriptionType_DB.getText().toString() + ", Expires: " + setExpirationTime());
 				
+
 				try {
 					//run insert query
 					DataBaseController.InsertIntoTable("Purchase_History", Purchase_HistoryColumns, Purchase_HistoryValues);
@@ -263,6 +265,80 @@ public class Payment_Controller extends Application {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Function to calculate the city subscription expiration date
+	 * @return String date of expiration
+	 */
+	public String setExpirationTime() {
+		Calendar calendar = Calendar.getInstance();
+		int month = calendar.get(Calendar.MONTH);
+		int year = calendar.get(Calendar.YEAR);
+		int expirationMonth = month;
+		/** Switch case on subscription time **/
+		switch (lblSubscriptionType_DB.getText().toString()){
+		case "1 Month":
+			if (expirationMonth == 11) {
+				year+=1;
+				expirationMonth = 0;
+			}
+			else {
+				expirationMonth += 1;
+			}
+			break;
+		case "2 Months":
+			if (expirationMonth == 10) {
+				year+=1;
+				expirationMonth = 0;
+			}
+			else {
+				expirationMonth += 2;
+			}
+			break;
+		case "3 Months":
+			if (expirationMonth == 9) {
+				year+=1;
+				expirationMonth = 0;
+			}
+			else {
+				expirationMonth += 3;
+			}
+			break;
+		case "4 Months":
+			if (expirationMonth == 8) {
+				year+=1;
+				expirationMonth = 0;
+			}
+			else {
+				expirationMonth += 4;
+			}
+			break;
+		case "5 Months":
+			if (expirationMonth == 7) {
+				year+=1;
+				expirationMonth = 0;
+			}
+			else {
+				expirationMonth += 5;
+			}
+			break;
+		case "6 Months":
+			if (expirationMonth == 6) {
+				year+=1;
+				expirationMonth = 0;
+			}
+			else {
+				expirationMonth += 6;
+			}
+			break;
+			
+		}
+		/** increase month by one (works from 0 to 11)**/
+		 expirationMonth++;
+		 /** ready date before return **/
+		 String expirationDate = year+ "/" + expirationMonth;
+		 return expirationDate;
 	}
 
 	/**

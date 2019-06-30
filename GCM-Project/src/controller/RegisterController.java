@@ -80,12 +80,24 @@ public class RegisterController extends Application {
 
 	}
 
+	
+	/**
+	 * cancel log in stage
+	 * get back to main screen
+	 * @param event
+	 */
 	@FXML
 	void CancelMouseClick(MouseEvent event) {
-		//((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(SceneController.pop());// replace the scene
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
-		//loginStage.setScene(SceneController.pop());// replace the scene
 		stage.close();
+		
+		MainController mainStage = new MainController();
+		try {
+			mainStage.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

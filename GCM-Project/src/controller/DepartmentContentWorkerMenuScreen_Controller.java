@@ -21,9 +21,12 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 
 	@FXML
 	private Button btnBack;
-
+	@FXML
+	private Button AddPlaceToCityBtn;
 	@FXML
 	private Button btnViewCard;
+	@FXML
+	private Button EditTourBtn;
 
 	/**
 	 * @author Ebrahem
@@ -53,11 +56,6 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 	 */
 	@FXML
 	void btnViewCardClick(ActionEvent event) throws Exception {
-		// close current stage
-		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		myStage.close();
-
-		
 		ViewCard_Controller viewCard = new ViewCard_Controller();
 		try {
 			viewCard.start(new Stage());
@@ -66,6 +64,86 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * @author Mohamed
+	 * @param event
+	 * @throws Exception
+	 */
+	@FXML
+	void AddTourToMap(ActionEvent event) throws Exception {
+		// close current stage
+		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		myStage.close();
+
+		AddTourToMapController AddTour = new AddTourToMapController();
+		try {
+			AddTour.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Mohamed
+	 * @param event
+	 * @throws Exception
+	 */
+	@FXML
+	void EditPlace(ActionEvent event) throws Exception {
+		// close current stage
+		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		myStage.close();
+
+		EditPlaceController EditPlace = new EditPlaceController();
+		try {
+			EditPlace.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Mohamed
+	 * @param event
+	 * @throws Exception
+	 */
+	@FXML
+	void AddPlaceToCity(ActionEvent event) throws Exception {
+		// close current stage
+		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		myStage.close();
+
+		AddPlaceToCityController NewPlace = new AddPlaceToCityController();
+		try {
+			NewPlace.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Mohamed
+	 * @param event
+	 * @throws Exception
+	 */
+	@FXML
+	void EditTour(ActionEvent event) throws Exception {
+		// close current stage
+		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		myStage.close();
+
+		EditTourController EditedTour = new EditTourController();
+		try {
+			EditedTour.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

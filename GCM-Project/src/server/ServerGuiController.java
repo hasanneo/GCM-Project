@@ -1,4 +1,4 @@
-package controller;
+package server;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import server.Server;
 
 public class ServerGuiController {
 

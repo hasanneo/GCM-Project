@@ -83,13 +83,13 @@ public class ViewCard_Controller extends Application {
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		thisStage.close();
 
-		MainController mainController = new MainController();
-		try {
-			mainController.OptionsOnActionBtn(event);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		MainController mainController = new MainController();
+//		try {
+//			mainController.OptionsOnActionBtn(event);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	
