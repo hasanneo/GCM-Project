@@ -17,6 +17,11 @@ public class CompanyManagerController extends Application{
 	
 	FXMLLoader fxmlLoader;
 	
+	
+	/**
+	 * @author majdh
+	 * function that push the CompanyManagerMenuScreen.fxml file.
+	 * */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		fxmlLoader = new FXMLLoader();
@@ -31,6 +36,11 @@ public class CompanyManagerController extends Application{
 	}
 	
 	
+	/**
+	 * @author majdh
+	 * function that create new stage to the SetUpdateApproveMapsRatesController class
+	 * and updated the DepartmentContentManagerController.SetORUpdateMapsRates to approve .
+	 * */
 	@FXML
 	void ApproveMapsRate(ActionEvent event) throws Exception {
 		DepartmentContentManagerController.SetORUpdateMapsRates="approve";
@@ -41,6 +51,10 @@ public class CompanyManagerController extends Application{
 		map_rates.start(new Stage());// create the option stage
 	}
 	
+	/**
+	 * @author majdh
+	 * back function.
+	 * */
 	@FXML
 	void CancelMouseClick(MouseEvent event) {
 		// get current stage and close it

@@ -215,12 +215,10 @@ public class MainController extends Application {
 		else {
 			thisStage.close(); //close current stage
 			
-		// DepartmentContentManagerController departmentManager = new DepartmentContentManagerController(); //creating an instance of department worker controller 
 
 		UserMenuScreen_Controller userMenuControllerStage = new UserMenuScreen_Controller(); //create an instance of target class
 			try {
 				
-				//departmentManager.start(new Stage());
 				userMenuControllerStage.start(new Stage()); //invoke start to get the appropriate UI
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

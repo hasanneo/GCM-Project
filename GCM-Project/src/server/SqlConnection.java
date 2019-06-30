@@ -45,6 +45,7 @@ public class SqlConnection {
 				queryResult = ExecuteGetFileQuery(queryArr);
 				break;
 			case "update":
+			case "delete":
 				queryResult = ExecuteUpdateQuery(queryArr);
 				break;
 			default:

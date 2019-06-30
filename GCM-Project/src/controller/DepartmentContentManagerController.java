@@ -32,8 +32,9 @@ public class DepartmentContentManagerController extends Application {
 	
 	public static String SetORUpdateMapsRates="";
 	/**
-	 * 
 	 * @author majdh
+	 * function that create new stage to the SetUpdateApproveMapsRatesController class
+	 * and updated the DepartmentContentManagerController.SetORUpdateMapsRates to set .
 	 * */
 	@FXML 
 	void SetMapsRates(ActionEvent event) throws Exception {
@@ -47,8 +48,9 @@ public class DepartmentContentManagerController extends Application {
 	
 
 	/**
-	 * 
 	 * @author majdh
+	 * function that create new stage to the SetUpdateApproveMapsRatesController class
+	 * and updated the DepartmentContentManagerController.SetORUpdateMapsRates to update .
 	 * */
 	@FXML 
 	void UpdateMapsRates(ActionEvent event) throws Exception {
