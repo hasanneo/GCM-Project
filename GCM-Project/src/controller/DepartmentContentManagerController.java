@@ -103,6 +103,11 @@ public class DepartmentContentManagerController extends Application {
 
 	}
 
+	/**
+	 * handles clicking on purchase map button
+	 * redirects the user to the catalog to select a city to buy its maps
+	 * @param event
+	 */
 	@FXML
 	void PurchaseMapsClick(MouseEvent event) {
 		try {

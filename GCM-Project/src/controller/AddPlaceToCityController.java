@@ -17,11 +17,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author mohamed
+ *
+ *
+ *         class that handles adding a place to a city
+ */
 public class AddPlaceToCityController implements Initializable {
 
 	@FXML
 	private TextField PlaceName;
-	private String Place_Name=null;
+	private String Place_Name = null;
 	@FXML
 	private TextField calssification;
 	private String Calssification;
@@ -40,7 +47,6 @@ public class AddPlaceToCityController implements Initializable {
 
 	@FXML
 	private Button AddBtn;
-	
 
 	ArrayList<String> Columns = new ArrayList<String>();
 	ArrayList<String> PlacesNumberColumn = new ArrayList<String>();
@@ -48,11 +54,10 @@ public class AddPlaceToCityController implements Initializable {
 	ArrayList<String> CityNames = new ArrayList<String>();
 	private int CurrentValueInPlacesValueColumn;
 
-	
 	/**
-	 * Columns: is an array list that have all the columns names that we want to insert data in it
-	 * get all the city names and save them into an array list 
-	 *  
+	 * Columns: is an array list that have all the columns names that we want to
+	 * insert data in it get all the city names and save them into an array list
+	 * 
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -66,15 +71,19 @@ public class AddPlaceToCityController implements Initializable {
 
 	}
 
+	/**
+	 * function that gets the city name from DB
+	 */
 	private void FillCityNames() {
 		if (DataBaseController.clientCon.GetServerObject() != null) {
 			CityNames = DataBaseController.clientCon.getList();
 		} else
 			CityNames = null;
 	}
-/**
- * get the data from the text fields
- */
+
+	/**
+	 * get the data from the text fields
+	 */
 	private void GetDataFromTextFields() {
 
 		Place_Name = this.PlaceName.getText();
@@ -87,10 +96,13 @@ public class AddPlaceToCityController implements Initializable {
 		NewValueFields.add(Accessibility);
 
 	}
-/**
- * insert the data in the place table and update the PLACES_NUMBER column in the city table
- * @param event
- */
+
+	/**
+	 * insert the data in the place table and update the PLACES_NUMBER column in the
+	 * city table
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void InsertData(ActionEvent event) {
 		if (NewValueFields != null)
@@ -98,7 +110,7 @@ public class AddPlaceToCityController implements Initializable {
 
 		GetDataFromTextFields();
 		CityName = this.city_name.getText();
-		
+
 		if (PlaceName.getText() == null || PlaceName.getText().trim().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR, "You have to write the name of the place", ButtonType.OK);
 			alert.setContentText("You have to write the name of the place");
@@ -131,11 +143,14 @@ public class AddPlaceToCityController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-/**
- * this is the cancel button it close the current window and open the previous one
- * @param event
- * @throws Exception
- */
+
+	/**
+	 * this is the cancel button it close the current window and open the previous
+	 * one
+	 * 
+	 * @param event
+	 * @throws Exception
+	 */
 	@FXML
 	void btnClose_ClickEvent(ActionEvent event) throws Exception {
 		// close current stage
@@ -150,11 +165,13 @@ public class AddPlaceToCityController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-/**
- * this is the start function that display the window of this action
- * @param primaryStage
- * @throws Exception
- */
+
+	/**
+	 * this is the start function that display the window of this action
+	 * 
+	 * @param primaryStage
+	 * @throws Exception
+	 */
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/fxml/AddPlaceToCity.fxml"));

@@ -27,7 +27,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 
 /**
+ * Add map to city class
  * 
+ *  class handles adding new maps to city
  *
  * @author Hasan
  * 
@@ -56,6 +58,10 @@ public class AddMapToCityController implements Initializable {
 		this.cityName = city;
 	}
 
+	/**
+	 * run on start
+	 * initialize the maps combobox where you pick which map to add to the city
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.cityLbl.setText(this.cityName);
@@ -91,8 +97,11 @@ public class AddMapToCityController implements Initializable {
 	}
 
 	/**
-	 * @param selectedCity2
-	 * @return
+	 * 
+	 * function that scans teh database for the maps in the selected city
+	 * and returns an arraylist of the maps in the city
+	 * @param selectedCity: city to search for maps inside
+	 * @return city maps
 	 */
 	private Collection<? extends String> GetCityMaps(String selectedCity) {
 		String[] associatedMapsWithCityArr;
@@ -153,6 +162,12 @@ public class AddMapToCityController implements Initializable {
 		}
 	}
 
+	/**
+	 * function to assign the selected map to the desired city
+	 * checks that the map isn't assigned already, in case it wasn't then the 
+	 * map is added
+	 * @param event
+	 */
 	@FXML
 	void AddBtnClick(MouseEvent event) {
 		// check if map is already added to the city
@@ -194,6 +209,11 @@ public class AddMapToCityController implements Initializable {
 		}
 
 	}
+	
+	/**
+	 * button to cancel the operation and return to previous screen
+	 * @param event: holds the current stage to be closed
+	 */
 	@FXML
 	void CancelBtnClick(MouseEvent event) {
 		// get current stage and close it

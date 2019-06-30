@@ -122,6 +122,9 @@ public class MainController extends Application {
 	@FXML
 	private Button refreshBtn;
 
+	/**
+	 * button function that logs the user out of the system
+	 */
 	@FXML
 	void LogOutClick() {
 
@@ -141,6 +144,11 @@ public class MainController extends Application {
 
 	}
 
+	/**
+	 * Search button click event handler
+	 * displays maps search results in a table view
+	 * @param event
+	 */
 	@FXML
 	void searchMaps(ActionEvent event) {
 		int mapscnt;
@@ -252,11 +260,6 @@ public class MainController extends Application {
 
 	}
 
-	@FXML
-	void CatalogClick(MouseEvent event) {
-
-	}
-
 	/**
 	 * @author Ebrahem
 	 * @author Majd
@@ -345,6 +348,12 @@ public class MainController extends Application {
 		}
 	}
 
+	/**
+	 * directs the user to the login stage 
+	 * shows up only when the user is logged out
+	 * @param event
+	 * @throws Exception
+	 */
 	@FXML
 	void LoginClick(ActionEvent event) throws Exception {
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
@@ -362,6 +371,11 @@ public class MainController extends Application {
 		register.start(new Stage());// create the register stage
 	}
 
+	/**
+	 * when user is logged in 
+	 * it shows him the buttons that he/she can interact with
+	 * @param acc
+	 */
 	public void SetUserIsLoggedIn(Account acc) {
 		System.out.println("**************************");
 		System.out.println(acc.getUsername());
@@ -380,6 +394,11 @@ public class MainController extends Application {
 		}
 	}
 
+	/**
+	 * hides the logged in user functions
+	 * non logged in user can't access those functions
+	 * shows log in and register buttons
+	 */
 	public void SetUserLoggedOut() {
 		this.usernamelbl.setVisible(false);
 		this.log_out_btn.setVisible(false);
@@ -390,6 +409,7 @@ public class MainController extends Application {
 		this.notificationLable.setVisible(false);
 	}
 
+	
 	public void start(Stage primaryStage) throws Exception {
 		System.out.println("In the start");
 		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -403,6 +423,11 @@ public class MainController extends Application {
 		primaryStage.show();
 	}
 
+	/**
+	 * loads maps list into an observable list
+	 * @param list
+	 * @return a list of the maps
+	 */
 	public ObservableList<Map> getMapObservableList(ArrayList<Map> list) {
 		ObservableList<Map> mapsList = FXCollections.observableArrayList();
 		for (int i = 0; i < list.size(); i++) {
@@ -411,6 +436,10 @@ public class MainController extends Application {
 		return mapsList;
 	}
 
+	/**
+	 * initializes the columns of the table
+	 * checks for notifications in the notification tab
+	 */
 	@FXML
 	public void initialize() {
 		// set up the columns in the table
@@ -430,6 +459,12 @@ public class MainController extends Application {
 		}
 	}
 
+	/**
+	 * function that handles a mouse click event on notifications button
+	 * loads the appropriate notifications panel depending on the user type 
+	 * either manager or else
+	 * @param event
+	 */
 	@FXML
 	void NotificationsClick(MouseEvent event) {
 		try {
@@ -446,6 +481,9 @@ public class MainController extends Application {
 		}
 	}
 
+	/**
+	 * checks that database for notifications depending on the user
+	 */
 	public void CheckNotifications() {
 		int notificationsCount=0;
 		if (DataBaseController.clientCon.GetUserType().equals("manager")) {
@@ -463,6 +501,11 @@ public class MainController extends Application {
 		this.notificationLable.setText("(" + notificationsCount + ")");
 	}
 
+	/**
+	 * regresh button click
+	 * clicking it will check the system for newly received notifications
+	 * @param event
+	 */
 	@FXML
 	void RefreshClick(MouseEvent event) {
 		CheckNotifications();

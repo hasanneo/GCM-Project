@@ -40,6 +40,9 @@ public class UserNotificationController implements Initializable {
 	private Label notificationContent;
 	ArrayList<UserNotification> notifications;
 
+	/**
+	 * run on start, initialize maplist and create a listener to the list changees
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		SetNotificationsArrayList();// get map list from db
@@ -51,6 +54,7 @@ public class UserNotificationController implements Initializable {
 
 	/**
 	 * 
+	 * function that handles the selection being made
 	 */
 	private void SetClickListener() {
 		mapsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<UserNotification>() {
@@ -62,7 +66,7 @@ public class UserNotificationController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * initialize table columns properties to show user notification
 	 */
 	private void InitShowProperty() {
 		mapsList.setCellFactory(new Callback<ListView<UserNotification>, ListCell<UserNotification>>() {
@@ -111,6 +115,11 @@ public class UserNotificationController implements Initializable {
 		}
 	}
 
+	/**
+	 * function that gets the mouse click event 
+	 * and deletes the selected notification 
+	 * @param event
+	 */
 	@FXML
 	void DeleteNotificationsClick(MouseEvent event) {
 		// DELETE NOTIFICATIONS

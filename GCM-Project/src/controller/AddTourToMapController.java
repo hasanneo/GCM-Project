@@ -23,7 +23,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
+/**
+ * 
+ * @author mohamed
+ *
+ */
 public class AddTourToMapController implements Initializable {
 
 	ArrayList<String> MapName;
@@ -199,7 +203,11 @@ public class AddTourToMapController implements Initializable {
 			
 	}
 
-	
+	/**
+	 *  function to scan for tours that appeared more than once and removes them
+	 * @param list
+	 * @return
+	 */
 	public static <T> ArrayList<T> removeDuplicates(ArrayList<T> list) 
     { 
   

@@ -42,6 +42,10 @@ public class ChooseCityController implements Initializable {
 	ArrayList<String> cityNames;
 	String selectedCity = null;
 
+	/**
+	 * function to initialize: 
+	 * city names and loads them into the combobox
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		DataBaseController.GenericSelectFromTable("city", "CITY_NAME");
@@ -73,6 +77,10 @@ public class ChooseCityController implements Initializable {
 		selectedCity = newValue;
 	}
 
+	/**
+	 * clciking on next  button handleer s
+	 * @param event
+	 */
 	@FXML
 	void NextClick(MouseEvent event) {
 		if (selectedCity == null) {
@@ -91,6 +99,11 @@ public class ChooseCityController implements Initializable {
 		}
 	}
 
+	/**
+	 * function that handles clicking on create city button
+	 * opens up the create city stage
+	 * @param event
+	 */
 	@FXML
 	void CreateCityClick(MouseEvent event) {
 		try {
@@ -103,12 +116,21 @@ public class ChooseCityController implements Initializable {
 		}
 	}
 
+	/**
+	 * function that closes current stage
+	 * @param event
+	 */
 	@FXML
 	void BackClick(MouseEvent event) {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		stage.close();
 	}
 
+	/**
+	 * opens up edit city stage, user must have selected a city first
+	 * if not, an alert box is shown
+	 * @param event
+	 */
 	@FXML
 	void EditClick(MouseEvent event) {
 		if(selectedCity!=null) {

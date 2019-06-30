@@ -15,6 +15,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import main.MainProgram;
 
+/**
+ * 
+ * @author Jawad
+ *
+ */
 public class ConeectToServerController {
 
 	@FXML
@@ -35,6 +40,10 @@ public class ConeectToServerController {
 	private TextField portTxt;
 
 
+	/**
+	 *  function that connects the client to the server
+	 * @param event
+	 */
 	@FXML
 	void connectToServer(ActionEvent event) {
 		boolean portIsOk=true;

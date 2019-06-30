@@ -132,6 +132,11 @@ public class LoginController extends Application {
 			}
 		}
 	}
+	/**
+	 * upon successfull login, redirects the user to the main panel
+	 * @param username
+	 * @throws IOException
+	 */
 	public void LogIntoMain(String username) throws IOException {
 		Account loggedInAccount=DataBaseController.clientCon.GetUserAccount();
 		loginStage = (Stage) ((Node) cancelBtn).getScene().getWindow();// get stage
@@ -146,6 +151,9 @@ public class LoginController extends Application {
 		}
 	}
 
+	/**
+	 * start function to load login stage
+	 */
 	@Override
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
@@ -161,6 +169,10 @@ public class LoginController extends Application {
 		stage.show();
 
 	}
+	/**
+	 * displays an alert box, depending on the actions the user makes
+	 * @param str: holds the message to be dealt with by the function
+	 */
 	public void LoginDialog(String str) {
 		if(str.equals("fail")) {
 			Alert alert = new Alert(AlertType.ERROR, "Incorrect Password or username", ButtonType.OK);

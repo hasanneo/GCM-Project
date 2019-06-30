@@ -57,6 +57,12 @@ public class ControllersAuxiliaryMethods {
 		return maps;
 	}
 
+	/**
+	 * 
+	 * @param rowsArray
+	 * @param tableColumnsNumber
+	 * @return arraylist of city maps 
+	 */
 	public static ArrayList<CityMap> GetCityMapsRowsAsList(String[] rowsArray, int tableColumnsNumber) {
 		int row = 0;
 		int tableColumns = tableColumnsNumber;
@@ -76,6 +82,14 @@ public class ControllersAuxiliaryMethods {
 		return rows;
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param tableName: table to search for maps
+	 * @param type: map type
+	 * @param searchText: value to look by
+	 * @return
+	 */
 	public static ArrayList<Map> GetMapRowsAsList(String tableName, String type, String searchText) {
 		// get map list from db
 		int i1, i2, i3, i4;
@@ -129,6 +143,10 @@ public class ControllersAuxiliaryMethods {
 		return rows;
 	}
 
+	/**
+	 * 
+	 * @return the map chosen at the combobox
+	 */
 	public static Map getSelectedMapFromCombo() {
 		return selectedMapFromCombo;
 	}
@@ -171,7 +189,11 @@ public class ControllersAuxiliaryMethods {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param cityName: which city to fetch details
+	 * @return city description
+	 */
 	public static City getcitydetails(String cityName)
 	{
 		City city=null;
@@ -188,6 +210,11 @@ public class ControllersAuxiliaryMethods {
 		
 	}
 	
+	/**
+	 * 
+	 * @param PlaceName: place to get from city
+	 * @return: place in city
+	 */
 	public static String getPlaceCityName(String PlaceName)
 	{
 		String cityName = null;

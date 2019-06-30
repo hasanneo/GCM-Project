@@ -178,10 +178,11 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 		}
 	}
 
-	@FXML
-	void ViewCatalog(MouseEvent event) {
-
-	}
+	/**
+	 * handles clicking on purchase map button
+	 * redirects the user to the catalog to select a city to buy its maps
+	 * @param event
+	 */
 
 	@FXML
 	void PurchaseMapsClick(MouseEvent event) {
@@ -193,6 +194,10 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 		}
 	}
 
+	/**
+	 * redirect the user to add map to city
+	 * @param event
+	 */
 	@FXML
 	void AddMapToCityClick(MouseEvent event) {
 		try {
@@ -202,6 +207,11 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * redirects the user to the view maps screen
+	 * @param event
+	 */
 	 @FXML
 	    void ViewMapsClick(MouseEvent event) {
 		 	try {
