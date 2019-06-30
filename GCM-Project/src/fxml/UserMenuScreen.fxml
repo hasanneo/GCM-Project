@@ -8,9 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.SVGPath?>
 
+
 <AnchorPane prefHeight="349.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserMenuScreen_Controller">
    <children>
       <Button layoutX="329.0" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#OpenCatalogClick" prefHeight="90.0" prefWidth="90.0">
+
          <effect>
             <SepiaTone />
          </effect>

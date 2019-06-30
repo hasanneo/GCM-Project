@@ -3,9 +3,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
+
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChooseCityController">
 	<children>
@@ -22,5 +25,6 @@
          </graphic>
       </Button>
       <Button fx:id="editBtn" disable="true" layoutX="417.0" layoutY="432.0" mnemonicParsing="false" onMouseClicked="#EditClick" prefHeight="25.0" prefWidth="119.0" styleClass="ripple-button" text="EDIT MAPS" />
+
 	</children>
 </AnchorPane>

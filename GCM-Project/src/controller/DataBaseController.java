@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import client.ClientConnection;
@@ -16,6 +17,7 @@ import entity.PlaceInMap;
  * A class defining the queries that will be sent to the server, and other data
  * base uses and set up.
  * 
+ * @author majdh
  * @author Hasan
  * @date 6/17/2019
  *
@@ -72,13 +74,96 @@ public class DataBaseController {
 		queryArr.add("insert");
 		clientCon.ExecuteQuery(queryArr);
 	}
+	
 
-	// majd
-	public static void InsertReportsToDB(String cityName, int reportTableMapsNumber, int reportTablSubscriptions,
-			int reportTablSubscriptionRenew, int reportTablViews, int reportTablDownloads,
-			int reportTablOneTimePurchase) {
+	/**
+	 * @author majdh
+	 * @param cityName=city name 
+	 * @param DateFrom=the first selected date.
+	 * @param DateTo=the second selected date. 
+	 * 
+	 * */
+	public static void SelectReportDataToCombobox(String cityName ,LocalDate DateFrom ,LocalDate DateTo){
 		ArrayList<String> queryArr = new ArrayList<String>();
-		String query = "INSERT INTO `gcm`.`viewreportstable` (`CITY_NAME`, `MapsNum`, `SubscriptionsNum`, `SubscriptionRenewNum`, `ViewsNum`, `DownloadsNum`, `OneTimePurchase`) VALUES(?,?,?,?,?,?,?)";
+		try {
+		                  //SELECT * FROM viewreportstable WHERE CITY_NAME='akko' AND (ReportDate BETWEEN '2019-06-1' AND '2020-09-29');
+			String query = "SELECT * FROM viewreportstable WHERE CITY_NAME='"+cityName+"' AND (ReportDate BETWEEN '"+DateFrom+"' AND '"+DateTo+"');";
+			queryArr.add(query);
+			queryArr.add("select");
+			clientCon.ExecuteQuery(queryArr);
+		} catch (Exception e) {
+			System.out.println("Exception thrown at Select from table:" + e.getMessage() + e.getClass().getName());
+		}
+		
+	}
+	
+	
+	/**
+	 * @author majdh
+	 * @param DateFrom=the first selected date.
+	 * @param DateTo=the second selected date. 
+	 * 
+	 * */
+	public static void SelectReportToAllCities(LocalDate DateFrom ,LocalDate DateTo){
+		ArrayList<String> queryArr = new ArrayList<String>();
+		try {             //SELECT * FROM viewreportstable WHERE (ReportDate BETWEEN '2019-06-1   ' AND '2020-09-29');
+			String query = "SELECT * FROM viewreportstable WHERE (ReportDate BETWEEN '"+DateFrom+"' AND '"+DateTo+"');";
+			queryArr.add(query);
+			queryArr.add("select");
+			clientCon.ExecuteQuery(queryArr);
+		} catch (Exception e) {
+			System.out.println("Exception thrown at Select from table:" + e.getMessage() + e.getClass().getName());
+		}
+	}
+	/**
+	 * @author majdh
+	 * simple function to know the date that defined in the DB.
+	 * 
+	 * */
+	public static void KnowDate(){
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query ="INSERT INTO `gcm`.`datet` (`ReportDate`) VALUES (current_date());";
+		queryArr.add(query);
+		queryArr.add("insert");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	/**
+	 * Delete a row from table.
+	 * 
+	 * @param tableName     -name of the table in the DB.
+	 * @param columnName    -name of the column that you compare by.
+	 * @param columnCompare -the compare value that is given
+	 * @author Hasan
+	 */
+	public static void DeleteRow(String tableName, String columnName, String columnCompare) {
+		String query = "DELETE FROM " + tableName + " WHERE " + columnName + "='" + columnCompare + "'";
+		ArrayList<String> queryArr = new ArrayList<String>();
+		queryArr.add(query);
+		queryArr.add("delete");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	/**
+	 * 
+	 * 
+	 * @author majdh
+	 * @param cityName=city Name.
+	 * @param reportTableMapsNumber=Maps Number.
+	 * @param reportTablSubscriptions=Subscriptions Number.
+	 * @param reportTablSubscriptionRenew=Subscription Renew Number.
+	 * @param reportTablViews=Views Number.
+	 * @param reportTablDownloads=Downloads Number.
+	 * @param reportTablOneTimePurchase=One Time Purchase Number.
+	 * 
+	 * this function inserts the values to the viewreportstable table. 
+	 * 
+	 * */
+	public static void InsertReportsToDB(String cityName, int reportTableMapsNumber, 
+			            int reportTablSubscriptions,int reportTablSubscriptionRenew,
+			            int reportTablViews, int reportTablDownloads,int reportTablOneTimePurchase)
+	{
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "INSERT INTO `gcm`.`viewreportstable` (`CITY_NAME`, `MapsNum`, `SubscriptionsNum`, `SubscriptionRenewNum`, `ViewsNum`, `DownloadsNum`, `OneTimePurchase`,`ReportDate`) VALUES(?,?,?,?,?,?,?,current_date())";
 		queryArr.add(cityName);
 		queryArr.add(Integer.toString(reportTableMapsNumber));
 		queryArr.add(Integer.toString(reportTablSubscriptions));
@@ -91,36 +176,80 @@ public class DataBaseController {
 		clientCon.ExecuteQuery(queryArr);
 	}
 
+
+	/**
+	 * @author majdh
+	 * @param cityName=city name  
+	 * @param Onetimepurchase = the One time purchase price. 
+	 * @param SubscriptionPurchase = the Subscription Purchase price. 
+	 * @param status = the price status.
+	 * 
+	 * Department content manager inserts & updates the values in the city_maps_rate table.
+	 * Company manager decides the price status. 
+	 * 
+	 * 
+	 * 
+	 * this function is to the Update process.
+	 * 
+	 * */
+	public static void UpdateCityMapsRates(String CityName,String Onetimepurchase,String SubscriptionPurchase,String status) {
+		//UPDATE `gcm`.`city_maps_rate` SET `OneTimePurchase_price` = '60', `SubsciptionPurchase_price` = '60', `status` = 'waiting' WHERE (`CITY_NAME` = 'Sekhnin');
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "UPDATE `gcm`.`city_maps_rate` SET `OneTimePurchase_price` = '"+Onetimepurchase+"', `SubsciptionPurchase_price` = '"+SubscriptionPurchase+"',`status` = '"+status+"' WHERE (`CITY_NAME` = '"+CityName+"')";
+		queryArr.add(query);
+     	queryArr.add("update");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	
+	/**
+	 * @author majdh
+	 * @param cityName=city name  
+	 * @param Onetimepurchase = the One time purchase price. 
+	 * @param SubscriptionPurchase = the Subscription Purchase price. 
+	 * @param status = the price status.
+	 * 
+	 * Department content manager inserts & updates the values in the city_maps_rate table.
+	 * Company manager decides the price status. 
+	 * 
+	 * 
+	 * 
+	 * this function is to the Insert process.
+	 * 
+	 * */
+	public static void InsertCityMapsRates(String CityName,String Onetimepurchase,String SubscriptionPurchase,String status) {
+		//INSERT INTO `gcm`.`city_maps_rate` (`CITY_NAME`, `OneTimePurchase_price`, `SubsciptionPurchase_price`, `status`) VALUES ('Nazerth', '10', '10', 'disapprove');
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query = "INSERT INTO `gcm`.`city_maps_rate` (`CITY_NAME`, `OneTimePurchase_price`, `SubsciptionPurchase_price`, `status`) VALUES(?,?,?,?)";
+		queryArr.add(CityName);
+		queryArr.add(Onetimepurchase);
+		queryArr.add(SubscriptionPurchase);
+		queryArr.add(status);
+		queryArr.add(query);
+		queryArr.add("insert");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	
+	
+
 	/**
 	 * 
 	 * @author majd
 	 * 
 	 * 
-	 *         Increment with value 1 in "viewreportstable" table , this function
-	 *         that takes column and city names and updated the wanted cell on DB.
+	 * Increment with value 1 in "viewreportstable" table ,
+	 * this function that takes column name,city names,date
+	 * and updated the wanted cell on DB.
+	 *     
 	 * 
-	 */
-
-	public static void CityIncFieldsInDB(String fName, String CityName) {
-		ArrayList<String> queryArr = new ArrayList<String>();
-		String query = "UPDATE viewreportstable SET " + fName + "=" + fName + "+ 1 WHERE CITY_NAME='" + CityName + "';";
-		queryArr.add(query);
-		queryArr.add("update");
-		clientCon.ExecuteQuery(queryArr);
-	}
-	/**
-	 * @author mohamed
-	 * @param TableName the name of the table we want to update
-	 * @param ColumnName the name of the column that we want to make changes on it
-	 * @param NewValue   the new value that we want to put(the updated data)
-	 * @param KeyCol     the key column that we choose the cell according to it
-	 * @param NameOfKeyColumn   the name of the key column
-	 */
-	public static void updatefield(String TableName, String ColumnName, int NewValue,String KeyCol,String NameOfKeyColumn ) {
-		ArrayList<String> queryArr = new ArrayList<String>();
-		String query = "UPDATE " + TableName+ " SET " + ColumnName + " = " + NewValue + " WHERE " + KeyCol + " = '"+ NameOfKeyColumn+"';";
-		queryArr.add(query);
-		queryArr.add("update");
+	 * */
+	public static void CityIncFieldsInDB(String fName,String CityName,String Date) {
+		
+		ArrayList<String> queryArr =new ArrayList<String>();
+		String query1="UPDATE viewreportstable SET "+fName+"="+ fName +"+ 1 WHERE (CITY_NAME='"+CityName+"')AND(ReportDate='"+Date+"');";
+		queryArr.add(query1);
+     	queryArr.add("update");
 		clientCon.ExecuteQuery(queryArr);
 	}
 	
