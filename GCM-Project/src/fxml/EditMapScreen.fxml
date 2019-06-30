@@ -16,9 +16,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MapEditController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="858.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MapEditController">
 	<children>
-		<VBox prefHeight="507.0" prefWidth="600.0">
+		<VBox layoutY="1.0" prefHeight="573.0" prefWidth="858.0">
 			<children>
 				<HBox prefHeight="156.0" prefWidth="600.0">
 					<children>
@@ -30,7 +30,7 @@
 						<Pane prefHeight="77.0" prefWidth="294.0">
 							<children>
 								<Button id="addSiteBtn" fx:id="addSiteBtn" layoutX="218.0" layoutY="27.0" mnemonicParsing="false" onAction="#addPlace" text="Add" />
-								<ComboBox id="combo" fx:id="combo" layoutX="40.0" layoutY="27.0" prefWidth="150.0" promptText="Choose Place " />
+								<ComboBox id="combo" fx:id="combo" layoutX="40.0" layoutY="27.0" prefWidth="150.0" promptText="Choose Place " styleClass="combo-box"/>
 								<Button id="removeBtn" fx:id="removeBtn" layoutX="40.0" layoutY="72.0" mnemonicParsing="false" onAction="#removeSite" text="Remove site" visible="false" />
 								<Button id="changeBtn" fx:id="changeBtn" layoutX="180.0" layoutY="72.0" mnemonicParsing="false" onAction="#changeCordinates" text="change cordinates" visible="false" />
 								<Button id="saveCordBtn" fx:id="saveCordBtn" layoutX="280.0" layoutY="72.0" mnemonicParsing="false" onAction="#saveNewCordinates" text="Save change" visible="false" />
@@ -38,10 +38,10 @@
 						</Pane>
 					</children>
 				</HBox>
-				<SplitPane dividerPositions="0.31605351170568563" prefHeight="406.0" prefWidth="600.0">
+				<SplitPane dividerPositions="0.31605351170568563" prefHeight="368.0" prefWidth="836.0">
 					<items>
-						<ListView id="placesList" fx:id="placesList" onMouseClicked="#veiwbuttons" prefHeight="400.0" prefWidth="200.0" />
-						<ScrollPane id="scrollPane" fx:id="scrollPane" prefHeight="406.0" prefWidth="406.0">
+						<ListView id="placesList" fx:id="placesList" onMouseClicked="#veiwbuttons" prefHeight="400.0" prefWidth="200.0" styleClass="list-view"/>
+						<ScrollPane id="scrollPane" fx:id="scrollPane" prefHeight="425.0" prefWidth="555.0" styleClass="scroll-pane">
 							<content>
 								<Pane id="p1" fx:id="p1">
 									<children>
@@ -78,8 +78,8 @@
 				</SplitPane>
 				<Pane prefHeight="66.0" prefWidth="600.0">
 					<children>
-						<Button id="cancelBtn" fx:id="cancelBtn" layoutX="419.0" layoutY="10.0" mnemonicParsing="false" onAction="#cancel" text="cancel" />
-						<Button id="saveBtn" fx:id="saveBtn" layoutX="131.0" layoutY="10.0" mnemonicParsing="false" onAction="#save" text="save" />
+						<Button id="cancelBtn" fx:id="cancelBtn" layoutX="739.0" layoutY="18.0" mnemonicParsing="false" onAction="#cancel" text="cancel" />
+						<Button id="saveBtn" fx:id="saveBtn" layoutX="640.0" layoutY="18.0" mnemonicParsing="false" onAction="#save" text="save" />
 					</children>
 				</Pane>
 			</children>

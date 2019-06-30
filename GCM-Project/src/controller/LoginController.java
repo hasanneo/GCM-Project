@@ -136,15 +136,14 @@ public class LoginController extends Application {
 		Account loggedInAccount=DataBaseController.clientCon.GetUserAccount();
 		loginStage = (Stage) ((Node) cancelBtn).getScene().getWindow();// get stage
 		loginStage.close();// close login stage
-		FXMLLoader fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(getClass().getResource("/fxml/MainScreen.fxml"));
-		Parent root = fxmlLoader.load();
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
-		MainProgram.stage.setTitle("GCM");
-		MainProgram.stage.setScene(scene);
-		MainProgram.stage.setResizable(false);
-		MainProgram.stage.setOpacity(1);
+		
+		try {
+			MainController mainStage = new MainController();
+			mainStage.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

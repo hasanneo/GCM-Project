@@ -16,21 +16,6 @@
             <Image url="@../Images/Background.jpg" />
          </image>
       </ImageView>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="84.0" layoutY="271.0" mnemonicParsing="false" onMousePressed="#ViewCatalog" prefHeight="90.0" prefWidth="90.0">
-         <effect>
-            <SepiaTone />
-         </effect>
-         <graphic>
-            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/catalogue.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <tooltip>
-            <Tooltip text="View maps catalog" />
-         </tooltip>
-      </Button>
       <Button fx:id="btnBack" contentDisplay="GRAPHIC_ONLY" layoutX="31.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnBackClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
@@ -46,7 +31,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="387.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#PurchaseMapsClick" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="321.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#PurchaseMapsClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -61,7 +46,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="543.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#ViewMapsClick" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="484.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#ViewMapsClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -75,7 +60,7 @@
                </image></ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnViewCard" contentDisplay="GRAPHIC_ONLY" layoutX="225.0" layoutY="271.0" mnemonicParsing="false" onAction="#btnViewCardClick" prefHeight="90.0" prefWidth="90.0">
+      <Button fx:id="btnViewCard" contentDisplay="GRAPHIC_ONLY" layoutX="151.0" layoutY="271.0" mnemonicParsing="false" onAction="#btnViewCardClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -86,7 +71,8 @@
             <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/User%20card.png" />
-               </image></ImageView>
+               </image>
+            </ImageView>
          </graphic>
       </Button>
       <Button contentDisplay="GRAPHIC_ONLY" layoutX="682.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#EditMapClick" prefHeight="90.0" prefWidth="90.0" visible="false">
@@ -104,7 +90,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="682.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#AddMapToCityClick" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="637.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#AddMapToCityClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>

@@ -27,6 +27,7 @@ public class EditMapLoader extends Application{
 		fxmlLoader.setLocation(getClass().getResource("/fxml/EditMapScreen.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		stage.setTitle("Edit map");
 		stage.setScene(scene);
 		stage.setResizable(false);
