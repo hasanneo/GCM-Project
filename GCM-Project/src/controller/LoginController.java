@@ -120,7 +120,7 @@ public class LoginController extends Application {
 		fxmlLoader.setLocation(getClass().getResource("/fxml/MainScreen.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/css/svg.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		MainProgram.stage.setTitle("GCM");
 		MainProgram.stage.setScene(scene);
 		MainProgram.stage.setResizable(false);

@@ -290,6 +290,7 @@ public class MainController extends Application {
 			// in case the user type was user -> display user options
 			if (UserType.equals("user")) {
 				thisStage.close(); // close current stage
+				
 				RegisteredUserMenuScreen_Controller registeredUserScreen = new RegisteredUserMenuScreen_Controller(); // creating
 				// and
 				// instance
@@ -341,7 +342,7 @@ public class MainController extends Application {
 		// if non of the above conditions were met then the user is an unregistered
 		// user, is redirected to the appropriate window
 		else {
-			thisStage.close(); // close current stage
+			//thisStage.close(); // close current stage
 			UserMenuScreen_Controller userMenuControllerStage = new UserMenuScreen_Controller(); // create an instance
 			// of target class
 			try {
@@ -410,7 +411,8 @@ public class MainController extends Application {
 		fxmlLoader.setLocation(getClass().getResource("/fxml/MainScreen.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/css/svg.css").toExternalForm());
+		//scene.getStylesheets().add(getClass().getResource("/css/svg.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		primaryStage.setTitle("GCM");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);

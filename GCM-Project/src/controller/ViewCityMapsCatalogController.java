@@ -95,6 +95,9 @@ public class ViewCityMapsCatalogController implements Initializable {
 	}
 
 	public void InitComboBox() {
+		if(!DataBaseController.clientCon.isLoggedIn()) {
+			purchaseBtn.setDisable(true);
+		}
 		GetCitiesFromDB();
 		ObservableList<String> options = FXCollections.observableArrayList(cityNames);
 		cityCombo.setItems(options);
@@ -106,9 +109,6 @@ public class ViewCityMapsCatalogController implements Initializable {
 	 */
 	private void GetCitiesFromDB() {
 		// TODO Auto-generated method stub
-		//DataBaseController.SelectAllRowsFromTable("city");
-		//String[] cityArray = DataBaseController.clientCon.GetObjectAsStringArray();// get as an array
-		//GetCityNamesFromRows(cityArray, 4);
 		cityNames = new ArrayList<String>();
 		ArrayList<String> columnsToSelect=new ArrayList<String>();
 		columnsToSelect.add("CITY_NAME");

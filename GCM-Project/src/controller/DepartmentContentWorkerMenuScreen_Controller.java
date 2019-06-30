@@ -127,7 +127,8 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 	 @FXML
 	    void ViewMapsClick(MouseEvent event) {
 		 	try {
-				new PurchasedMapsLoader().start(new Stage());
+				//new PurchasedMapsLoader().start(new Stage());
+		 		new ViewAllMapsLoader(null).start(new Stage());
 			} catch (Exception e) {
 				System.out.println("ERROR AT VIEW MAPS>>"+e.getMessage());
 				// TODO Auto-generated catch block

@@ -18,27 +18,12 @@
             <Image url="@../Images/Background.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="22.0" layoutY="40.0" prefHeight="44.0" prefWidth="440.0" text="Department Content Manager" textFill="#e00b0b">
+      <Label layoutX="236.0" layoutY="173.0" prefHeight="44.0" prefWidth="440.0" text="Department Content Manager" textFill="#e00b0b">
          <font>
             <Font name="Comic Sans MS Bold" size="24.0" />
          </font>
       </Label>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="40.0" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#ViewCatalog" prefHeight="90.0" prefWidth="90.0">
-         <effect>
-            <SepiaTone />
-         </effect>
-         <graphic>
-            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                   <Image url="@../Images/catalogue.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <tooltip>
-            <Tooltip text="View maps catalog" />
-         </tooltip>
-      </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="209.0" layoutY="132.0" mnemonicParsing="false" onMousePressed="#PurchaseMapsClick" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="37.0" layoutY="263.0" mnemonicParsing="false" onMousePressed="#PurchaseMapsClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -53,7 +38,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnBack" contentDisplay="GRAPHIC_ONLY" layoutX="40.0" layoutY="519.0" mnemonicParsing="false" onAction="#btnBackClick" prefHeight="90.0" prefWidth="90.0">
+      <Button fx:id="btnBack" contentDisplay="GRAPHIC_ONLY" layoutX="22.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBackClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -68,7 +53,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="371.0" layoutY="132.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="590.0" layoutY="263.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -82,7 +67,7 @@
                </image></ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnViewCard" contentDisplay="GRAPHIC_ONLY" layoutX="547.0" layoutY="132.0" mnemonicParsing="false" onAction="#btnViewCardClick" prefHeight="90.0" prefWidth="90.0">
+      <Button fx:id="btnViewCard" contentDisplay="GRAPHIC_ONLY" layoutX="456.0" layoutY="263.0" mnemonicParsing="false" onAction="#btnViewCardClick" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -97,7 +82,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="713.0" layoutY="132.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="719.0" layoutY="263.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -112,7 +97,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="209.0" layoutY="330.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="307.0" layoutY="263.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -127,7 +112,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="View_Report_btn" contentDisplay="GRAPHIC_ONLY" layoutX="40.0" layoutY="330.0" mnemonicParsing="false" onAction="#OnActionViewReports" prefHeight="90.0" prefWidth="90.0">
+      <Button fx:id="View_Report_btn" contentDisplay="GRAPHIC_ONLY" layoutX="172.0" layoutY="263.0" mnemonicParsing="false" onAction="#OnActionViewReports" prefHeight="90.0" prefWidth="90.0">
          <effect>
             <SepiaTone />
          </effect>
@@ -138,51 +123,6 @@
             <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/View%20reports.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="371.0" layoutY="330.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
-         <effect>
-            <SepiaTone />
-         </effect>
-         <tooltip>
-            <Tooltip text="Manage data archive" />
-         </tooltip>
-         <graphic>
-            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/Manage%20data%20archive.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="547.0" layoutY="330.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
-         <effect>
-            <SepiaTone />
-         </effect>
-         <tooltip>
-            <Tooltip text="Approve map version" />
-         </tooltip>
-         <graphic>
-            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/Approve%20map%20version.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button contentDisplay="GRAPHIC_ONLY" layoutX="713.0" layoutY="330.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="90.0">
-         <effect>
-            <SepiaTone />
-         </effect>
-         <tooltip>
-            <Tooltip text="Approve map edits" />
-         </tooltip>
-         <graphic>
-            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/Approve%20map%20edits.png" />
                </image>
             </ImageView>
          </graphic>
