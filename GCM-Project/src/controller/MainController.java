@@ -263,9 +263,13 @@ public class MainController extends Application {
 	 * @param event
 	 * @throws Exception in case of failed stage opening
 	 * 
-	 *                   Controls to which options menu the user is redirected
-	 *                   depending on user type: * User * Registered User * Worker *
-	 *                   Manager
+	 * Controls to which options menu the user is redirected depending on user type:
+	 * * User
+	 * * Registered User
+	 * * Worker
+	 * * Manager
+	 * *Company Manager
+
 	 */
 	@FXML
 	void OptionsOnActionBtn(ActionEvent event) throws Exception {
@@ -345,7 +349,6 @@ public class MainController extends Application {
 			}
 		}
 	}
-
 	@FXML
 	void LoginClick(ActionEvent event) throws Exception {
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
