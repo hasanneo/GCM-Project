@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import fxmlLoaders.ChooseCityLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
@@ -61,7 +62,8 @@ public class CreateNewCityController {
 	@FXML
 	void CancelClick(MouseEvent event) {
 		try {
-			new ChooseCityLoader().start(new Stage());
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+			stage.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

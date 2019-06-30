@@ -129,21 +129,6 @@ public class DataBaseController {
 	}
 	
 	/**
-	 * Delete a row from table.
-	 * 
-	 * @param tableName     -name of the table in the DB.
-	 * @param columnName    -name of the column that you compare by.
-	 * @param columnCompare -the compare value that is given
-	 * @author Hasan
-	 */
-	public static void DeleteRow(String tableName, String columnName, String columnCompare) {
-		String query = "DELETE FROM " + tableName + " WHERE " + columnName + "='" + columnCompare + "'";
-		ArrayList<String> queryArr = new ArrayList<String>();
-		queryArr.add(query);
-		queryArr.add("delete");
-		clientCon.ExecuteQuery(queryArr);
-	}
-	/**
 	 * 
 	 * 
 	 * @author majdh
@@ -647,4 +632,21 @@ public class DataBaseController {
 		queryArr.add(query);
 		queryArr.add("delete");
 	}
+	/**
+	 * @author mohamed
+	 * @param TableName the name of the table we want to update
+	 * @param ColumnName the name of the column that we want to make changes on it
+	 * @param NewValue   the new value that we want to put(the updated data)
+	 * @param KeyCol     the key column that we choose the cell according to it
+	 * @param NameOfKeyColumn   the name of the key column
+	 */
+	public static void updatefield(String TableName, String ColumnName, int NewValue,String KeyCol,String NameOfKeyColumn ) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query = "UPDATE " + TableName+ " SET " + ColumnName + " = " + NewValue + " WHERE " + KeyCol + " = '"+ NameOfKeyColumn+"';";
+		queryArr.add(query);
+		queryArr.add("update");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+
 }
