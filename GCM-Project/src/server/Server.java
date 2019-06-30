@@ -7,9 +7,6 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.URL;
 import java.util.Properties;
-
-import com.sun.javaws.exceptions.ExitException;
-
 import controller.DataBaseController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

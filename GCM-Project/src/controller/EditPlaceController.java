@@ -18,6 +18,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author mohamed
+ *	Edit place controller class
+ */
 public class EditPlaceController implements Initializable {
 
 	@FXML
@@ -48,7 +53,11 @@ public class EditPlaceController implements Initializable {
 	ArrayList<String> NewValueFields = new ArrayList<String>();//arraylist to store the data from the text fields
 	ArrayList<String> Columns = new ArrayList<String>();
 	ArrayList<String> PlaceNames=new ArrayList<String>();
-	
+	ArrayList<String> CityNames=new ArrayList<String>();
+	/**
+	 * initialize the array list that called Columns which contains the names of the columns that we need to update data into it 
+	 * we select and get the data from the table place and save this data into an array list which called PlaceNames 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Columns.add("CLASSIFICATION");
@@ -58,20 +67,38 @@ public class EditPlaceController implements Initializable {
 		DataBaseController.GenericSelectFromTable("places", "NAME");
 		FillPlaceNames();
 		comboBox.getItems().addAll(PlaceNames);
+		DataBaseController.GenericSelectFromTable("city", "CITY_NAME");
+		FillCityNames();
 
 	}
-
+/**
+ * this function works when we click on update button and it checks if there is a place that has been selected or not if not it send a suitable alert otherwise it update the data in the places table 
+ * @param event
+ */
 	@FXML
 	void UpdateData(ActionEvent event) {
+		if(NewValueFields!=null)
+			NewValueFields.clear();
 		GetDataFromTextFields();
+		CityName = this.city_name.getText();
 		if(comboBox.getValue()==null) {
 			Alert alert = new Alert(AlertType.ERROR, "You have to select one of the places", ButtonType.OK);
 			alert.setContentText("You have to select one of the places");
 			alert.showAndWait();
 		}
-		else {
-		DataBaseController.GenericUpdateTableRow("places", Columns, NewValueFields, "NAME", comboBox.getValue());
+		else if((CityNames.contains(CityName))==false) {
+			Alert alert = new Alert(AlertType.ERROR, "this city is not exist", ButtonType.OK);
+			alert.setContentText("This City Is Not Exists Please Choose Another City");
+			alert.showAndWait();
 		}
+		else {
+		NewValueFields.add(CityName);
+		DataBaseController.GenericUpdateTableRow("places", Columns, NewValueFields, "NAME", comboBox.getValue());
+		Alert alert = new Alert(AlertType.INFORMATION, "Updated Successfully", ButtonType.OK);
+		alert.setContentText("Updated Successfully");
+		alert.showAndWait();
+		}
+		
 	}
 
 	private void FillPlaceNames() {
@@ -80,7 +107,17 @@ public class EditPlaceController implements Initializable {
 		} else
 			PlaceNames = null;
 	}
+	
+	private void FillCityNames() {
+		if (DataBaseController.clientCon.GetServerObject() != null) {
+			CityNames = DataBaseController.clientCon.getList();
+		} else
+			CityNames = null;
+	}
 
+	/**
+	 * function that get the data from the text filed in the gui
+	 */
 	private void GetDataFromTextFields() {
 
 		Calssification = this.calssification.getText();
@@ -89,12 +126,14 @@ public class EditPlaceController implements Initializable {
 		NewValueFields.add(Description);
 		Accessibility = this.accessibility.getText();
 		NewValueFields.add(Accessibility);
-		CityName = this.city_name.getText();
-		NewValueFields.add(CityName);
-
+		
 	}
 	
-	
+	/**
+	 * cancel button to close the current window and open the previous one
+	 * @param event
+	 * @throws Exception
+	 */
 	@FXML
     void btnClose_ClickEvent(ActionEvent event) throws Exception {
 		// close current stage

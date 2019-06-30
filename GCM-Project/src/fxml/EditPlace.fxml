@@ -10,13 +10,13 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditPlaceController">
    <children>
       <Label layoutX="95.0" layoutY="150.0" prefHeight="17.0" prefWidth="88.0" text="Classification :" />
-      <Label layoutX="96.0" layoutY="183.0" prefHeight="17.0" prefWidth="68.0" text="Description :" />
-      <Label layoutX="99.0" layoutY="230.0" text="Accessibility :" />
-      <Label layoutX="97.0" layoutY="265.0" prefHeight="17.0" prefWidth="68.0" text="City Name :" />
+      <Label layoutX="99.0" layoutY="183.0" prefHeight="17.0" prefWidth="68.0" text="Description :" />
+      <Label layoutX="99.0" layoutY="223.0" text="Accessibility :" />
+      <Label layoutX="105.0" layoutY="263.0" prefHeight="17.0" prefWidth="68.0" text="City Name :" />
       <TextField fx:id="calssification" layoutX="183.0" layoutY="146.0" />
-      <TextField fx:id="description" layoutX="183.0" layoutY="186.0" />
-      <TextField fx:id="accessibility" layoutX="183.0" layoutY="226.0" />
-      <TextField fx:id="city_name" layoutX="183.0" layoutY="265.0" />
+      <TextField fx:id="description" layoutX="183.0" layoutY="181.0" />
+      <TextField fx:id="accessibility" layoutX="183.0" layoutY="220.0" />
+      <TextField fx:id="city_name" layoutX="183.0" layoutY="261.0" />
       <Label layoutX="203.0" layoutY="45.0" prefHeight="17.0" prefWidth="110.0" text="Edit Place">
          <font>
             <Font name="System Bold" size="18.0" />
