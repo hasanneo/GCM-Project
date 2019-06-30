@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.swing.Action;
 
-import com.sun.deploy.uitoolkit.impl.fx.ui.FXConsole;
 
 import javafx.application.Application;
 import javafx.beans.property.StringProperty;
@@ -24,7 +23,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.PromptData;
 import javafx.stage.Stage;
-import sun.util.resources.cldr.aa.CalendarData_aa_DJ;
 
 public class Payment_Controller extends Application {
 
