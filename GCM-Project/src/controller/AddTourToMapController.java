@@ -202,6 +202,8 @@ public class AddTourToMapController implements Initializable {
 		}
 			
 	}
+	
+	
 
 	/**
 	 *  function to scan for tours that appeared more than once and removes them

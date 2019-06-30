@@ -259,8 +259,8 @@
 
 .icon-svg{
   -fx-fill:-color-primary;
-  -fx-scale-x:3;
-  -fx-scale-y:3;
+  -fx-scale-x:5;
+  -fx-scale-y:5;
 }
 .mybutton{
 	

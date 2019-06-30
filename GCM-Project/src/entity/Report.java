@@ -15,7 +15,9 @@ import javafx.scene.control.TableView;
  * */
 public class Report {
 
-	ArrayList<String> fields;
+	/*
+	 * parameters.
+	 * */
 	private  String CityName;
 	private  Integer ReportTableMapsNumber;
 	private  Integer ReportTablSubscriptions;
@@ -23,6 +25,7 @@ public class Report {
     private  Integer ReportTablViews;
 	private  Integer ReportTablDownloads;
 	private  Integer ReportTablOneTimePurchase;
+	static int i=1;
 	
 	public Report(String cityName, int reportTableMapsNumber, int reportTablSubscriptions,
 			int reportTablSubscriptionRenew, int reportTablViews, int reportTablDownloads,
@@ -36,7 +39,7 @@ public class Report {
 		ReportTablDownloads =reportTablDownloads;
 		ReportTablOneTimePurchase =reportTablOneTimePurchase;
 	}
-
+	/*getters & setters*/
 	public String getCityName() {
 		return CityName;
 	}
@@ -93,24 +96,130 @@ public class Report {
 		ReportTablOneTimePurchase =reportTablOneTimePurchase;
 	}
 
-	
+	/**
+	 * @author majdh
+	 * this function accepts city name and updated the Maps Number.
+	 * */			    
     public static void AddReportTablMapsNumber(String cityName) {
-    	DataBaseController.CityIncFieldsInDB("MapsNum",cityName);
+    	ArrayList<String> array=null;
+    	DataBaseController.KnowDate();
+		DataBaseController.SelectAllRowsFromTable("datet");
+		ArrayList<String> arrDate=DataBaseController.clientCon.getList();
+		String date=arrDate.get(1);
+		DataBaseController.DeleteRow("datet","ReportDate",date);
+		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",cityName);
+		array=DataBaseController.clientCon.getList();
+    	if(array==null ||!array.contains(cityName)||!array.contains(date)) {
+        	DataBaseController.InsertReportsToDB(cityName,1,0,0,0,0,0); 
+    	}else {
+    		if(array.contains(date) && array.contains(cityName)) 
+    			DataBaseController.CityIncFieldsInDB("MapsNum",cityName,date);
+    	}
 	}
+    /**
+	 * @author majdh
+	 * this function accepts city name and updated the Subscriptions Number.
+	 * */
 	public static void AddReportTablSubscriptions(String cityName) {
-    	DataBaseController.CityIncFieldsInDB("SubscriptionsNum",cityName);
-	}
-	public static void AddReportTablSubscriptionRenew(String cityName) {
-    	DataBaseController.CityIncFieldsInDB("SubscriptionRenewNum",cityName);
-	}
-	public static void AddReportTablViews(String cityName) {
-    	DataBaseController.CityIncFieldsInDB("ViewsNum",cityName);
-	}
-	public static void AddReportTablTablDownloads(String cityName){
-    	DataBaseController.CityIncFieldsInDB("DownloadsNum",cityName);
-	}
-	public static void AddReportTablOneTimePurchase(String cityName){
-    	DataBaseController.CityIncFieldsInDB("OneTimePurchase",cityName);
-	}
+		ArrayList<String> array=null;
+    	DataBaseController.KnowDate();
+		DataBaseController.SelectAllRowsFromTable("datet");
+		ArrayList<String> arrDate=DataBaseController.clientCon.getList();
+		String date=arrDate.get(1);
+		DataBaseController.DeleteRow("datet","ReportDate",date);
+		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",cityName);
+		array=DataBaseController.clientCon.getList();
+		if(array==null ||!array.contains(cityName)||!array.contains(date)) {
 	
+    	DataBaseController.InsertReportsToDB(cityName,0,1,0,0,0,0);
+		}else {
+			if(array.contains(date)&& array.contains(cityName))
+				DataBaseController.CityIncFieldsInDB("SubscriptionsNum",cityName,date);
+    	}
+		
+	}
+	/**
+	 * @author majdh
+	 * this function accepts city name and updated the Subscription Renew Number.
+	 * */
+	public static void AddReportTablSubscriptionRenew(String cityName) {
+		ArrayList<String> array=null;
+    	DataBaseController.KnowDate();
+		DataBaseController.SelectAllRowsFromTable("datet");
+		ArrayList<String> arrDate=DataBaseController.clientCon.getList();
+		String date=arrDate.get(1);
+		DataBaseController.DeleteRow("datet","ReportDate",date);
+		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",cityName);
+		array=DataBaseController.clientCon.getList();
+		if(array==null ||!array.contains(cityName)||!array.contains(date))  {
+    	DataBaseController.InsertReportsToDB(cityName,0,0,1,0,0,0);
+		}else {
+			if(array.contains(date)&& array.contains(cityName))
+    			DataBaseController.CityIncFieldsInDB("SubscriptionRenewNum",cityName,date);
+    	}
+		
+	}
+	/**
+	 * @author majdh
+	 * this function accepts city name and updated the Views Number.
+	 * */
+	public static void AddReportTablViews(String cityName) {
+		ArrayList<String> array=null;
+    	DataBaseController.KnowDate();
+		DataBaseController.SelectAllRowsFromTable("datet");
+		ArrayList<String> arrDate=DataBaseController.clientCon.getList();
+		String date=arrDate.get(1);
+		DataBaseController.DeleteRow("datet","ReportDate",date);
+		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",cityName);
+		array=DataBaseController.clientCon.getList();
+		if(array==null ||!array.contains(cityName)||!array.contains(date)) {
+    	DataBaseController.InsertReportsToDB(cityName,0,0,0,1,0,0);
+		}else {
+			if(array.contains(date) && array.contains(cityName))
+				DataBaseController.CityIncFieldsInDB("ViewsNum",cityName,date);  
+		}
+		
+	}
+	/**
+	 * @author majdh
+	 * this function accepts city name and updated the Downloads Number.
+	 * */
+	public static void AddReportTablTablDownloads(String cityName){
+		ArrayList<String> array=null;
+    	DataBaseController.KnowDate();
+		DataBaseController.SelectAllRowsFromTable("datet");
+		ArrayList<String> arrDate=DataBaseController.clientCon.getList();
+		String date=arrDate.get(1);
+		DataBaseController.DeleteRow("datet","ReportDate",date);
+		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",cityName);
+		array=DataBaseController.clientCon.getList();
+		if(array==null ||!array.contains(cityName)||!array.contains(date)) {		
+    	DataBaseController.InsertReportsToDB(cityName,0,0,0,0,1,0);
+		}else {
+			if(array.contains(date)&& array.contains(cityName))
+	    		DataBaseController.CityIncFieldsInDB("DownloadsNum",cityName,date);
+		} 
+		
+	}
+	/**
+	 * @author majdh
+	 * this function accepts city name and updated the One Time Purchase Number.
+	 * */
+	public static void AddReportTablOneTimePurchase(String cityName){
+		ArrayList<String> array=null;
+    	DataBaseController.KnowDate();
+		DataBaseController.SelectAllRowsFromTable("datet");
+		ArrayList<String> arrDate=DataBaseController.clientCon.getList();
+		String date=arrDate.get(1);
+		DataBaseController.DeleteRow("datet","ReportDate",date);
+		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",cityName);
+		array=DataBaseController.clientCon.getList();
+		if(array==null ||!array.contains(cityName)||!array.contains(date)) {		
+    	DataBaseController.InsertReportsToDB(cityName,0,0,0,0,0,1);
+		}else {
+			if(array.contains(date)&& array.contains(cityName))
+				DataBaseController.CityIncFieldsInDB("OneTimePurchase",cityName,date);
+		}
+		
+	}
 }

@@ -30,16 +30,54 @@ public class DepartmentContentManagerController extends Application {
 	private Button btnBack;
 
 	FXMLLoader fxmlLoader;
+	
+	public static String SetORUpdateMapsRates="";
+	/**
+	 * @author majdh
+	 * function that create new stage to the SetUpdateApproveMapsRatesController class
+	 * and updated the DepartmentContentManagerController.SetORUpdateMapsRates to set .
+	 * */
+	@FXML 
+	void SetMapsRates(ActionEvent event) throws Exception {
+		SetORUpdateMapsRates="set";
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		SetUpdateApproveMapsRatesController map_rates = new SetUpdateApproveMapsRatesController();
+		map_rates.start(new Stage());// create the option stage
+	}
+	
 
-	@FXML //
+	/**
+	 * @author majdh
+	 * function that create new stage to the SetUpdateApproveMapsRatesController class
+	 * and updated the DepartmentContentManagerController.SetORUpdateMapsRates to update .
+	 * */
+	@FXML 
+	void UpdateMapsRates(ActionEvent event) throws Exception {
+		SetORUpdateMapsRates="update";
+		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
+		mystage.close();
+		SceneController.push(((Node) event.getSource()).getScene());// push current scene
+		SetUpdateApproveMapsRatesController map_rates = new SetUpdateApproveMapsRatesController();
+		map_rates.start(new Stage());// create the option stage
+	}
+
+/**
+ * 
+ * @author majdh
+ * 
+ * */
+	@FXML 
 	void OnActionViewReports(ActionEvent event) throws Exception {
 		Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();// get stage
 		mystage.close();
 		SceneController.push(((Node) event.getSource()).getScene());// push current scene
-		ViewReportController view_repor = new ViewReportController();
-		view_repor.start(new Stage());// create the option stage
+		ViewReportController view_report = new ViewReportController();
+		view_report.start(new Stage());// create the option stage
 	}
 
+	
 	/**
 	 * @author Ebrahem
 	 * @param event: get the current stage
@@ -81,6 +119,7 @@ public class DepartmentContentManagerController extends Application {
 		}
 	}
 
+	
 	/**
 	 * @param primaryStage: is a new stage instance to be redirected to this class
 	 *        start method, launches this class stage
@@ -92,6 +131,7 @@ public class DepartmentContentManagerController extends Application {
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
 		primaryStage.setTitle("Department Content Manager");
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();

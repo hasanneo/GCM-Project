@@ -12,10 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -36,12 +39,20 @@ public class ViewReportController{
 	@FXML private TableColumn<Report,Integer> ReportTablOneTimePurchase ;
 	@FXML private ComboBox combobox;
 	@FXML private Button cancelBtn;
+	@FXML private DatePicker DatePicker_from;
+    @FXML private DatePicker DatePicker_to;
+    
 	ArrayList<String> CitysArr = new ArrayList<String>();
 	ObservableList<Report> observableList;
 	FXMLLoader fxmlLoader;
 	
+	/**
+	 * 
+	 * @author majdh
+	 * push the ViewReportMainScreen.fxml file 
+	 * 
+	 * */
 	public void start(Stage stage) throws Exception{
-		System.out.println("start");
 		fxmlLoader = new FXMLLoader();
 		fxmlLoader.setLocation(getClass().getResource("/fxml/ViewReportMainScreen.fxml"));
 		Parent root = fxmlLoader.load();
@@ -52,24 +63,24 @@ public class ViewReportController{
 		stage.show();
 	}
 	
+	
+	/**
+	 * @author majdh
+	 * cancel button.
+	 * 
+	 * */
 	@FXML
 	void CancelMouseClick(MouseEvent event) {
-		/*Report.AddReportTablMapsNumber("akko");
-		Report.AddReportTablSubscriptions("akko");
-		Report.AddReportTablSubscriptionRenew("akko");
-		Report.AddReportTablTablDownloads("akko");
-		Report.AddReportTablViews("akko");
-		Report.AddReportTablOneTimePurchase("akko");
-		//-----
-		Report.AddReportTablMapsNumber("nazareth");
-		Report.AddReportTablSubscriptions("nazareth");
-		Report.AddReportTablSubscriptionRenew("nazareth");
-		Report.AddReportTablTablDownloads("nazareth");
-		Report.AddReportTablViews("nazareth");
-		Report.AddReportTablOneTimePurchase("nazareth");*/
+		
 		((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(SceneController.pop());// replace the scene
 	}
 	
+	/**
+	 * 
+	 * @author majdh
+	 * function that initialize the Table view & the combobox.
+	 * 
+	 * */
 	public void initialize() {
 		int i;
 		this.ReportTableCity.setCellValueFactory(new PropertyValueFactory<>("CityName"));
@@ -80,47 +91,83 @@ public class ViewReportController{
 		ReportTablDownloads.setCellValueFactory(new PropertyValueFactory<>("ReportTablDownloads"));
 		ReportTablOneTimePurchase.setCellValueFactory(new PropertyValueFactory<>("ReportTablOneTimePurchase"));
 		//Combo values : Citys name 
-		DataBaseController.SelectAllRowsFromTable("viewreportstable");           
-		String[] Arr=DataBaseController.clientCon.GetObjectAsStringArray();
+		DataBaseController.SelectAllRowsFromTable("city");           
+		ArrayList<String> Arr=DataBaseController.clientCon.getList();
 		combobox.getItems().removeAll(combobox.getItems());//delet
-		for(i=1;i<Arr.length+1;) {
-		    this.CitysArr.add(Arr[i]);
-			combobox.getItems().addAll(Arr[i]);
-			i=i+8;
+		for(i=0;i<Arr.size();) {
+		    this.CitysArr.add(Arr.get(i));
+			combobox.getItems().addAll(Arr.get(i));
+			i=i+4;
 			combobox.getSelectionModel().select("Choose City Name :");
         }
+		
 	}
 	
+	
+	/**
+	 * 
+	 * @author majdh
+	 *this function takes the selected city and shows the data btween the slected dates.
+	 * 
+	 * */
 	@FXML
 	public void OnActionComboox() {
+		//SelectReportDataToCombobox
+		//SELECT * FROM viewreportstable WHERE CITY_NAME='akko' AND (ReportDate BETWEEN '2019-06-1' AND '2020-09-29');
 		int i=1;
 		observableList = FXCollections.observableArrayList();
 		int index=combobox.getSelectionModel().getSelectedIndex();
-		String SelectedCity=this.CitysArr.get(index).toString();
-		DataBaseController.SelectAllRowsFromTable("viewreportstable","CITY_NAME",SelectedCity);
-		String[] arr=DataBaseController.clientCon.GetObjectAsStringArray();
-		Report rep;
-		rep=new Report(arr[i],Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),
-				Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]));
-		observableList.add(rep);
-		ReportTable.setItems(observableList);
-	}
-	
-	@FXML
-	public void OnActionReportsOnAllTheCities() {
-		int i;
-		DataBaseController.SelectAllRowsFromTable("viewreportstable");           
-		String[] arr=DataBaseController.clientCon.GetObjectAsStringArray();
-		observableList = FXCollections.observableArrayList();
-		for(i=1;i<arr.length+1;)
-		{
+		String SelectedCity=CitysArr.get(index).toString();
+		DataBaseController.SelectReportDataToCombobox(SelectedCity,DatePicker_from.getValue(),DatePicker_to.getValue());
+		ArrayList<String> arr=DataBaseController.clientCon.getList();
+		if((arr==null ||arr.size()== 0)) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning Dialog");
+			alert.setHeaderText("Look, a Warning Dialog");
+			alert.setContentText("Causes:\n1)Choose Date please.\n2)The "+SelectedCity+"dos not have data in table viewreportstable.");
+			alert.showAndWait();
+		}else {
+			
 			Report rep;
-			rep=new Report(arr[i],Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),
-					Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]),Integer.parseInt(arr[(++i)]));
-			i=i+2;
+			for(i=1;i<arr.size()+1;) {
+			rep=new Report(arr.get(i),Integer.parseInt(arr.get(++i)),Integer.parseInt(arr.get(++i)),Integer.parseInt(arr.get(++i)),
+					Integer.parseInt(arr.get(++i)),Integer.parseInt(arr.get(++i)),Integer.parseInt(arr.get(++i)));
+			i=i+3;
 			observableList.add(rep);
 			ReportTable.setItems(observableList);
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @author majdh
+	 * this function shows the data  
+	 *  btween the slected dates to all cities viewreportstable Table.
+	 * */
+	@FXML
+	public void OnActionReportsOnAllTheCities() {
+		//SelectReportToAllCities
+		//SELECT * FROM viewreportstable WHERE (ReportDate BETWEEN '2019-06-1' AND '2020-09-29');
+		int i;
+		DataBaseController.SelectReportToAllCities(DatePicker_from.getValue(),DatePicker_to.getValue());
+		ArrayList<String> arr=DataBaseController.clientCon.getList();
+		observableList = FXCollections.observableArrayList();
+		if((arr==null ||arr.size()== 0)) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning Dialog");
+			alert.setHeaderText("Look, a Warning Dialog");
+			alert.setContentText("Causes:\n1)Choose Date please.\n2)The table viewreportstable is Empty!!");
+			alert.showAndWait();
+		}else {
+			Report rep;
+			for(i=1;i<arr.size()+1;) {
+			rep=new Report(arr.get(i),Integer.parseInt(arr.get(++i)),Integer.parseInt(arr.get(++i)),Integer.parseInt(arr.get(++i)),
+					Integer.parseInt(arr.get(++i)),Integer.parseInt(arr.get(++i)),Integer.parseInt(arr.get(++i)));
+			i=i+3;
+			observableList.add(rep);
+			ReportTable.setItems(observableList);
+			}
 		}
 	}	
-	//-----------------------------
 }
