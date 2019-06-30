@@ -23,6 +23,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import main.MainProgram;
 
 /**
@@ -59,7 +60,7 @@ public class LoginController extends Application {
 		loginStage.close();
 		MainProgram.stage.setOpacity(1);
 	}
-	
+
 	/**
 	 * Opens the register form
 	 * @param registerBtn mouse click
@@ -95,16 +96,36 @@ public class LoginController extends Application {
 		} else {// when result is true
 			username = tableRow.get(3).toString();
 			password =tableRow.get(4).toString();
+
+
 			if (accountNameTxt.getText().equalsIgnoreCase(username)&& passwordTxt.getText().equals(password)) {
 				System.out.println("IN THE TRUE IF STATEMENT");
-				DataBaseController.clientCon.setLoggedIn(true);// SET LOGGED IN AS TRUE
-				DataBaseController.clientCon.SetUserAccount(tableRow);//set the account in the logged in client
-				LoginDialog("success");
-				try {
-					LogIntoMain(username);
-				} catch (IOException e) {
-					System.out.println("LOGIN CONTROLLER >> failed at LoginClick");
-					e.printStackTrace();
+
+				ArrayList<String> logIn=new ArrayList<>();
+				logIn.add("logIn");
+				logIn.add(username);
+				DataBaseController.clientCon.ExecuteQuery(logIn);
+				ArrayList<String> iflogedIn =DataBaseController.clientCon.getList();
+				if (iflogedIn.get(0).equals("Allowed")) {
+
+
+					DataBaseController.clientCon.setLoggedIn(true);// SET LOGGED IN AS TRUE
+					DataBaseController.clientCon.SetUserAccount(tableRow);//set the account in the logged in client
+					LoginDialog("success");
+					try {
+						LogIntoMain(username);
+					} catch (IOException e) {
+						System.out.println("LOGIN CONTROLLER >> failed at LoginClick");
+						e.printStackTrace();
+					}
+
+				}
+				else
+				{
+					if (iflogedIn.get(0).equals("notAllowed")) 
+					{
+						LoginDialog("AlreadylogedIn");
+					}
 				}
 			}else {
 				LoginDialog("fail");
@@ -115,15 +136,14 @@ public class LoginController extends Application {
 		Account loggedInAccount=DataBaseController.clientCon.GetUserAccount();
 		loginStage = (Stage) ((Node) cancelBtn).getScene().getWindow();// get stage
 		loginStage.close();// close login stage
-		FXMLLoader fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(getClass().getResource("/fxml/MainScreen.fxml"));
-		Parent root = fxmlLoader.load();
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("/css/svg.css").toExternalForm());
-		MainProgram.stage.setTitle("GCM");
-		MainProgram.stage.setScene(scene);
-		MainProgram.stage.setResizable(false);
-		MainProgram.stage.setOpacity(1);
+		
+		try {
+			MainController mainStage = new MainController();
+			mainStage.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -133,28 +153,40 @@ public class LoginController extends Application {
 		fxmlLoader.setLocation(getClass().getResource("/fxml/LogInScreen.fxml"));
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		stage.setTitle("LogIn");
 		stage.setScene(scene);
 		stage.setResizable(false);
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
 
 	}
 	public void LoginDialog(String str) {
 		if(str.equals("fail")) {
-		Alert alert = new Alert(AlertType.ERROR, "Incorrect Password or username", ButtonType.OK);
-		alert.setContentText("Incorrect password or username");
-		alert.showAndWait();
-		passwordTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-		accountNameTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-		accountNameTxt.clear();
-		passwordTxt.clear();
-		}
-		else if(str.equals("success")) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText(null);
-			alert.setContentText("Logged in");
+			Alert alert = new Alert(AlertType.ERROR, "Incorrect Password or username", ButtonType.OK);
+			alert.setContentText("Incorrect password or username");
 			alert.showAndWait();
+			passwordTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+			accountNameTxt.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+			accountNameTxt.clear();
+			passwordTxt.clear();
 		}
+		else
+		{
+			if(str.equals("success"))
+			{
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setHeaderText(null);
+				alert.setContentText("Logged in");
+				alert.showAndWait();
+			}
+			if(str.equals("AlreadylogedIn")) {
+				Alert alert = new Alert(AlertType.ERROR, "This Account is already Logged In", ButtonType.OK);
+				alert.setContentText("You cant log in from the same account");
+				alert.showAndWait();
+			}
+		}
+
 	}
 	
 }

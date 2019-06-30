@@ -32,16 +32,35 @@ public class ConeectToServerController {
 	private Button connectBtn;
 
 	@FXML
-	void connectToServer(ActionEvent event) {
-		boolean connected;
-		Properties props = new Properties();
+	private TextField portTxt;
 
+
+	@FXML
+	void connectToServer(ActionEvent event) {
+		boolean portIsOk=true;
+		boolean connected=false;
+		Properties props = new Properties();
+		int port = 5555;
 
 		String host = IpText.getText();
 		if (host=="") {
 			host="localhost";
 		}
-		int port = 5555;
+		try {
+				 port = Integer.parseInt(portTxt.getText());
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+			portIsOk=false;
+			Alert a = new Alert(AlertType.INFORMATION);
+			a.setContentText("the port must be Number");
+			a.show();
+			
+		}
+		finally {
+			
+		}
+		if(portIsOk==true)
+		{
 		try {
 			DataBaseController.InitiateClient(new ClientConnection(host, port));
 			connected=true;
@@ -49,13 +68,14 @@ public class ConeectToServerController {
 			// TODO: handle exception
 			System.out.println("didnt connect");
 			connected=false;
-			Alert notconnected = new Alert(AlertType.ERROR,"Check the server or the IP Address");
+			Alert notconnected = new Alert(AlertType.ERROR,"Check the server or the IP Address or port number");
 			notconnected.setTitle("Connection Error");
 			notconnected.show();
 		}
+		}
 		if (connected) {
 
-		MainProgram.stage.close();
+			MainProgram.stage.close();
 			MainController main=new MainController();
 
 

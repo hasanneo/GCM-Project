@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0"
+	prefWidth="374.0" xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.CreateNewCityController">
+	<children>
+		<TextField fx:id="cityNameTxt" layoutX="87.0" layoutY="24.0"
+			prefHeight="25.0" prefWidth="200.0" promptText="CITY NAME" styleClass="text-input"/>
+		<TextArea fx:id="cityDescTxt" layoutX="87.0" layoutY="75.0"
+			prefHeight="200.0" prefWidth="200.0" />
+		<Button layoutX="219.0" layoutY="276.0" mnemonicParsing="false"
+			onMouseClicked="#CreateClick" text="CREATE" styleClass="ripple-button"/>
+		<Button layoutX="287.0" layoutY="276.0" mnemonicParsing="false"
+			onMouseClicked="#CancelClick" text="CANCEL" styleClass="ripple-button"/>
+	</children>
+</AnchorPane>

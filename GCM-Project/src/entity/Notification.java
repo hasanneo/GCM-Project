@@ -23,11 +23,17 @@ public class Notification {
 	 * @param request
 	 * @param requestUser
 	 */
+	public Notification(String request, String requestUser, ArrayList<String> requestInfo) {
+		super();
+		this.request = request;
+		this.requestUser = requestUser;
+		setRequestInfo(requestInfo);
+	}
 	public Notification(String request, String requestUser, String requestInfo) {
 		super();
 		this.request = request;
 		this.requestUser = requestUser;
-		this.requestInfo = requestInfo;
+		this.requestInfo=requestInfo;
 	}
 
 	public String getRequest() {
@@ -50,8 +56,11 @@ public class Notification {
 		return requestInfo;
 	}
 
-	public void setRequestInfo(String requestInfo) {
-		this.requestInfo = requestInfo;
+	public void setRequestInfo(ArrayList<String> places) {
+		this.requestInfo="";
+		for(String place:places) {
+			requestInfo=requestInfo.concat("REQUESTING TO ADD " +place+"\n");
+		}
 	}
 
 }

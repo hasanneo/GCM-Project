@@ -58,9 +58,6 @@ public class RegisteredUserMenuScreen_Controller extends Application {
 	 */
 	@FXML
 	void ViewCardClick(ActionEvent event) throws Exception {
-		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		myStage.close();		
-		//create an instance of target class and launch it's stage
 		ViewCard_Controller registeredViewCard= new ViewCard_Controller();
 		try {
 			registeredViewCard.start(new Stage());

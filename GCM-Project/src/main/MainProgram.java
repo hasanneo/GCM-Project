@@ -1,3 +1,4 @@
+
 package main;
 
 import java.util.*;
@@ -5,7 +6,6 @@ import java.util.*;
 import client.ClientConnection;
 import controller.DataBaseController;
 import controller.MainController;
-import controller.ViewCityMapsCatalogController;
 import fxmlLoaders.AddMapToCityLoader;
 import fxmlLoaders.ChooseCityLoader;
 import fxmlLoaders.ReleaseMapLoader;
@@ -63,23 +63,22 @@ public class MainProgram extends Application {
 
 			//MainController main=new MainController();
 			//arg0=new Stage();
-//
+
 			//main.start(arg0);//start main menu*/
 
-// 			Properties props = new Properties();
-// 			FileInputStream in = new FileInputStream("@/../Client.properties");
-// 			props.load(in);
-// 			in.close();
-// 			String host = props.getProperty("server.host");
-// 			int port = Integer.parseInt(props.getProperty("server.port"));
-
-// 			DataBaseController.InitiateClient(new ClientConnection(host, port));
-// 			MainController main=new MainController();			
-// 			stage=arg0=new Stage();
-// 			main.start(arg0);
+ 			Properties props = new Properties();
+ 			FileInputStream in = new FileInputStream("@/../Client.properties");
+ 			props.load(in);
+ 			in.close();
+ 			String host = props.getProperty("server.host");
+			int port = Integer.parseInt(props.getProperty("server.port"));
+ 			DataBaseController.InitiateClient(new ClientConnection(host, port));
+ 			MainController main=new MainController();			
+			stage=arg0=new Stage();
+			main.start(arg0);
 			
 
-
+/*
 
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/fxml/ClientConnection.fxml"));
@@ -90,7 +89,7 @@ public class MainProgram extends Application {
 			stage.setScene(scene);
 			//stage.setResizable(false);
 			stage.show();
-			
+			*/
 			
 		} catch (Exception e) {
 			System.out.println("MainProgram :"+e.getMessage());
