@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.SVGPath?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="931.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+      <ScrollPane layoutY="140.0" styleClass="scroll-pane">
+         <content>
+      		<TableView fx:id="placesTable" prefHeight="243.0" prefWidth="931.0" styleClass="tree-table-view" />
+         </content>
+      </ScrollPane>
+		<Button fx:id="applyBtn" layoutX="757.0" layoutY="495.0" mnemonicParsing="false" onMouseClicked="#ApplyClick" prefHeight="25.0" prefWidth="153.0" text="APPLY" styleClass="ripple-button"/>
+		<Button fx:id="cancelBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#CancelClick" prefHeight="52.0" prefWidth="50.0" styleClass="mybutton">
+         <graphic>
+            <SVGPath content="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z" styleClass="svg-icon"/>
+         </graphic></Button>
+      <CheckBox fx:id="selectAll" layoutX="757.0" layoutY="393.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="91.0" styleClass="check-box" text="SELECT ALL" />
+      <Label fx:id="mapNameLabel" layoutX="326.0" layoutY="44.0" prefHeight="59.0" prefWidth="280.0" text="MAPNAME" styleClass="label"/>
+	</children>
+</AnchorPane>

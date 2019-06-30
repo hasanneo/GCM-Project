@@ -21,6 +21,18 @@ public class Map {
 		setCityName(cityName);
 		setMapVersion(mapVersion);
 	}
+	
+	public Map(String mapName, String mapDescirption,String cityName) {
+		setMapName(mapName);
+		setMapDescription(mapDescirption);
+		setCityName(cityName);
+	}
+	/**
+	 * 
+	 */
+	public Map() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getCityName() {
 		return cityName;

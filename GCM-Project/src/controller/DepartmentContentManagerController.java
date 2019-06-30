@@ -2,6 +2,7 @@ package controller;
 
 import com.sun.glass.ui.View;
 
+import fxmlLoaders.ViewCityMapsCatalogLoader;
 import javafx.application.Application;
 /*
  * majd 
@@ -85,12 +86,8 @@ public class DepartmentContentManagerController extends Application {
 	 */
 	@FXML
 	void btnViewCardClick(ActionEvent event) throws Exception {
-		// get current stage and close it
-		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		thisStage.close();
-
 		// create an instance of target class and try to launch it's stage
-		ViewCard_RegisteredUser_Controller viewCardStage = new ViewCard_RegisteredUser_Controller();
+		ViewCard_Controller viewCardStage = new ViewCard_Controller();
 		try {
 			viewCardStage.start(new Stage());
 		} catch (Exception e) {
@@ -134,9 +131,25 @@ public class DepartmentContentManagerController extends Application {
 		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
 		primaryStage.setTitle("Department Content Manager");
+		scene.getStylesheets().add(getClass().getResource("/css/blackTableView.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
+	}
+
+	@FXML
+	void ViewCatalog(MouseEvent event) {
+
+	}
+
+	@FXML
+	void PurchaseMapsClick(MouseEvent event) {
+		try {
+			new ViewCityMapsCatalogLoader().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTourToMapController">
+   <children>
+      <ComboBox fx:id="MapNameComboBox" layoutX="212.0" layoutY="152.0" prefWidth="150.0" promptText="Select  Map" />
+      <ComboBox fx:id="TourNameComboBox" layoutX="211.0" layoutY="212.0" prefHeight="25.0" prefWidth="194.0" promptText="Choose A Tour To Be Added" />
+      <Label layoutX="201.0" layoutY="36.0" prefHeight="17.0" prefWidth="150.0" text="Add Tour To Map">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="53.0" layoutY="325.0" mnemonicParsing="false" onAction="#InsertData" text="Done" />
+      <Button fx:id="closeBtn" layoutX="468.0" layoutY="325.0" mnemonicParsing="false" onAction="#btnClose_ClickEvent" text="Cancel" />
+      <Label layoutX="98.0" layoutY="112.0" text="Enter Map Version :" />
+      <TextField fx:id="MapVersion" layoutX="212.0" layoutY="108.0" />
+   </children>
+</AnchorPane>

@@ -1,5 +1,9 @@
 package controller;
 
+import fxmlLoaders.ChooseCityLoader;
+import fxmlLoaders.PurchasedMapsLoader;
+import fxmlLoaders.ViewAllMapsLoader;
+import fxmlLoaders.ViewCityMapsCatalogLoader;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class DepartmentContentWorkerMenuScreen_Controller extends Application {
@@ -16,22 +21,25 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 
 	@FXML
 	private Button btnBack;
-
+	@FXML
+	private Button AddPlaceToCityBtn;
 	@FXML
 	private Button btnViewCard;
+	@FXML
+	private Button EditTourBtn;
 
 	/**
 	 * @author Ebrahem
 	 * @param event: holds the screen of where the action was made
-	 * @throws Exception, in case couldn't open the new stage (Main Menu) 
+	 * @throws Exception, in case couldn't open the new stage (Main Menu)
 	 */
 	@FXML
-	void btnBackClick(ActionEvent event) throws Exception{
-		//getting current stage and closing it
+	void btnBackClick(ActionEvent event) throws Exception {
+		// getting current stage and closing it
 		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		myStage.close();
-		
-		//try to open Main controller stage
+
+		// try to open Main controller stage
 		MainController mainControllerStage = new MainController();
 		try {
 			mainControllerStage.start(new Stage());
@@ -47,24 +55,100 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 	 * @throws Exception: on unsuccessful stage change
 	 */
 	@FXML
-	void btnViewCardClick(ActionEvent event) throws Exception{
-		//close current stage
+	void btnViewCardClick(ActionEvent event) throws Exception {
+		ViewCard_Controller viewCard = new ViewCard_Controller();
+		try {
+			viewCard.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * @author Mohamed
+	 * @param event
+	 * @throws Exception
+	 */
+	@FXML
+	void AddTourToMap(ActionEvent event) throws Exception {
+		// close current stage
 		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		myStage.close();
-		
-		//create an instance of target class and try to open it's stage
-		ViewCard_DepartmentContentWorker_Controller viewCardDepWorker = new ViewCard_DepartmentContentWorker_Controller();
+
+		AddTourToMapController AddTour = new AddTourToMapController();
 		try {
-			viewCardDepWorker.start(new Stage());
+			AddTour.start(new Stage());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * @author Mohamed
+	 * @param event
+	 * @throws Exception
+	 */
+	@FXML
+	void EditPlace(ActionEvent event) throws Exception {
+		// close current stage
+		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		myStage.close();
+
+		EditPlaceController EditPlace = new EditPlaceController();
+		try {
+			EditPlace.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Mohamed
+	 * @param event
+	 * @throws Exception
+	 */
+	@FXML
+	void AddPlaceToCity(ActionEvent event) throws Exception {
+		// close current stage
+		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		myStage.close();
+
+		AddPlaceToCityController NewPlace = new AddPlaceToCityController();
+		try {
+			NewPlace.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Mohamed
+	 * @param event
+	 * @throws Exception
+	 */
+	@FXML
+	void EditTour(ActionEvent event) throws Exception {
+		// close current stage
+		Stage myStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		myStage.close();
+
+		EditTourController EditedTour = new EditTourController();
+		try {
+			EditedTour.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * @param primaryStage: is a new stage instance to be redirected to this class
-	 * start method, launches this class stage
+	 *        start method, launches this class stage
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -79,4 +163,54 @@ public class DepartmentContentWorkerMenuScreen_Controller extends Application {
 		primaryStage.show();
 	}
 
+	/**
+	 * 
+	 * @param event click on edit map.
+	 * @author Hasan
+	 */
+	@FXML
+	void EditMapClick(MouseEvent event) {
+		try {
+			new ViewAllMapsLoader(null).start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	void ViewCatalog(MouseEvent event) {
+
+	}
+
+	@FXML
+	void PurchaseMapsClick(MouseEvent event) {
+		try {
+			new ViewCityMapsCatalogLoader().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	void AddMapToCityClick(MouseEvent event) {
+		try {
+			new ChooseCityLoader().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	 @FXML
+	    void ViewMapsClick(MouseEvent event) {
+		 	try {
+				//new PurchasedMapsLoader().start(new Stage());
+		 		new ViewAllMapsLoader(null).start(new Stage());
+			} catch (Exception e) {
+				System.out.println("ERROR AT VIEW MAPS>>"+e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
 }

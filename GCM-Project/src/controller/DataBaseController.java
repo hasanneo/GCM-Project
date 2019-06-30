@@ -5,13 +5,11 @@ import java.util.ArrayList;
 
 import client.ClientConnection;
 
-
 import entity.Account;
 
 import entity.City;
 import entity.Map;
 import entity.PlaceInMap;
-
 
 /**
  * 
@@ -178,6 +176,7 @@ public class DataBaseController {
 		clientCon.ExecuteQuery(queryArr);
 	}
 
+
 	/**
 	 * @author majdh
 	 * @param cityName=city name  
@@ -233,6 +232,7 @@ public class DataBaseController {
 	
 	
 	
+
 	/**
 	 * 
 	 * @author majd
@@ -264,6 +264,7 @@ public class DataBaseController {
 		String query = "SELECT `MAP_NAME`,`MAP_DESC`,`CITY_NAME`,`MAP_VERSION` FROM `MAP`";
 		queryArr.add(query);
 		queryArr.add("select");
+		System.out.println("ABOUT TO EXECUTE >>" + queryArr.toString());
 		clientCon.ExecuteQuery(queryArr);
 	}
 
@@ -308,7 +309,10 @@ public class DataBaseController {
 	public static void getMaps(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
-			String query = "SELECT * FROM " + tableName + " where " + type + " LIKE " + "'%" + searchText + "%'" + ";";
+
+			String query = "SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " where " + type + " = " + "'"
+					+ searchText + "'" + ";";
+
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
@@ -317,31 +321,37 @@ public class DataBaseController {
 		}
 
 	}
+	
 
 	public static void getMapsbyplace(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
-			String query = "SELECT * FROM map where " + "MAP_NAME"
-					+ " IN (SELECT MAP_NAME FROM places_in_maps WHERE places_in_maps.PLACE_NAME like '%" + searchText
-					+ "%');";
+			String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM map where " + "MAP_NAME"
+					+ " IN (SELECT MAP_NAME FROM places_in_maps WHERE places_in_maps.PLACE_NAME = '" + searchText
+					+ "' AND APPROVED = 1);";
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
 		} catch (Exception e) {
 			System.out.println("Exception thrown at Select from table:" + e.getMessage() + e.getClass().getName());
 		}
-
 	}
 
 	public static void getMapsbydesc(String tableName, String type, String searchText) {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		try {
-			String query = "SELECT * FROM " + tableName + " where CITY_NAME IN"
-					+ "(select CITY_NAME from city where cityDescription LIKE " + "'%" + searchText + "%')"
-					+ "UNION SELECT * FROM " + tableName + "" + " where MAP_NAME IN (SELECT "
-					+ "places_in_maps.MAP_NAME " + "FROM " + " places_in_maps " + " INNER JOIN "
-					+ " places ON places.NAME = places_in_maps.PLACE_NAME where DESCRIPTION like '%" + searchText
-					+ "%');";
+			/*
+			 * String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName +
+			 * " where CITY_NAME IN" +
+			 * "(select CITY_NAME from city where cityDescription LIKE " + "'%" + searchText
+			 * + "%')" + "UNION SELECT MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + ""
+			 * + " where MAP_NAME IN (SELECT " + "places_in_maps.MAP_NAME " + "FROM " +
+			 * " places_in_maps " + " INNER JOIN " +
+			 * " places ON places.NAME = places_in_maps.PLACE_NAME where DESCRIPTION like '%"
+			 * + searchText + "%');";
+			 */
+			String query = "SELECT  MAP_NAME, MAP_DESC, CITY_NAME FROM " + tableName + " WHERE MAP_DESC LIKE '%"
+					+ searchText + "%'";
 			queryArr.add(query);
 			queryArr.add("select");
 			clientCon.ExecuteQuery(queryArr);
@@ -349,6 +359,18 @@ public class DataBaseController {
 			System.out.println("Exception thrown at Select from table:" + e.getMessage() + e.getClass().getName());
 		}
 
+	}
+	public static void getCityByName(String cityName)
+	{
+		ArrayList<String> queryArr = new ArrayList<String>();
+		try {
+			String query = "SELECT * FROM city where CITY_NAME = '"  + cityName + "';";
+			queryArr.add(query);
+			queryArr.add("select");
+			clientCon.ExecuteQuery(queryArr);
+		} catch (Exception e) {
+			System.out.println("Exception thrown at Select from table:" + e.getMessage() + e.getClass().getName());
+		}
 	}
 
 	/**
@@ -359,8 +381,8 @@ public class DataBaseController {
 	 */
 	public static void SelectAllRowsFromTable(String tableName) {
 
-		ArrayList<String> queryArr =new ArrayList<String>();
-		String query="SELECT * FROM `"+tableName+"`;";
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query = "SELECT * FROM `" + tableName + "`;";
 		queryArr.add(query);
 		queryArr.add("select");
 		clientCon.ExecuteQuery(queryArr);
@@ -390,7 +412,7 @@ public class DataBaseController {
 	 */
 	public static void InsertIntoPlacesInMaps(PlaceInMap place) {
 		ArrayList<String> queryArr = new ArrayList<String>();
-		String query = "INSERT INTO places_in_maps(MAP_VERSION, MAP_NAME, PLACE_NAME, X_LOCATION, Y_LOCATION)VALUES (?,?,?,?,?)";
+		String query = "INSERT INTO places_in_maps(MAP_NAME, PLACE_NAME, X_LOCATION, Y_LOCATION)VALUES (?,?,?,?)";
 		queryArr.addAll(place.GetFieldsAsArrayList());
 		queryArr.add(query);
 		queryArr.add("insert");
@@ -446,13 +468,33 @@ public class DataBaseController {
 		queryArr.add("select");
 		clientCon.ExecuteQuery(queryArr);
 	}
-
+/**
+ * @author mohamed
+ * @param tableName
+ * @param columnName
+ * @param compareColumn
+ * @param value
+ * @param compareColumn2
+ * @param authorized
+ * @param compareColumn3
+ * @param map_version
+ */
+	public static void SelectCityNameFieldFromTable(String tableName, String columnName, String compareColumn, String value,String compareColumn2,int authorized,String compareColumn3,int map_version) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query = "SELECT " + columnName + " FROM `" + tableName + "` WHERE " + compareColumn + "='" + value
+				+"' AND "+compareColumn2+"="+authorized + " AND "+compareColumn3+"="+map_version+ ";";
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	
+	
+	
 	/**
 	 * Generic select one column from table query without compare
 	 * 
-	 * @param tableName     -name of the table in the DB
-	 * @param columnName    -name of the column that you want to show
-	 * @param compareColumn -name of the column that you want to compare values with
+	 * @param tableName  -name of the table in the DB
+	 * @param columnName -name of the column that you want to show
 	 * @author Hasan
 	 *
 	 */
@@ -465,13 +507,19 @@ public class DataBaseController {
 	}
 
 	/**
-	 * A generic function that will update a row in a table.(Not checked if you give false parameters yet)
-	 * @param tableName -table name in the db.
-	 * @param tableColumns -insert your table columns in the appropriate manner as in the defined table.
-	 * @param newValues - your new values arraylist. The order here matters (reletive to the tableColumns order given). 
-	 * @param compareColumn -the coulmn you want to compare to (EX. name,lastname,id,...).
+	 * A generic function that will update a row in a table.(Not checked if you give
+	 * false parameters yet)
+	 * 
+	 * @param tableName     -table name in the db.
+	 * @param tableColumns  -insert your table columns in the appropriate manner as
+	 *                      in the defined table.
+	 * @param newValues     - your new values arraylist. The order here matters
+	 *                      (reletive to the tableColumns order given).
+	 * @param compareColumn -the coulmn you want to compare to (EX.
+	 *                      name,lastname,id,...).
 	 * @param comepareValue - the compare value that you compare with.
-	 * @return will return the number of affected rows in -> clientCon.getServerObject()
+	 * @return will return the number of affected rows in ->
+	 *         clientCon.getServerObject()
 	 * @author Hasan
 	 */
 	public static void GenericUpdateTableRow(String tableName, ArrayList<String> tableColumns,
@@ -479,20 +527,124 @@ public class DataBaseController {
 		ArrayList<String> queryArr = new ArrayList<String>();
 		String query = "UPDATE " + tableName + " SET ";
 		for (int i = 0; i < tableColumns.size(); i++) {
-			if (i == tableColumns.size()-1) {
+			if (i == tableColumns.size() - 1) {
 				query = query.concat("`" + tableColumns.get(i) + "` = '" + newValues.get(i) + "' WHERE ");
-				query = query.concat(compareColumn + "='" + comepareValue + "';");
+				query = query.concat("`" + compareColumn + "`='" + comepareValue + "';");
 			} else {
 				query = query.concat("`" + tableColumns.get(i) + "` = '" + newValues.get(i) + "' ,");
 			}
 		}
 		queryArr.add(query);
 		queryArr.add("update");
-		clientCon.ExecuteQuery(queryArr);	
+		clientCon.ExecuteQuery(queryArr);
 	}
 
-	
-	
+	/**
+	 * This will select the columns that is provided with on compare value.
+	 * 
+	 * @param tableName
+	 * @param tableColumns
+	 * @param compareColumn
+	 * @param comapreValue
+	 * @author Hasan
+	 */
+	public static void GenericSelectColumnsFromTable(String tableName, ArrayList<String> tableColumns,
+			String compareColumn, String comapreValue) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query = "SELECT ";
+		// add columns to the query
+		for (int i = 0; i < tableColumns.size(); i++) {
+			if (i == tableColumns.size() - 1) {
+				query = query.concat(tableColumns.get(i) + " FROM " + tableName + " WHERE " + compareColumn + "='"
+						+ comapreValue + "'");
+			} else {
+				query = query.concat(tableColumns.get(i) + ",");
+			}
+		}
+		queryArr.add(query);
+		queryArr.add("select");
+		System.out.println("ABOUT TO EXECUTE>>" + queryArr.toString());
+		clientCon.ExecuteQuery(queryArr);
+	}
+/*
+	public static void SelectPurchasesBasedOnCityAndUserName(String userName, String cityName) {
+		String query="SELECT CITY FROM purchase_history WHERE USERNAME='"+userName+"' AND CITY='"+
+	}*/
 
+	/**
+	 * This will select the columns that is provided
+	 * 
+	 * @param tableName    -name of the table in the db
+	 * @param tableColumns -provided table columns
+	 * @author Hasan
+	 */
+	public static void GenericSelectColumnsFromTable(String tableName, ArrayList<String> tableColumns) {
+		ArrayList<String> queryArr = new ArrayList<String>();
+		String query = "SELECT ";
+		// add columns to the query
+		for (int i = 0; i < tableColumns.size(); i++) {
+			if (i == tableColumns.size() - 1) {
+				query = query.concat(tableColumns.get(i) + " FROM " + tableName);
+			} else {
+				query = query.concat(tableColumns.get(i) + ",");
+			}
+		}
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
 
+	public static void GetRowCount(String tableName, String columnName, String columnCompare) {
+		String query = "SELECT * FROM " + tableName;
+		ArrayList<String> queryArr = new ArrayList<String>();
+		if (columnName != null && columnCompare != null) {
+			query = "SELECT * FROM " + tableName + " WHERE " + columnName + "='" + columnCompare + "';";
+		}
+		queryArr.add(query);
+		queryArr.add("select");
+		clientCon.ExecuteQuery(queryArr);
+	}
+
+	/**
+	 * Delete a row from table.
+	 * 
+	 * @param tableName     -name of the table in the DB.
+	 * @param columnName    -name of the column that you compare by.
+	 * @param columnCompare -the compare value that is given
+	 * @author Hasan
+	 */
+	public static void DeleteRow(String tableName, String columnName, String columnCompare) {
+		String query = "DELETE FROM " + tableName + " WHERE " + columnName + "='" + columnCompare + "'";
+		ArrayList<String> queryArr = new ArrayList<String>();
+		queryArr.add(query);
+		queryArr.add("delete");
+		clientCon.ExecuteQuery(queryArr);
+	}
+
+	/**
+	 * Insert into user_notifications table.
+	 * 
+	 * @param values -username and notification header and content
+	 * @author Hasan
+	 */
+	public static void InsertIntoUsersNotifications(ArrayList<String> values) {
+		String query = "INSERT INTO user_notifications(USERNAME,NOTIFICATION_HEADER,NOTIFICATION)VALUES (?,?,?)";
+		ArrayList<String> queryArr = new ArrayList<String>();
+		queryArr.add(values.get(0));
+		queryArr.add(values.get(1));
+		queryArr.add(values.get(2));
+		queryArr.add(query);
+		queryArr.add("insert");
+		clientCon.ExecuteQuery(queryArr);
+	}
+	/**
+	 * Delete all records present in the table that is given.
+	 * @param tableName -table name in the DB
+	 */
+	public static void DeleteAllRecordFromTable(String tableName) {
+		String query = "DELETE FROM " + tableName + ";";
+		ArrayList<String> queryArr = new ArrayList<String>();
+		queryArr.add(query);
+		queryArr.add("delete");
+	}
 }

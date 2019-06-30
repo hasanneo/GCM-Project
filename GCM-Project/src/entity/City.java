@@ -11,7 +11,16 @@ public class City {
 	private int numberOfPOI;
 	private int numberOfTours;
 	private int numberOfVersions;
+	
+	private String cityDescription;
+	
+	public String getCityDescription() {
+		return cityDescription;
+	}
 
+	public void setCityDescription(String cityDescription) {
+		this.cityDescription = cityDescription;
+	}
 
 	public City(String cityName)
 	{

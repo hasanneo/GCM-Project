@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.SVGPath?>
+
+<AnchorPane prefHeight="568.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<GridPane layoutX="14.0" layoutY="69.0" prefHeight="260.0" prefWidth="254.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="149.20001831054688" minWidth="10.0" prefWidth="125.20001831054688" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="128.79998168945312" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<Label fx:id="mapNameLabel" prefHeight="11.0" prefWidth="59.0" styleClass="label" text="map name" GridPane.columnIndex="1" />
+				<Label fx:id="mapCityLabel" styleClass="label" text="city" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label fx:id="mapDescLabel" styleClass="label" text="desciption" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label styleClass="label" text="Map Name:" />
+				<Label styleClass="label" text="City:" GridPane.rowIndex="1" />
+				<Label styleClass="label" text="Description:" GridPane.rowIndex="2" />
+				<Label styleClass="label" text="Version:" GridPane.rowIndex="3" />
+				<Label fx:id="mapVersion" styleClass="label" text="v" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+			</children>
+		</GridPane>
+		<AnchorPane layoutX="279.0" minHeight="0.0" minWidth="0.0" prefHeight="568.0" prefWidth="560.0">
+			<children>
+				<ScrollPane prefHeight="325.0" prefWidth="392.0" styleClass="scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<content>
+						<AnchorPane fx:id="imagePane">
+							<children>
+								<ImageView id="mapImageView" fx:id="mapImageView" pickOnBounds="true" preserveRatio="true" />
+							</children>
+						</AnchorPane>
+					</content>
+				</ScrollPane>
+			</children>
+		</AnchorPane>
+		<Button fx:id="DownloadBtn" disable="true" layoutX="22.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#DownloadClick" prefHeight="25.0" prefWidth="220.0" styleClass="ripple-button" text="DOWNLOAD" />
+      <Button layoutX="22.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#BackClick" prefHeight="41.0" prefWidth="34.0" styleClass="mybutton">
+         <graphic>
+            <SVGPath content="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z" styleClass="icon-svg" />
+         </graphic></Button>
+      <Button fx:id="editBtn" layoutX="22.0" layoutY="377.0" mnemonicParsing="false" onMouseClicked="#EditBtnClick" prefHeight="25.0" prefWidth="220.0" text="EDIT" visible="false" styleClass="ripple-button"/>
+	</children>
+</AnchorPane>
