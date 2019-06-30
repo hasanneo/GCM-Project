@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import controller.DataBaseController;
@@ -17,10 +18,11 @@ import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
 
-	
+
 
 public class Server extends AbstractServer {
 	public static boolean connected=false; 
+	ArrayList<String> Accounts =new ArrayList<>();
 	static Server server;
 	private Object clientMessageResult;
 	private SqlConnection sqlConnection;
@@ -37,29 +39,62 @@ public class Server extends AbstractServer {
 	}
 
 	@Override
-	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
+	protected void handleMessageFromClient(Object msg, ConnectionToClient client) 
+	{
+		ArrayList<String> accountLogInOut = null;
 		try {
-			System.out.println("handleMessageFromClient :[Client " + client.getId() + "] Message received: " + msg.toString());
-			Object obj;
-			obj=sqlConnection.ExecuteQuery(msg);
-			client.sendToClient(obj);
-		} catch (IOException e) {
+			if (msg instanceof ArrayList<?>)
+			{
+				accountLogInOut = (ArrayList<String>) msg;
+				ArrayList<String> status=new ArrayList<>();
+				if (accountLogInOut.get(0).equals("logIn")) {
+					if (Accounts.contains(accountLogInOut.get(1))) {
+						status=new ArrayList<>();
+						status.add("notAllowed");
+						client.sendToClient(status);
+						
+					}
+					else
+					{
+						Accounts.add(accountLogInOut.get(1));
+						status=new ArrayList<>();
+						status.add("Allowed");
+						client.sendToClient(status);
+						
+					}
+				}
+
+				else
+				{
+					if (accountLogInOut.get(0).equals("logOut")) 
+					{
+						Accounts.remove(accountLogInOut.get(1));
+						status=new ArrayList<>();
+						status.add("logedOut");
+						client.sendToClient(status);
+					}
+					else
+					{
+						System.out.println("handleMessageFromClient :[Client " + client.getId() + "] Message received: " + msg.toString());
+						Object obj;
+						obj=sqlConnection.ExecuteQuery(msg);
+						client.sendToClient(obj);
+					}
+				}
+			}
+		}
+		catch (IOException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		  
-	}
-	public static void StartServer(int myport) {
 
-		
-		//int myport;
-		//int DEFAULT_PORT = 5555; // Port to listen on
-		
-		//myport=DEFAULT_PORT;
-		
-		
-		
+
+
+
+	}
+	public static void StartServer(int myport)
+	{
 		Properties props;
 		FileInputStream in;
 		//open the server properties file for reading		
@@ -78,35 +113,15 @@ public class Server extends AbstractServer {
 			server.setSqlConnection(new SqlConnection(schema, username, password,hostname,props.getProperty("server.port")));
 			server.listen(); // Start listening for connections
 			server.serverStarted();
-			
 			connected=true;
-//			
-//			  InetAddress inetAddress = InetAddress.getLocalHost();
-//		        System.out.println("Local IP Address:- " + inetAddress.getHostAddress());
-//		        
-//		        URL whatismyip = new URL("http://checkip.amazonaws.com");
-//		        BufferedReader in1 = new BufferedReader(new InputStreamReader(
-//		                        whatismyip.openStream()));
-//
-//		        String ip = in1.readLine(); //you get the IP as a String
-//		        System.out.println("Public IP Address:- "+ip);
-//		        
-		        
-		        
+
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public static void stopServer() throws IOException
-	{
-		connected=false;
-		server.stopListening();
-		
-		
-		
-	}
+
 	public static void openServer()
 	{
 		connected=true;
